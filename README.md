@@ -3,6 +3,8 @@
 A simple and clean web-based reporting tool for Fail2Ban events.  
 Turn your daily Fail2Ban logs into searchable and filterable JSON reports – right on your webspace.
 
+## 🛡️ This tool does not replace proper intrusion detection and access control. It is a visualization layer and should be deployed accordingly.
+
 ## 📦 Features
 
 - Parses `fail2ban.log` into daily JSON logs
