@@ -16,6 +16,26 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 
 ---
 
+## new File Structure
+```
+assets/
+├── css/
+│ └── style.css # Main stylesheet for the Fail2Ban report UI
+├── js/
+│ ├── jsonreader.js # Core JavaScript: loads and renders JSON data
+│ └── action.js # Handles action button events (e.g. Ban IP)
+includes/
+└── list-files.php # PHP script to list and prepare JSON files for frontend
+```
++ `.htaccess` # Basic web server protection and security headers
++ `Fail2Ban.png` # Screenshot
++ `LICENSE` # License file (GPLv3)
++ `README.md` # Project documentation and setup instructions
++ `fail2ban_log2json.sh` # Bash script to convert Fail2Ban logs to JSON
++ `index.php` # Main web frontend, includes PHP and HTML
+
+---
+
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Bash Script Setup (`fail2ban_log2json.sh`)
