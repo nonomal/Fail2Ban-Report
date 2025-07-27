@@ -41,7 +41,7 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
    ```
    @daily /path/to/fail2ban_log2json.sh
    ```
-   or any other time that fits your needs (you can try the crontab time generator on [https://suble.net/cronhelper/](https://suble.net/cronhelper/) (⚠️german language⚠️)
+   or any other time that fits your needs (you can try the crontab time generator on [https://suble.net/cronhelper/](https://suble.net/cronhelper/) (⚠️german language)
 
 ### 2️⃣ Web Interface Setup (Webspace)
 
@@ -107,7 +107,7 @@ AuthUserFile /path/to/.htpasswd
 Require valid-user
 ```
 
-You can use the htpasswd helper for your htpasswd files (choose bcrypt as algorythm as it is better) on [https://suble.net/htpasswd/](https://suble.net/htpasswd/)
+You can use the htpasswd helper for your htpasswd files (choose bcrypt as algorythm as it is better) on [https://suble.net/htpasswd/](https://suble.net/htpasswd/) (⚠️ german language)
 
 or restrict by IP:
 
