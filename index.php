@@ -21,7 +21,7 @@ $filesJson = json_encode($files);
   <meta charset="UTF-8" />
   <title>Fail2Ban Report</title>
   <link rel="stylesheet" href="/assets/css/style.css" />
-  <script src="/assets/js/jsonreader.js"></script>
+  <script src="/assets/js/jsonreader.js" defer></script>
 </head>
 <body>
   <h1>Fail2Ban Report</h1>
