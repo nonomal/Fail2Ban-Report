@@ -119,9 +119,6 @@ Require ip 203.0.113.5
 ## 📄 License
 This project is released under the GPLv3 License. Feel free to modify and share.
 
-## ✨ Contributions
-Pull requests, ideas or translations welcome!
-
 ---
 
 ## 🗺️ Roadmap
