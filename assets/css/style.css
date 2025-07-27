@@ -1,3 +1,4 @@
+/* Dokument Styles */
 body {
       background-color: #111;
       color: #eee;
@@ -12,6 +13,7 @@ select, input {
       border: 1px solid #444;
       border-radius: 5px;
     }
+/* Table Styles for Output */
 table {
       width: 100%;
       border-collapse: collapse;
@@ -29,8 +31,9 @@ th {
 tr:nth-child(even) {
       background-color: #1a1a1a;
     }
+/* Styles for Action Buttons */
 .action-btn {
-  background-color: #b8860b; /* dunkles Gold */
+  background-color: #b8860b; /* dark Gold */
   color: #111;
   border: none;
   padding: 8px 16px;
@@ -43,7 +46,7 @@ tr:nth-child(even) {
 
 .action-btn:hover, 
 .action-btn:focus {
-  background-color: #ffd700; /* helleres Gold beim Hover */
+  background-color: #ffd700; /* light Gold when Hover */
   color: #000;
   outline: none;
   box-shadow: 0 0 10px #ffd700;
