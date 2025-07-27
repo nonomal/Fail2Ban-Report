@@ -128,19 +128,18 @@ Pull requests, ideas or translations welcome!
 
 **Fail2Ban-Report** is designed to be lightweight, modular, and open to future improvements. The following features are currently planned:
 
-### 🔐 Security Features
-- Integration of a proper `.htaccess` file for basic access control and secure defaults
-- Optional password protection for the web interface
-
 ### ⚙️ Setup & Automation
 - Setup script to automate initial installation, including directory structure and permissions
 - Optionally auto-configure a daily cronjob
+
+### 🔐 Security Features
+- Integration of a stronger `.htaccess` file for basic access control and secure defaults
 
 ### 🔥 Active Defense Integration
 - Allow manual IP blocking directly from the interface via `iptables` or `ufw`
 - Optionally enable automatic blocking of suspicious IPs based on defined criteria
 
-### 🧩 Open to Contributions
+## 🧩 Open to Contributions
 I'm happy to hear from users and contributors!  
 Whether it's:
 - feature requests,  
