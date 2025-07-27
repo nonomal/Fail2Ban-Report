@@ -36,12 +36,46 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
     └── list-files.php      # PHP script to list and prepare JSON files for frontend
 
 ```
-+ `.htaccess` # Basic web server protection and security headers
-+ `Fail2Ban.png` # Screenshot
-+ `LICENSE` # License file (GPLv3)
-+ `README.md` # Project documentation and setup instructions
-+ `fail2ban_log2json.sh` # Bash script to convert Fail2Ban logs to JSON
-+ `index.php` # Main web frontend, includes PHP and HTML
+### Files List
++ `.htaccess`  
+  Basic web server protection and security headers to restrict access to sensitive files and improve security.
+
++ `Fail2Ban.png`  
+  Screenshot or logo image related to the Fail2Ban Report project.
+
++ `LICENSE`  
+  License file specifying the usage terms of the project (GPLv3).
+
++ `README.md`  
+  Project documentation including setup instructions, features, and roadmap.
+
++ `fail2ban_log2json.sh`  
+  Bash script that parses Fail2Ban logs and converts them into daily JSON files for easy web-based reporting.
+
++ `index.php`  
+  Main web frontend file combining PHP and HTML to display the report interface and load JSON data dynamically.
+
++ `assets/`  
+  Directory containing static assets such as CSS, JavaScript, and images.
+
+  - `assets/css/style.css`  
+    Stylesheet defining the appearance and layout of the Fail2Ban report web interface.
+
+  - `assets/js/jsonreader.js`  
+    JavaScript responsible for fetching JSON data and rendering the report table with filters.
+
+  - `assets/js/action.js`  
+    JavaScript handling user interactions with action buttons, such as "Ban IP".
+
+  - `assets/images/Fail2Ban.png`  
+    The image file relocated here for better organization of static assets.
+
++ `includes/`  
+  Directory containing PHP include files.
+
+  - `includes/list-files.php`  
+    PHP script to scan the archive directory, list available JSON log files, and prepare data for the frontend.
+
 
 ---
 
