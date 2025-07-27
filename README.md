@@ -105,6 +105,12 @@ Require valid-user
 
 You can use the htpasswd helper for your htpasswd files (choose bcrypt as algorythm as it is better) on [https://suble.net/htpasswd/](https://suble.net/htpasswd/)
 
+or restrict by IP:
+
+```
+Require ip 192.168.1.0/24
+Require ip 203.0.113.5
+```
 
 ## 📄 License
 This project is released under the MIT License. Feel free to modify and share.
