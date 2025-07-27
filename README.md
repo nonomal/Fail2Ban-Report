@@ -31,7 +31,7 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 │   │   ├── jsonreader.js   # Core JavaScript: loads and renders JSON data
 │   │   └── action.js       # Handles action button events (e.g. Ban IP)
 │   └── images/
-│       └── Fail2Ban.png    # Logo or related image
+│       └── Fail2Ban.png    # Screenshot for GitHub Readme
 └── includes/
     └── list-files.php      # PHP script to list and prepare JSON files for frontend
 
@@ -68,7 +68,7 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
     JavaScript handling user interactions with action buttons, such as "Ban IP".
 
   - `assets/images/Fail2Ban.png`  
-    The image file relocated here for better organization of static assets.
+    Screenshot for Github Readme.
 
 + `includes/`  
   Directory containing PHP include files.
