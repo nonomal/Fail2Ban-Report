@@ -1,20 +1,6 @@
-<?php
-// index.php
+<?php include(__DIR__ . '/includes/list-files.php'); ?>
+<?php // index.php Version 0.2.1 ?>
 
-// Directory with JSON files
-$jsonDir = __DIR__ . '/archive/';
-
-// List all matching JSON files
-$files = array_values(array_filter(scandir($jsonDir), function($f) {
-    return preg_match('/^fail2ban-events-\d{8}\.json$/', $f);
-}));
-
-// Sort files descending (newest first)
-rsort($files);
-
-// Output as JSON for JS
-$filesJson = json_encode($files);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
