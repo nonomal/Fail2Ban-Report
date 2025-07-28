@@ -8,7 +8,7 @@ function collectAndExecuteActions(ip) {
   }
 
   selectedActions.forEach(action => {
-    const scriptUrl = `/actions/action_${action}-ip.php`;
+    const scriptUrl = `/includes/actions/action_${action}-ip.php`;
 
     fetch(scriptUrl, {
       method: 'POST',
