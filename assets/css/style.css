@@ -56,3 +56,34 @@ tr:nth-child(even) {
   background-color: #aa7a00;
   box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
 }
+/* Notifications for Actions */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  background-color: #222;
+  color: #ffd700;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  font-family: monospace;
+  font-size: 14px;
+  opacity: 0.95;
+  animation: fadein 0.3s ease-out, fadeout 0.5s ease-in 4s forwards;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 0.95; transform: translateY(0); }
+}
+
+@keyframes fadeout {
+  to { opacity: 0; transform: translateY(-10px); }
+}
