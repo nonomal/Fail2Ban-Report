@@ -18,7 +18,7 @@ function blockIp($ip, $jail = 'unknown', $source = 'manual') {
         ];
     }
 
-    $jsonFile = __DIR__ . 'archive/blocklist.json';
+    $jsonFile = dirname(__DIR__, 1) . '/archive/blocklist.json';
     $data = [];
 
     // Read existing blocklist
