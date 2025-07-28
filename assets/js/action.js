@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tbody.addEventListener('click', e => {
     if (e.target.classList.contains('action-btn')) {
       const ip = e.target.dataset.ip;
-      collectAndExecuteActions(ip); // <- zentrale Logik ausgelagert
+      collectAndExecuteActions(ip); // <- central Logic in this File
     }
   });
 });
