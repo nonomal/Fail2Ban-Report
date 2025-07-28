@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.getElementById('openBlocklistBtn');
   const closeBtn = document.getElementById('closeOverlayBtn');
   const reloadBtn = document.getElementById('reloadBlocklistBtn');
+  const reapplyBtn = document.getElementById('reapplyFirewallBtn');
   const container = document.getElementById('blocklistContainer');
   const searchInput = document.getElementById('blocklistSearch');
 
   let blocklistData = [];
 
-  
-  // Show overlay
+  // Show overlay and load blocklist
   openBtn.addEventListener('click', () => {
     overlay.classList.remove('hidden');
     loadBlocklist();
@@ -23,16 +23,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reload blocklist manually
   reloadBtn.addEventListener('click', loadBlocklist);
 
+  // Reapply blocklist to firewall
+  if (reapplyBtn) {
+    reapplyBtn.addEventListener('click', () => {
+      if (!confirm('Reapply the entire blocklist to the firewall?')) return;
+
+      fetch('/includes/actions/action_reapply-firewall.php', {
+        method: 'POST'
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        if (!data.success && data.details) {
+          console.error('Reapply error details:', data.details);
+        }
+      })
+      .catch(err => {
+        alert('Failed to reapply blocklist: ' + err.message);
+      });
+    });
+  }
+
+  // Filter blocklist while typing
   searchInput.addEventListener('input', () => {
     const filterValue = searchInput.value.trim();
     renderBlocklist(blocklistData, filterValue);
   });
 
-  // Load blocklist.json and render entries
+  // Load blocklist from JSON file
   function loadBlocklist() {
     container.textContent = 'Loading blocklist...';
 
-    fetch('/archive/blocklist.json', {cache: "no-store"})
+    fetch('/archive/blocklist.json', { cache: 'no-store' })
       .then(res => {
         if (!res.ok) throw new Error('Failed to load blocklist');
         return res.json();
@@ -46,49 +68,49 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // Render blocklist entries with unblock buttons
-function renderBlocklist(data, filter = '') {
-  if (!Array.isArray(data) || data.length === 0) {
-    container.textContent = 'Blocklist is empty.';
-    return;
+  // Render blocklist entries with optional filtering
+  function renderBlocklist(data, filter = '') {
+    if (!Array.isArray(data) || data.length === 0) {
+      container.textContent = 'Blocklist is empty.';
+      return;
+    }
+
+    const filteredData = data.filter(entry => {
+      const term = filter.toLowerCase();
+      return entry.ip.toLowerCase().includes(term) || entry.jail.toLowerCase().includes(term);
+    });
+
+    if (filteredData.length === 0) {
+      container.textContent = 'No entries match your search.';
+      return;
+    }
+
+    container.innerHTML = ''; // Clear container
+
+    filteredData.forEach(entry => {
+      const div = document.createElement('div');
+      div.className = 'blocklist-entry';
+
+      div.innerHTML = `
+        <span>${entry.ip} (Jail: ${entry.jail}) - Blocked at: ${new Date(entry.timestamp).toLocaleString()}</span>
+        <button data-ip="${entry.ip}">Unblock</button>
+      `;
+
+      const btn = div.querySelector('button');
+      btn.addEventListener('click', () => unblockIp(entry.ip));
+
+      container.appendChild(div);
+    });
   }
 
-  const filteredData = data.filter(entry => {
-    const term = filter.toLowerCase();
-    return entry.ip.toLowerCase().includes(term) || entry.jail.toLowerCase().includes(term);
-  });
-
-  if (filteredData.length === 0) {
-    container.textContent = 'No entries match your search.';
-    return;
-  }
-
-  container.innerHTML = ''; // clear
-
-  filteredData.forEach(entry => {
-    const div = document.createElement('div');
-    div.className = 'blocklist-entry';
-
-    div.innerHTML = `
-      <span>${entry.ip} (Jail: ${entry.jail}) - Blocked at: ${new Date(entry.timestamp).toLocaleString()}</span>
-      <button data-ip="${entry.ip}">Unblock</button>
-    `;
-
-    const btn = div.querySelector('button');
-    btn.addEventListener('click', () => unblockIp(entry.ip));
-
-    container.appendChild(div);
-  });
-}
-
-  // Send unblock request via AJAX
+  // Unblock an IP via POST request
   function unblockIp(ip) {
     if (!confirm(`Unblock IP ${ip}?`)) return;
 
     fetch('/includes/actions/action_unban-ip.php', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams({ip})
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ ip })
     })
     .then(res => res.json())
     .then(data => {
@@ -99,23 +121,4 @@ function renderBlocklist(data, filter = '') {
       alert('Error unblocking IP: ' + err.message);
     });
   }
-});
-
-/* Object Listener for Reapply to Firewall */
-document.getElementById('reapplyFirewallBtn').addEventListener('click', () => {
-  if (!confirm('Möchtest du die komplette Blocklist erneut in die Firewall übernehmen?')) return;
-
-  fetch('/includes/actions/action_reapply-firewall.php', {
-    method: 'POST'
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-    if (!data.success) {
-      console.error('Details:', data.details);
-    }
-  })
-  .catch(err => {
-    alert('Fehler beim Übernehmen der Blocklist: ' + err.message);
-  });
 });
