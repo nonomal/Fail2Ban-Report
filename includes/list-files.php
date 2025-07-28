@@ -1,7 +1,7 @@
 <?php
 
 // Directory with JSON files
-$jsonDir = __DIR__ . '/archive/';
+$jsonDir = (__DIR__) . '/archive/';
 
 // List all matching JSON files
 $files = array_values(array_filter(scandir($jsonDir), function($f) {
