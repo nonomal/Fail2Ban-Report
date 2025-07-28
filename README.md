@@ -6,6 +6,10 @@ Fail2Ban Report is a privacy-friendly and self-hosted dashboard to monitor, mana
 
 ---
 
+## 🛡️ This tool does not replace proper intrusion detection and access control. It is a visualization layer and should be deployed accordingly.
+
+---
+
 ## 🚀 Features
 
 - 📊 **Live overview** of Fail2Ban jails, ban history and active bans
