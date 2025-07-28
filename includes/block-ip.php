@@ -30,15 +30,31 @@ function blockIp($ip, $jail = 'unknown', $source = 'manual') {
         }
     }
 
-    // Check for existing IP
-    foreach ($data as $item) {
+    // Check for existing IP, reactivate if found but inactive
+    foreach ($data as &$item) {
         if ($item['ip'] === $ip) {
+            if (!isset($item['active']) || $item['active'] === false) {
+                $item['active'] = true;
+                $item['lastModified'] = date('c');
+                // Save updated blocklist
+                if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
+                    return [
+                        'success' => false,
+                        'message' => "Failed to write to blocklist.json."
+                    ];
+                }
+                return [
+                    'success' => true,
+                    'message' => "IP $ip was reactivated in blocklist.json."
+                ];
+            }
             return [
                 'success' => true,
-                'message' => "IP $ip was already listed in blocklist.json."
+                'message' => "IP $ip is already active in blocklist.json."
             ];
         }
     }
+    unset($item);
 
     // New block entry with optional fields for future use
     $entry = [
