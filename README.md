@@ -28,11 +28,12 @@ Fail2Ban Report is a privacy-friendly and self-hosted dashboard to monitor, mana
 ![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-1.png)
 Main Window
 
-![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-2.png)
-Banlist manipulation
-
 ![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-3.png)
-Actions to Perform
+new: Actions to Perform
+
+![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-2.png)
+new: Banlist manipulation
+
 
 ---
 
