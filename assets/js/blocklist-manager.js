@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('closeOverlayBtn');
   const reloadBtn = document.getElementById('reloadBlocklistBtn');
   const container = document.getElementById('blocklistContainer');
+  const searchInput = document.getElementById('blocklistSearch');
 
+  let blocklistData = [];
+
+  
   // Show overlay
   openBtn.addEventListener('click', () => {
     overlay.classList.remove('hidden');
@@ -29,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return res.json();
       })
       .then(data => {
+        blocklistData = data;
         renderBlocklist(data);
       })
       .catch(err => {
@@ -37,29 +42,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Render blocklist entries with unblock buttons
-  function renderBlocklist(data) {
-    if (!Array.isArray(data) || data.length === 0) {
-      container.textContent = 'Blocklist is empty.';
-      return;
-    }
-
-    container.innerHTML = ''; // clear
-
-    data.forEach(entry => {
-      const div = document.createElement('div');
-      div.className = 'blocklist-entry';
-
-      div.innerHTML = `
-        <span>${entry.ip} (Jail: ${entry.jail}) - Blocked at: ${new Date(entry.timestamp).toLocaleString()}</span>
-        <button data-ip="${entry.ip}">Unblock</button>
-      `;
-
-      const btn = div.querySelector('button');
-      btn.addEventListener('click', () => unblockIp(entry.ip));
-
-      container.appendChild(div);
-    });
+function renderBlocklist(data, filter = '') {
+  if (!Array.isArray(data) || data.length === 0) {
+    container.textContent = 'Blocklist is empty.';
+    return;
   }
+
+  const filteredData = data.filter(entry => {
+    const term = filter.toLowerCase();
+    return entry.ip.toLowerCase().includes(term) || entry.jail.toLowerCase().includes(term);
+  });
+
+  if (filteredData.length === 0) {
+    container.textContent = 'No entries match your search.';
+    return;
+  }
+
+  container.innerHTML = ''; // clear
+
+  filteredData.forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'blocklist-entry';
+
+    div.innerHTML = `
+      <span>${entry.ip} (Jail: ${entry.jail}) - Blocked at: ${new Date(entry.timestamp).toLocaleString()}</span>
+      <button data-ip="${entry.ip}">Unblock</button>
+    `;
+
+    const btn = div.querySelector('button');
+    btn.addEventListener('click', () => unblockIp(entry.ip));
+
+    container.appendChild(div);
+  });
+}
 
   // Send unblock request via AJAX
   function unblockIp(ip) {
