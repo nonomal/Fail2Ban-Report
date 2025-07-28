@@ -32,7 +32,7 @@ function blockIp($ip, $jail = 'unknown', $source = 'manual') {
     $ipEscaped = escapeshellarg($ip);
 
     // Path to IPTABLES (could be different on some systems)
-    $cmd = "/sbin/iptables -A INPUT -s $ipEscaped -j DROP";
+    $cmd = "/usr/sbin/iptables -A INPUT -s $ipEscaped -j DROP";
 
     $output = [];
     $exitCode = 0;
