@@ -41,4 +41,26 @@ AddDefaultCharset utf-8
 
 # ----------------------------------------------------
 # Set your own Rules to fit your needs down here
+# Example for additonal configuration
 # ----------------------------------------------------
+
+# Enable Basic Authentication (uncomment and configure if needed)
+# AuthType Basic
+# AuthName "Restricted Area"
+# AuthUserFile /path/to/.htpasswd
+# Require valid-user
+
+# Restrict access by IP address (adjust IP ranges accordingly)
+# <RequireAny>
+#   Require ip 192.168.1.0/24
+#   Require ip 203.0.113.5
+# </RequireAny>
+
+# Block access to backup files (optional)
+# <FilesMatch "\.(bak|old|backup)$">
+#   Require all denied
+# </FilesMatch>
+
+# Add your own security headers or overrides below
+# Header always set Referrer-Policy "no-referrer-when-downgrade"
+# Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline';"
