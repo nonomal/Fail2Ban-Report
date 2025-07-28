@@ -57,7 +57,7 @@ tr:nth-child(even) {
   box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
 }
 /* Notifications for Actions */
-.notification-container {
+#notification-container {
   position: fixed;
   top: 20px;
   right: 20px;
