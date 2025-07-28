@@ -1,19 +1,11 @@
 <?php
-// includes/actions/action_report-ip.php
+// includes/actions/action_report.php
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405);
-  echo "Fehler: Nur POST erlaubt.";
-  exit;
-}
+// Set response header to JSON with UTF-8 encoding
+header('Content-Type: application/json; charset=utf-8');
 
-$ip = $_POST['ip'] ?? null;
-
-if (!$ip || !filter_var($ip, FILTER_VALIDATE_IP)) {
-  http_response_code(400);
-  echo "Ungültige oder fehlende IP.";
-  exit;
-}
-
-// Dummy-Antwort
-echo "[REPORT] IP $ip wurde erfolgreich verarbeitet.";
+// Return a dummy response indicating that reporting is not yet implemented
+echo json_encode([
+    'success' => true,
+    'message' => 'Thank you for your report — this feature is not yet implemented and will be available in a future version.'
+]);
