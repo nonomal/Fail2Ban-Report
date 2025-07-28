@@ -134,4 +134,21 @@ echo "Webroot path: $TARGET_DIR"
 echo "Shell scripts in: $SH_PATH"
 echo "Firewall script path: $SH_PATH/firewall-update.sh"
 echo
+# === Cleanup frontend install directory ===
+
+# Remove all .sh files from frontend path
+echo -e "${BLUE}Cleaning up frontend installation path...${NORMAL}"
+find "$TARGET_DIR" -type f -name "*.sh" -exec rm -f {} \;
+
+# Remove assets/images/ folder if it exists
+if [ -d "$TARGET_DIR/assets/images" ]; then
+  rm -rf "$TARGET_DIR/assets/images"
+  echo -e "${GREEN}Removed $TARGET_DIR/assets/images/${NORMAL}"
+fi
+
+# Remove this installer script
+INSTALLER_PATH="$(realpath "$0")"
+echo -e "${YELLOW}Removing installer script: $INSTALLER_PATH${NORMAL}"
+rm -f "$INSTALLER_PATH"
+
 echo "Make sure to adjust webserver config and test the blocklist system."
