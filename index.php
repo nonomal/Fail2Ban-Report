@@ -53,18 +53,22 @@
   </table>
 
   <!-- Edit Blocklist Overlay -->
-<div id="blocklistOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="blocklistTitle" aria-describedby="blocklistDesc">  
-<div id="blocklistOverlay">
+<div id="blocklistOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="blocklistTitle" aria-describedby="blocklistDesc">
   <div class="overlay-content">
-    <h2>Edit Blocklist</h2>
+    <h2 id="blocklistTitle">Edit Blocklist</h2>
+    <p id="blocklistDesc" class="sr-only">Hier können Sie die gebannten IPs verwalten und durchsuchen.</p>
+
     <label for="blocklistSearch">Search IP or Jail:</label>
     <input type="text" id="blocklistSearch" placeholder="Type to filter..." />
-    <button id="closeOverlayBtn" class="close-btn">× Close</button>
+
+    <button id="closeOverlayBtn" class="close-btn" aria-label="Close Blocklist Overlay">× Close</button>
+
     <div id="blocklistContainer">Loading blocklist...</div>
+
     <button id="reloadBlocklistBtn">Reload Blocklist</button>
   </div>
 </div>
-</div>
+
   
 </body>
 </html>
