@@ -3,55 +3,49 @@
 set -euo pipefail
 
 BLOCKLIST_JSON="/path/to/archive/blocklist.json"
-TABLE_NAME="filter"
-FAMILY="inet"
-CHAIN_NAME="fail2ban-blocklist"
 
-# Check if jq is installed
+# Prüfen ob jq installiert ist
 if ! command -v jq &>/dev/null; then
-  echo "ERROR: jq is not installed." >&2
+  echo "ERROR: jq ist nicht installiert." >&2
   exit 1
 fi
 
-# Create table and chain if not exists
-if ! sudo nft list table "$FAMILY" "$TABLE_NAME" &>/dev/null; then
-  sudo nft add table "$FAMILY" "$TABLE_NAME"
+# Prüfen ob ufw installiert ist
+if ! command -v ufw &>/dev/null; then
+  echo "ERROR: ufw ist nicht installiert." >&2
+  exit 1
 fi
 
-if ! sudo nft list chain "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" &>/dev/null; then
-  sudo nft add chain "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" '{ type filter hook input priority 0; }'
-fi
+# Aktuell blockierte IPs extrahieren (nur die von uns gesetzten)
+ufw status numbered | grep "DENY IN" | awk '{print $3}' > /tmp/current_ufw_blocklist.txt || true
 
-# Get currently blocked IPs in the chain
-current_ips=$(sudo nft list chain "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" | grep -Po '(?<=ip saddr )[\d.]+')
-
-# Get active IPs from JSON
+# Aktive IPs aus JSON lesen
 active_ips=$(jq -r '.[] | select(.active != false) | .ip' "$BLOCKLIST_JSON")
 
-# Add active IPs not yet in the chain
+# Neue IPs blockieren
 for ip in $active_ips; do
-  if ! echo "$current_ips" | grep -qw "$ip"; then
-    sudo nft add rule "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" ip saddr "$ip" drop
-    # echo "Blocked $ip" > /dev/null  # Uncomment for debug
+  if ! grep -qw "$ip" /tmp/current_ufw_blocklist.txt; then
+    echo "Blockiere $ip"
+    sudo ufw deny from "$ip"
   fi
 done
 
-# Get inactive IPs
+# Inaktive IPs freigeben
 inactive_ips=$(jq -r '.[] | select(.active == false) | .ip' "$BLOCKLIST_JSON")
 
-# Remove rules for inactive IPs
+# Für jede inaktive IP prüfen, ob blockiert – und ggf. entfernen
 for ip in $inactive_ips; do
-  # Get rule handles for the IP
-  handles=$(sudo nft -a list chain "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" | grep "ip saddr $ip drop" | awk '{print $NF}')
-  for handle in $handles; do
-    sudo nft delete rule "$FAMILY" "$TABLE_NAME" "$CHAIN_NAME" handle "$handle"
-    # echo "Unblocked $ip (handle $handle removed)" > /dev/null  # Uncomment for debug
+  # Alle Regeln auflisten und suchen
+  mapfile -t rules < <(sudo ufw status numbered | grep "$ip" | grep "DENY IN" | tac)
+  for rule in "${rules[@]}"; do
+    rule_number=$(echo "$rule" | awk -F'[][]' '{print $2}')
+    echo "Entferne Regel $rule_number für $ip"
+    sudo ufw --force delete "$rule_number"
   done
 done
 
-# Clean up JSON file: remove inactive entries
+# JSON bereinigen (inaktive Einträge löschen)
 tmp_file=$(mktemp)
 jq 'map(select(.active != false))' "$BLOCKLIST_JSON" > "$tmp_file" && mv "$tmp_file" "$BLOCKLIST_JSON"
-# echo "Inactive entries removed from JSON." > /dev/null  # Uncomment for debug
 
-exit 0
+echo "✅ UFW-Blocklist aktualisiert."
