@@ -32,6 +32,9 @@
   <label for="ipFilter">IP contains:</label>
   <input type="text" id="ipFilter" placeholder="e.g. 192.168" />
 
+  <label><input type="checkbox" name="actions" value="ban"> Ban IP</label>
+  <label><input type="checkbox" name="actions" value="report"> Report</label>
+
   <table id="resultTable">
     <thead>
       <tr>
