@@ -155,5 +155,5 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 
 ---
 
-Made with 🛠️ and ❤️ by [Your Name / GitHub handle].
+Made with ❤️ by [SubleXBle](https://github.com/SubleXBle).
 
