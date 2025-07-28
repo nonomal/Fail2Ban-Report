@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reload blocklist manually
   reloadBtn.addEventListener('click', loadBlocklist);
 
+  searchInput.addEventListener('input', () => {
+    const filterValue = searchInput.value.trim();
+    renderBlocklist(blocklistData, filterValue);
+  });
+
   // Load blocklist.json and render entries
   function loadBlocklist() {
     container.textContent = 'Loading blocklist...';
