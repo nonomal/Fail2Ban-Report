@@ -143,3 +143,16 @@ tr:nth-child(even) {
 .blocklist-entry button:hover {
   background: #a33;
 }
+#blocklistSearch {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 10px 0 15px 0;
+  border: 1px solid #d4af37;
+  border-radius: 4px;
+  background-color: #222;
+  color: #d4af37;
+  font-size: 1rem;
+}
+#blocklistSearch::placeholder {
+  color: #aa9a52;
+}
