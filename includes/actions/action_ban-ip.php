@@ -5,7 +5,6 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../block-ip.php';
 
-// Check if IP is provided via POST
 if (!isset($_POST['ip'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Missing IP address']);
@@ -13,8 +12,8 @@ if (!isset($_POST['ip'])) {
 }
 
 $ip = trim($_POST['ip']);
-$jail = $_POST['jail'] ?? 'unknown';  // Optional, fallback
-$source = 'action_ban-ip';            // Fixed source identifier
+$jail = $_POST['jail'] ?? 'unknown';
+$source = $_POST['source'] ?? 'action_ban-ip'; // Optional override
 
 $result = blockIp($ip, $jail, $source);
 
