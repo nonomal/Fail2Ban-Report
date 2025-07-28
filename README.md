@@ -9,6 +9,8 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 - Filter by date, action (`Ban` / `Unban`), jail and IP fragment
 - Responsive dark-themed UI
 - Easy to deploy, no database, no frameworks
+- The JSON output is plain and lightweight. You can post-process or archive old data easily.
+- This tool requires no database and can run even on very minimal webspace setups. (e.g. RaspberryPi)
 
 ---
 
@@ -18,6 +20,16 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 ## Screenshot
 ![/assets/images/Fail2Ban.png](/assets/images/Fail2Ban.png)
 
+## 📝 Version-Notes
+
+### Better Structure
++ Stylesheet have been moved to /assets/css/style.css for easy customization.
++ Javascripts mooved to /assets/js/
++ Screenshot for GitHub Readme mooved to /assets/images/ => I can remove that later with an automated Setup
++ Action Button added for later Actions like "Ban IP"
++ improved .htaccess File
+
+---
 
 ## File Structure
 ```
@@ -136,10 +148,7 @@ After the first log run is processed, open your browser and go to:
 ```
 You will see a dropdown to choose the date, filter by action, jail, and IP.
 
-## 📝 Notes
-+ Stylesheet have been moved to style.css for easy customization.
-+ The JSON output is plain and lightweight. You can post-process or archive old data easily.
-+ This tool requires no database and can run even on very minimal webspace setups. (e.g. RaspberryPi)
+---
 
 ## Protecting Your Fail2Ban Report with .htaccess
 
