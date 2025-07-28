@@ -19,7 +19,7 @@ function collectAndExecuteActions(ip, jail = '') {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams(postData)
+      body: new URLSearchParams({ ip, jail })
     })
     .then(res => res.text())
     .then(responseText => {
