@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function unblockIp(ip) {
     if (!confirm(`Unblock IP ${ip}?`)) return;
 
-    fetch('/includes/actions/action_unban-ip.php', {
+    fetch('includes/actions/action_unban-ip.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ ip })
