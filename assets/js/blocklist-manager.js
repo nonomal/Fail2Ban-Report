@@ -100,3 +100,22 @@ function renderBlocklist(data, filter = '') {
     });
   }
 });
+
+/* Object Listener for Reapply to Firewall */
+document.getElementById('reapplyFirewallBtn').addEventListener('click', () => {
+  if (!confirm('Möchtest du die komplette Blocklist erneut in die Firewall übernehmen?')) return;
+
+  fetch('/includes/actions/action_reapply-firewall.php', {
+    method: 'POST'
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    if (!data.success) {
+      console.error('Details:', data.details);
+    }
+  })
+  .catch(err => {
+    alert('Fehler beim Übernehmen der Blocklist: ' + err.message);
+  });
+});
