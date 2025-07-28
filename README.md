@@ -127,9 +127,9 @@ This ensures full synchronization between Fail2Ban, firewall, and the web interf
 
 ## 🗺️ Roadmap
 
-- ✅ v2: UFW integration and JSON state sync (done!)
-- ⏳ v3: Support for nftables and firewalld
-- ⏳ v4: Optional SQLite history log
+- ✅ Beta-2: UFW integration and JSON state sync (done!)
+- ⏳ Beta-3: Support for nftables and firewalld
+- ⏳ Beta-4: Optional SQLite history log
 - ⏳ v5: Ban reason enrichment (e.g. from logs)
 - ⏳ Web UI enhancements (sorting, filtering, statistics)
 - ⏳ Multi-server sync support
