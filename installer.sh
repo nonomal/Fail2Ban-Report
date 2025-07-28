@@ -12,7 +12,7 @@ REPO_URL="https://github.com/SubleXBle/Fail2Ban-Report.git"
 BRANCH_NAME="latest"
 
 # Default install path
-TARGET_DIR="/opt/Fail2Ban-Report"
+TARGET_DIR="/var/www/html/Fail2Ban-Report"
 
 echo -e "${BLUE}--- Fail2Ban-Report Installer ---${NORMAL}"
 
