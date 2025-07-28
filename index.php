@@ -53,6 +53,7 @@
   </table>
 
   <!-- Edit Blocklist Overlay -->
+<div id="blocklistOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="blocklistTitle" aria-describedby="blocklistDesc">  
 <div id="blocklistOverlay" class="overlay hidden">
   <div class="overlay-content">
     <h2>Edit Blocklist</h2>
@@ -62,6 +63,7 @@
     <div id="blocklistContainer">Loading blocklist...</div>
     <button id="reloadBlocklistBtn">Reload Blocklist</button>
   </div>
+</div>
 </div>
   
 </body>
