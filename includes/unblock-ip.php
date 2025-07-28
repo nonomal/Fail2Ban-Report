@@ -1,33 +1,77 @@
 <?php
 // includes/unblock-ip.php
 
+/**
+ * Deactivates an IP address in blocklist.json (no iptables calls).
+ *
+ * @param string $ip        The IP address to unblock.
+ * @return array            Result array with 'success' and 'message'.
+ */
 function unblockIp($ip) {
-  if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-    return ['success' => false, 'message' => "Invalid IP format: $ip"];
-  }
+    // Validate IP address
+    if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+        return [
+            'success' => false,
+            'message' => "Invalid IP address format: $ip"
+        ];
+    }
 
-  // Remove iptables rule
-  $cmd = escapeshellcmd("iptables -D INPUT -s $ip -j DROP");
-  exec($cmd, $output, $exitCode);
-
-  if ($exitCode !== 0) {
-    return ['success' => false, 'message' => "Failed to remove iptables rule for IP $ip"];
-  }
-
-  // Remove from blocklist.json
-  $jsonFile = __DIR__ . '/archive/blocklist.json';
-  if (!file_exists($jsonFile)) {
-    return ['success' => true, 'message' => "IP $ip was not in blocklist."];
-  }
-
-  $data = json_decode(file_get_contents($jsonFile), true);
-  if (!is_array($data)) {
+    $jsonFile = __DIR__ . '/archive/blocklist.json';
     $data = [];
-  }
 
-  $newData = array_filter($data, fn($item) => $item['ip'] !== $ip);
+    // Read existing blocklist
+    if (file_exists($jsonFile)) {
+        $existing = file_get_contents($jsonFile);
+        $data = json_decode($existing, true);
+        if (!is_array($data)) {
+            return [
+                'success' => false,
+                'message' => "Corrupted or unreadable blocklist.json."
+            ];
+        }
+    } else {
+        return [
+            'success' => false,
+            'message' => "Blocklist file not found."
+        ];
+    }
 
-  file_put_contents($jsonFile, json_encode(array_values($newData), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    $found = false;
 
-  return ['success' => true, 'message' => "IP $ip successfully unblocked and removed from blocklist."];
+    foreach ($data as &$item) {
+        if ($item['ip'] === $ip) {
+            if (isset($item['active']) && $item['active'] === false) {
+                return [
+                    'success' => true,
+                    'message' => "IP $ip was already inactive."
+                ];
+            }
+
+            $item['active'] = false;
+            $item['lastModified'] = date('c');
+            $found = true;
+            break;
+        }
+    }
+    unset($item);
+
+    if (!$found) {
+        return [
+            'success' => false,
+            'message' => "IP $ip not found in blocklist.json."
+        ];
+    }
+
+    // Save updated blocklist
+    if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
+        return [
+            'success' => false,
+            'message' => "Failed to write to blocklist.json."
+        ];
+    }
+
+    return [
+        'success' => true,
+        'message' => "IP $ip was successfully marked as inactive in blocklist.json."
+    ];
 }
