@@ -16,14 +16,10 @@ Options -Indexes
 </Files>
 
 # Protect the .json files in archive/
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^archive/.*\.json$ - [F,L]
-</IfModule>
-
 # Protect .php files in includes
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteRule ^archive/.*\.json$ - [F,L]
   RewriteRule ^includes/.*\.php$ - [F,L]
 </IfModule>
 
