@@ -5,6 +5,12 @@ body {
       font-family: sans-serif;
       padding: 20px;
     }
+h1 {
+    color:#d4af37;
+   }
+h2 {
+    color:#999999;
+   }
 select, input {
       margin: 10px 5px;
       padding: 5px;
