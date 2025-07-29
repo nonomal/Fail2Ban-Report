@@ -87,7 +87,7 @@ sudo wget https://raw.githubusercontent.com/SubleXBle/Fail2Ban-Report/main/Insta
 ```
 
 The installer will:
-- Install required packages (`jq`, `ufw`, etc.)
+- Install required packages (`jq`,)
 - Place the files in `/var/www/html/fail2ban-report/` (or custom path)
 - Set permissions correctly
 - Schedule automatic firewall sync
