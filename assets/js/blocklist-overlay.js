@@ -97,8 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
     .then(res => res.json())
     .then(data => {
-      // Zeige grüne Meldung bei Erfolg (data.success === true)
-      // und rote Meldung bei Fehler (data.success === false)
       showNotification(data.message, !data.success);
 
       if (data.success) loadBlocklist();
