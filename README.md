@@ -57,6 +57,7 @@ Fail2Ban-Report is designed to be lightweight, modular, and open to future impro
     ✅ Setup script to automate initial installation, including directory structure and permissions
     ✅ Optionally auto-configure a daily cronjob
     ⏳ Make installer more robust
+    ⏳ Ship better Security with installer
 
 🔐 Security Features
 
@@ -66,10 +67,10 @@ Fail2Ban-Report is designed to be lightweight, modular, and open to future impro
 🔥 Active Defense Integration
 
     ✅ Allow manual IP blocking directly from the interface via ufw
-    ⏳ Optionally enable automatic blocking of suspicious IPs based on defined criteria
-    ⏳ add action for report to other Services (e.g. AbuseIPDB)
     ⏳ add support for nft iptables firewalld
     ⏳ multiple blocking of suspicious IPs at once
+    ⏳ Optionally enable automatic blocking of suspicious IPs based on defined criteria
+    ⏳ add action for report to other Services (e.g. AbuseIPDB)
 
 🌻 Beauty
 
