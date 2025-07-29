@@ -160,6 +160,7 @@ This ensures "full synchronization" between Fail2Ban, firewall, and the web inte
 ## 🪳 Bugfixing (a.k.a. cockroach control)
 
     ✅ Date Filter : will now show Events only from selected Date
+    ✅ Jail Filter : will now only show Jails that show up in the List
 
 ---
 
