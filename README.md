@@ -95,7 +95,7 @@ The installer will:
 1. Install dependencies:
 
 ```
-sudo apt install jq ufw
+sudo apt install jq
 ```
 
 2. Copy the project files to your desired web root, e.g.:
