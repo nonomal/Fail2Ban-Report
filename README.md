@@ -154,7 +154,8 @@ Changes to blocklist state are automatically picked up by `firewall-update.sh`.
 2. `firewall-update.sh` removes the `ufw` rule for the IP
 3. The IP entry is cleaned up from JSON (if desired)
 
-This ensures full synchronization between Fail2Ban, firewall, and the web interface.
+
+This ensures "full synchronization" between Fail2Ban, firewall, and the web interface.
 
 ---
 
