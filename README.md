@@ -56,7 +56,8 @@ Fail2Ban Report was built with simplicity, security, and control in mind:
 
 ---
 
-#### ⚠️ Installer will prove if certain Software is installed on the system like `jq` (Commandline Json Processor). [https://jqlang.org/](`jq`)
+#### ⚠️ Installer will prove if certain Software is installed on the system like:
+ - [`jq`](https://jqlang.org/)  - for easy processing of .json files.
 
 ## ⚙️ Installation / Setup Instructions
 
