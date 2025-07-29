@@ -16,7 +16,7 @@ DEFAULT_SH_PATH="/opt/Fail2Ban-Report"
 echo -e "${BLUE}--- Fail2Ban-Report Installer ---${NORMAL}"
 
 # Ask for Webroot path
-read -rp "Enter your webroot path where the tool should be installed (default: $DEFAULT_WEBROOT): " WEBROOT
+read -rp "Enter the path where the Tool-Folder should be installed (default: $DEFAULT_WEBROOT): " WEBROOT
 WEBROOT=${WEBROOT:-$DEFAULT_WEBROOT}
 TARGET_DIR="${WEBROOT%/}/Fail2Ban-Report"
 
