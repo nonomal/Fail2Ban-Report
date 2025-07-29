@@ -15,7 +15,7 @@
 Options -Indexes
 
 # Block direct access to sensitive file types
-<FilesMatch "\.(sh|ini|log|bak|OLD)$">
+<FilesMatch "\.(sh|ini|log)$">
   Require all denied
 </FilesMatch>
 
@@ -24,8 +24,6 @@ Options -Indexes
   Require all denied
 </Files>
 
-# Protect include directory
-RewriteRule ^includes/ - [F,L]
 
 # ----------------------------------------------------
 # BASIC HTTPS HEADERS
