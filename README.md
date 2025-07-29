@@ -1,7 +1,7 @@
 # Fail2Ban-Report
 
 A simple and clean web-based reporting tool for Fail2Ban events.  
-Turn your daily Fail2Ban logs into searchable and filterable JSON reports – right on your webspace.
+Web-based dashboard to turn your daily Fail2Ban logs into searchable and filterable JSON reports with optional IP blocklist management for UFW.
 
 ## 🛡️ This tool does not replace proper intrusion detection and access control. It is a visualization layer and should be deployed accordingly.
 
