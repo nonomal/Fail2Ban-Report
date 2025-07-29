@@ -2,6 +2,15 @@
 # BASIC PROTECTION
 # ----------------------------------------------------
 
+# Redirect to https
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Check if HTTPS is not enabled
+  RewriteCond %{HTTPS} !=on
+  # Redirect to the same URL but with https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 # Disable directory listing
 Options -Indexes
 
@@ -15,14 +24,9 @@ Options -Indexes
   Require all denied
 </Files>
 
-# Protect the .json files in archive/
-# Protect .php files in includes
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^archive/.*\.json$ - [F,L]
-  RewriteRule ^includes/.*\.php$ - [F,L]
-</IfModule>
-
+# Block access to includes and archive
+RewriteRule ^archive/ - [F,L]
+RewriteRule ^includes/ - [F,L]
 
 # ----------------------------------------------------
 # BASIC HTTPS HEADERS
@@ -38,6 +42,9 @@ Options -Indexes
 # Set UTF-8 as default charset
 # ----------------------------------------------------
 AddDefaultCharset utf-8
+
+
+
 
 # ----------------------------------------------------
 # Set your own Rules to fit your needs down here
