@@ -167,6 +167,30 @@ tr:nth-child(even) {
 .blocklist-entry button:hover {
   background: #a33;
 }
+
+#reloadBlocklistBtn {
+  background-color: #28a745; /* schönes sattes Grün */
+  color: white;              /* weiße Schrift für guten Kontrast */
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(40, 167, 69, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+}
+
+#reloadBlocklistBtn:hover,
+#reloadBlocklistBtn:focus {
+  background-color: #218838; /* dunkleres Grün beim Hover */
+  box-shadow:
+    0 0 8px 2px rgba(40, 167, 69, 0.8),
+    0 0 15px 4px rgba(40, 167, 69, 0.5);
+  outline: none;
+}
+
+
 #blocklistSearch {
   width: 100%;
   padding: 8px 10px;
