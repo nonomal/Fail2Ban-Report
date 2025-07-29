@@ -26,7 +26,7 @@ active_ips=$(jq -r '.[] | select(.active != false) | .ip' "$BLOCKLIST_JSON")
 for ip in $active_ips; do
   if ! grep -qw "$ip" /tmp/current_ufw_blocklist.txt; then
     echo "Blocking $ip"
-    sudo ufw deny from "$ip"
+    ufw deny from "$ip"
   fi
 done
 
