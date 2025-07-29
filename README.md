@@ -1,6 +1,7 @@
 # Fail2Ban-Report
 
-Fail2Ban Report is a privacy-friendly dashboard to monitor, manage, and extend your Fail2Ban bans via a web interface — including automated firewall integration and easy control of blocklists.
+A simple and clean web-based reporting tool for Fail2Ban events.
+Turn your daily Fail2Ban logs into searchable and filterable JSON reports – perma ban IPs from this List directly in your Firewall.
 
 > Designed for sysadmins, self-hosters, and security-conscious users who want better insight into Fail2Ban activity and fine-grained control over IP blocking.
 
@@ -13,14 +14,14 @@ Fail2Ban Report is a privacy-friendly dashboard to monitor, manage, and extend y
 
 ## 🚀 Features
 
-- 📊 **Live overview** of Fail2Ban jails, ban history and active bans (depends on how often cronjobs run)
+- 📊 **Overview** of Fail2Ban jails, ban history and active bans (depends on how often cronjobs run)
 - 🔒 **Integrated blocklist system** with JSON-based state tracking
-- 🔄 **Automatic firewall updates** (currently only via `ufw`, `nftables` planned for future release)
-- 🌐 **Lightweight PHP web interface** (no database or frameworks required)
+- 🔄 **Automatic firewall updates** (currently only via `ufw` other Firewall Systems planned for future release)
+- 🌐 **Lightweight web interface** (no database or frameworks required)
 - 🧱 Compatible with hardened environments (strict HTTP headers, no external assets)
 - 📁 Fully On-premises — no tracking, no cloud, no dependencies
 - 🔧 **Installer script** included for quick setup
-- 🛠 Easily extensible and modular by design
+- 🛠 Easily extensible by its modular by design
 
 ---
 
@@ -28,12 +29,15 @@ Fail2Ban Report is a privacy-friendly dashboard to monitor, manage, and extend y
 ## 🖥️ Screenshots
 
 ![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-1.png)
+
 Main Window
 
 ![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-3.png)
+
 new: Actions to Perform
 
 ![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-2.png)
+
 new: Banlist manipulation
 
 
