@@ -10,8 +10,8 @@ function showNotification(message, isError = false) {
 
   const note = document.createElement('div');
   note.className = 'notification';
-  note.style.backgroundColor = isError ? '#722' : '#a8d5ba';  // rot für Fehler, sanft grün für Erfolg
-  note.style.color = isError ? '#f8f8f8' : '#2e4d32';         // helle Schrift auf rot, dunkle auf grün
+  note.style.backgroundColor = isError ? '#722' : '#a8d5ba';  // red for errors, soft green for success
+  note.style.color = isError ? '#f8f8f8' : '#2e4d32';         // light text on red, dark text on green
   note.style.padding = '0.5em 1em';
   note.style.marginBottom = '0.5em';
   note.style.borderRadius = '4px';
@@ -21,7 +21,7 @@ function showNotification(message, isError = false) {
   note.innerText = message;
   container.appendChild(note);
 
-  // Entferne Notification nach 5 Sekunden
+  // Remove notification after 5 seconds
   setTimeout(() => {
     note.remove();
   }, 5000);
