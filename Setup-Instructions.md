@@ -6,7 +6,7 @@ These instructions explain how to manually install and configure **Fail2Ban-Repo
 
 ## ✅ Requirements
 
-- A Linux system with the following installed:
+- A Linux system (tested with debian only) with the following installed:
   - `fail2ban`
   - `jq`
   - `ufw` (only UFW is supported at this time)
