@@ -51,3 +51,45 @@ After the first log run is processed, open your browser and go to:
    https://yourdomain.tld/Fail2Ban/
 ```
 You will see a dropdown to choose the date, filter by action, jail, and IP.
+
+
+## Protecting Your Fail2Ban Report with .htaccess
+
+To enhance the security of your Fail2Ban report, a `.htaccess` file is provided that:
+
+- Disables directory listings
+- Blocks direct access to sensitive files such as `.json` and `.css`
+- Sets basic HTTP security headers for safer browsing
+
+### How to Use the `.htaccess` File
+
+1. Save the provided `.htaccess` file in the root directory of your Fail2Ban report (where `index.php` resides).
+2. Ensure your web server allows `.htaccess` overrides (typically via `AllowOverride` in Apache).
+3. The `.htaccess` will automatically protect files in the main directory and subfolders like `/archive/`.
+
+### Important Security Notice
+
+While this `.htaccess` provides a basic level of protection, **it is highly recommended to implement additional security measures**, such as:
+
+- HTTP authentication (Basic Auth) to restrict access to authorized users only
+- IP-based access restrictions to allow only trusted networks or addresses
+
+Fail2Ban reports often contain sensitive security-related data. Adding these layers of protection will help prevent unauthorized access and keep your data safe.
+
+For example, you can set up Basic Auth with:
+
+```apache
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /path/to/.htpasswd
+Require valid-user
+```
+
+You can use the htpasswd helper for your htpasswd files (choose bcrypt as algorythm as it is better) on [https://suble.net/htpasswd/](https://suble.net/htpasswd/) (⚠️ german language)
+
+or restrict by IP:
+
+```
+Require ip 192.168.1.0/24
+Require ip 203.0.113.5
+```
