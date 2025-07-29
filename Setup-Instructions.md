@@ -47,8 +47,9 @@ The structure should look like this:
 
 Make the `/archive/` directory writable for the web server:
 
-    chown -R www-data:www-data /var/www/html/Fail2Ban-Report/archive/
-    chmod -R 755 /var/www/html/Fail2Ban-Report/archive/
+    chown -R www-data:www-data /var/www/html/Fail2Ban-Report/
+    find /var/www/html/Fail2Ban-Report/ -type d -exec chmod 755 {} \;
+    find /var/www/html/Fail2Ban-Report/ -type f -exec chmod 644 {} \;
 
 ---
 
@@ -61,8 +62,10 @@ Recommended path: `/opt/Fail2Ban-Report/`
 - `firewall-update.sh`
 
 Adjust paths in these scripts if necessary:
-- `fail2ban_log2json.sh` reads the Fail2Ban log and writes JSON files to `/archive/`
-- `firewall-update.sh` reads `blocklist.json` and syncs it with UFW (blocks/unblocks)
+- `fail2ban_log2json.sh` reads the Fail2Ban log and writes JSON files to `/archive/` (archive/ is a folder placed in the Webspace of /Fail2Ban-Report/ 
+- `firewall-update.sh` reads `blocklist.json` and syncs it with UFW (blocks/unblocks) so it also needs the path to `/archive/`
+
+> Make sure both scripts are executable (`chmod +x`)
 
 ---
 
