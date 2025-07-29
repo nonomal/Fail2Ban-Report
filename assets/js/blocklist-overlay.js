@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function unblockIp(ip) {
-  if (!confirm(`Unblock IP ${ip}?`)) return;
+/*  if (!confirm(`Unblock IP ${ip}?`)) return; */
 
   fetch('includes/actions/action_unban-ip.php', {
     method: 'POST',
