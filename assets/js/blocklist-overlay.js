@@ -88,20 +88,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function unblockIp(ip) {
-    if (!confirm(`Unblock IP ${ip}?`)) return;
+  if (!confirm(`Unblock IP ${ip}?`)) return;
 
-    fetch('includes/actions/action_unban-ip.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ ip })
+  fetch('includes/actions/action_unban-ip.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ ip })
+  })
+    .then(res => res.json())
+    .then(data => {
+      // Zeige grüne Meldung bei Erfolg (data.success === true)
+      // und rote Meldung bei Fehler (data.success === false)
+      showNotification(data.message, !data.success);
+
+      if (data.success) loadBlocklist();
     })
-      .then(res => res.json())
-      .then(data => {
-        showNotification(data.message, 'success');
-        if (data.success) loadBlocklist();
-      })
-      .catch(err => {
-        showNotification('Error unblocking IP: ' + err.message, 'error');
-      });
-  }
+    .catch(err => {
+      showNotification('Error unblocking IP: ' + err.message, true);
+    });
+}
+
 });
