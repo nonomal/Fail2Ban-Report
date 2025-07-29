@@ -44,7 +44,7 @@ tr:nth-child(even) {
   box-shadow: 0 2px 5px rgba(184, 134, 11, 0.6);
 }
 
-.action-btn:hover, 
+.action-btn:hover,
 .action-btn:focus {
   background-color: #ffd700; /* light Gold when Hover */
   color: #000;
@@ -163,4 +163,69 @@ tr:nth-child(even) {
   overflow: hidden;
   clip: rect(0,0,0,0);
   border: 0;
+}
+/* Checkboxes  */
+/* Hide original Checkbox */
+input[type="checkbox"] {
+  appearance: none; /* Firefox und moderne Browser */
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none; /* Firefox */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d4af37;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  background: black;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Style für Checked */
+input[type="checkbox"]:checked {
+  background-color: #d4af37;
+  border-color: #d4af37;
+  box-shadow: 0 0 5px #d4af37aa;
+}
+
+/* Black Check */
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover  */
+input[type="checkbox"]:hover {
+  border-color: #d4af37;
+}
+
+/* Blocklist Button */
+#openBlocklistBtn {
+  background-color: #d4af37;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(212, 175, 55, 0.5);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#openBlocklistBtn:hover,
+#openBlocklistBtn:focus {
+  background-color: #d4af37;
+  box-shadow:
+    0 0 8px 2px rgba(212, 175, 55, 0.7),
+    0 0 15px 4px rgba(212, 175, 55, 0.4);
+  outline: none;
 }
