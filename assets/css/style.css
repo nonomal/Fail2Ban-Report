@@ -87,6 +87,40 @@ tr:nth-child(even) {
   font-family: monospace;
   font-size: 14px;
   opacity: 0.95;
+  animation: fadein 0.3s ease-out, fadeout 0.5s ease-in 4s forwards;    
+}
+.notification.success {
+  background-color: #28a745; /* sattes Grün */
+  color: #fff;               /* weiße Schrift für Lesbarkeit */
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  font-family: monospace;
+  font-size: 14px;
+  opacity: 0.95;
+  animation: fadein 0.3s ease-out, fadeout 0.5s ease-in 4s forwards;
+}
+.notification.error {
+  background-color: #e74c3c; /* sattes Rot */
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  font-family: monospace;
+  font-size: 14px;
+  opacity: 0.95;
+  animation: fadein 0.3s ease-out, fadeout 0.5s ease-in 4s forwards;
+}
+
+.notification.info {
+  background-color: #3498db; /* klassisches Blau */
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  font-family: monospace;
+  font-size: 14px;
+  opacity: 0.95;
   animation: fadein 0.3s ease-out, fadeout 0.5s ease-in 4s forwards;
 }
 
