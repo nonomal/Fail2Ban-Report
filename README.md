@@ -36,9 +36,13 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 ---
 
 ## 📝 Release-Notes
-+ Stylesheet have been moved to style.css for easy customization.
-+ The JSON output is plain and lightweight. You can post-process or archive old data easily.
-+ 
++ modular design instead of one file for everything
++ Action Buttons added to perform (one or more) actions with the given IP
++ Edit Blocklist Button : will show the Blocklist
++ Action Checkboxes (Actions that are checked, will be performed by action button)
++ Action Ban IP will set the IP on blocklist.json and set it as active=true
++ Unblock in Blocklist will set the IP on the Blocklist as active=false
++ new .sh Script : firewall-uppdate.sh will perform firewall actions according to blocklist.json (block and unblock)
 
 ---
 
@@ -46,6 +50,7 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 
     ✅ Date Filter : will now show Events only from selected Date
     ✅ Jail Filter : will now only show Jails that show up in the List
+    ⏳ Report Action is not implemented
 
 ---
 
@@ -76,7 +81,6 @@ Fail2Ban-Report is designed to be lightweight, modular, and open to future impro
 🌻 Beauty
 
     ⏳ Do some CSS Work to make it look nicer
-    ⏳ Add more Filters (Date)
 
 ---
 
@@ -110,10 +114,10 @@ For larger features, feel free to start a discussion first.
 I'm happy to hear from users and contributors!
 Whether it's:
 
-    feature requests,
-    improvement ideas,
-    or even pull requests —
-    Feel free to reach out or contribute directly.
++ feature requests,
++ improvement ideas,
++ or even pull requests —
++ Feel free to reach out or contribute directly.
 
 If you use this tool and think "Hey, wouldn't it be cool if it could also do XYZ?" — I'm all ears!
 
