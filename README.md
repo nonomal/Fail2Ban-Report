@@ -1,7 +1,7 @@
 # Fail2Ban-Report
 
 A simple and clean web-based reporting tool for Fail2Ban events.
-Turn your daily Fail2Ban logs into searchable and filterable JSON reports – perma ban IPs from this List directly in your Firewall.
+Turn your daily Fail2Ban logs into searchable and filterable JSON reports – perma ban IPs from this List directly and manage its Blocklist. Ban/Unban
 
 > Designed for sysadmins, self-hosters, and security-conscious users who want better insight into Fail2Ban activity and fine-grained control over IP blocking.
 
@@ -48,7 +48,7 @@ new: Banlist manipulation
 Fail2Ban Report was built with simplicity, security, and control in mind:
 
 - All data is local — no cloud, no external APIs, no tracking
-- No cookies, no JavaScript required
+- No cookies, no tracking
 - Access control via web server authentication (`.htaccess`)
 - JSON-based blocklist structure: easy to audit, version, and edit
 - Separation of concerns:
