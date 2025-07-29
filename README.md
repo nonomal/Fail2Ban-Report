@@ -19,9 +19,6 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 
 ---
 
-
-
-
 ## 📦 Features
 
 - **Overview** of Fail2Ban, ban history and active bans (depends on how often cronjobs run)
