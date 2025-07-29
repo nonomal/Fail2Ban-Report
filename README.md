@@ -75,7 +75,7 @@ Fail2Ban Report was built with simplicity, security, and control in mind:
 
 ## ⚙️ Installation / Setup Instructions
 
-### ⚠️ Installer will prove if certain Software is installed on the system like:
+### ⚠️ Installer will proove if certain Software is installed on the system like:
  - [`jq`](https://jqlang.org/)  - for easy processing of .json files.
 
 ### 🔧 Option 1: Using the Installer (experimental)
