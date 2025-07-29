@@ -127,12 +127,24 @@ tr:nth-child(even) {
 }
 
 .close-btn {
-  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   font-size: 1.5rem;
   background: none;
   border: none;
   color: #d4af37;
   cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #ffd54f;
+  outline: none;
 }
 
 .blocklist-entry {
