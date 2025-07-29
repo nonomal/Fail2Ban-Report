@@ -86,17 +86,7 @@ Fail2Ban-Report is designed to be lightweight, modular, and open to future impro
 
 ## 🖥️ Screenshots
 
-![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-1.png)
-
-Main Window
-
-![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-3.png)
-
-new: Actions to Perform
-
-![assets/images/Fail2Ban-Report-1.png](assets/images/Fail2Ban-Report-2.png)
-
-new: Banlist manipulation
+![Main Window](assets/Fail2Ban-Report-B2.png)
 
 ---
 
