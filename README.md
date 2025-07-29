@@ -72,6 +72,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ### 🔐 Security
 - ✅ Hardened `.htaccess` with best practices
+- ⏳ add security layer between json and js to harden `includes/` and `archive/` better
 - ⏳ Further improvements (ongoing goal)
 
 ### 🔥 Active Defense
