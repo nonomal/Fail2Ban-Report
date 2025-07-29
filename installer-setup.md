@@ -28,7 +28,10 @@ This installer script automates the setup of the Fail2Ban-Report tool by perform
 
    Execute the installer script in your shell:
 
-   bash install_fail2ban_report.sh
+```
+wget https://raw.githubusercontent.com/SubleXBle/Fail2Ban-Report/main/Installer.sh && chmod +x Installer.sh && ./Installer.sh && rm Installer.sh
+
+```
 
 2. **Specify Installation Paths**
 
