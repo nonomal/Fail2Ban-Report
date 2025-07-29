@@ -34,7 +34,7 @@
       }
     }
 
-    function renderTable(data) {
+    function renderTable(data, selectedDate) {
       const tbody = document.querySelector('#resultTable tbody');
       const actionFilter = document.getElementById('actionFilter').value;
       const jailFilter = document.getElementById('jailFilter').value;
