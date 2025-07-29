@@ -11,6 +11,11 @@ h1 {
 h2 {
     color:#999999;
    }
+.inline-headlines {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
 select, input {
       margin: 10px 5px;
       padding: 5px;
