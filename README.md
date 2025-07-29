@@ -31,13 +31,14 @@ Turn your daily Fail2Ban logs into searchable and filterable JSON reports – ri
 - **Installer script** included for quick setup
 - Easily extensible by its modular by design
 - **Logging of Block and Unblock Actions** by setting LOGGING=true in firewall-update.sh
+- This tool requires no database and can run even on very minimal webspace setups. (e.g. RaspberryPi)
 
 ---
 
 ## 📝 Release-Notes
 + Stylesheet have been moved to style.css for easy customization.
 + The JSON output is plain and lightweight. You can post-process or archive old data easily.
-+ This tool requires no database and can run even on very minimal webspace setups. (e.g. RaspberryPi)
++ 
 
 ---
 
@@ -108,6 +109,13 @@ For larger features, feel free to start a discussion first.
 
 I'm happy to hear from users and contributors!
 Whether it's:
+
+    feature requests,
+    improvement ideas,
+    or even pull requests —
+    Feel free to reach out or contribute directly.
+
+If you use this tool and think "Hey, wouldn't it be cool if it could also do XYZ?" — I'm all ears!
 
 ---
 
