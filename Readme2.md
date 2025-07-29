@@ -19,10 +19,9 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 - Sync that list with your system firewall (via `ufw` (other Firewalls than UFW not yet supported))
 
 🧱 The architecture:
-- **Backend Shell Scripts**: Parse logs, write JSON, and update UFW
+- **Backend Shell Scripts**: Parse logs, write JSON, and update UFW accordingly to `blocklist.json`
 - **Frontend Web Interface**: Visualizes data and offers action buttons
 - **JSON Blocklist**: Stores manually blocked IPs (`active=true`)
-- **Firewall Script**: Reads `blocklist.json` and applies/removes UFW rules accordingly
 
 ---
 
@@ -53,6 +52,8 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 ---
 
 ## 🪳 Bugfixes
+
+> - Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/issues)
 
 - ✅ **Date filter** now correctly limits displayed events
 - ✅ **Jail filter** only shows existing jails from logs
