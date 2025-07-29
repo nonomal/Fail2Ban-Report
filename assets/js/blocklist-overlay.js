@@ -97,11 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(data => {
-        alert(data.message);
+        showNotification(data.message, 'success');
         if (data.success) loadBlocklist();
       })
       .catch(err => {
-        alert('Error unblocking IP: ' + err.message);
+        showNotification('Error unblocking IP: ' + err.message, 'error');
       });
   }
 });
