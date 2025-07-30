@@ -140,6 +140,8 @@ Adds cronjobs for automatic execution of the log parser and firewall updater, ba
 
 ## After Installation
 
+- ⚠️ Make sure that the directory is inacessible for others ⚠️
+
 - Verify that your web server serves the Fail2Ban-Report directory correctly.
 
 - Access the Fail2Ban-Report web interface via your browser.
