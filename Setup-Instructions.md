@@ -122,13 +122,13 @@ Monitor your logs, manage bans, and secure your system visually and efficiently.
 
 ## 🌐 Optional: AbuseIPDB Integration
 
-Fail2Ban-Report supports an optional IP reputation check via [AbuseIPDB](https://www.abuseipdb.com/), a public threat intelligence platform.
+Fail2Ban-Report supports an optional IP reputation check and reporting via [AbuseIPDB](https://www.abuseipdb.com/), a public threat intelligence platform.
 
 ### 🔎 What It Does
 
-- Displays the number of reports an IP address has received on AbuseIPDB
-- Helps assess the trustworthiness of an IP before unblocking it
-- Sends reports **only on manual user request** — no automation
+- Displays how often an IP has been reported on AbuseIPDB
+- Allows you to manually report abusive IPs directly from the interface
+- Helps assess the trustworthiness of IP addresses before unblocking them
 
 ### 🧰 Requirements
 
@@ -137,51 +137,54 @@ Fail2Ban-Report supports an optional IP reputation check via [AbuseIPDB](https:/
 
 ### 🛠 Configuration
 
-1. Create the following file **outside the web root**, e.g. at:
+1. Create a config file **outside the web root**, e.g. at:
 
     ```
     /opt/Fail2Ban-Report/fail2ban-report.config
     ```
 
-2. Insert the following content, replacing the placeholder with your actual API key:
+2. Add the following content (replace the API key placeholder):
 
     ```ini
-    [abuseipdb]
-    api_key = YOUR_API_KEY_HERE
+    [reports]
+    report=true
+    report_types=abuseipdb   # you can set more than one report
+
+    [AbuseIPDB API Key]
+    abuseipdb_key=YOUR_API_KEY_HERE
     ```
 
-3. Make sure the file is **readable by the web server user** (e.g. `www-data`):
+3. Ensure the config file is **readable** by the web server (e.g. `www-data`):
 
     ```bash
     chown www-data:www-data /opt/Fail2Ban-Report/fail2ban-report.config
     chmod 640 /opt/Fail2Ban-Report/fail2ban-report.config
     ```
 
-4. Done — if the file exists and contains a valid API key, the reputation check will be available when viewing or reporting IPs in the web interface.
+4. Done — if the file exists and is valid, the web interface will show AbuseIPDB info and allow reporting.
 
-### ⚠️ Changing the Config Location or Name
+### ⚠️ Custom Path or Filename
 
-If you choose to place the `.config` file elsewhere or use a different filename:
+If you choose a different location or name for the config file:
 
-- Open the file:
+- Open this file:
 
     ```
     includes/actions/reports/abuseipdb.php
     ```
 
-- Find the following line (early in the script):
+- Look for the line that defines the path:
 
     ```php
     $configPath = '/opt/Fail2Ban-Report/fail2ban-report.config';
     ```
 
-- Modify it to match your custom location or filename.
+- Adjust it to match your actual file path.
 
-> The file must be outside the web-accessible path for security reasons.
+> ⚠️ The config file must be placed **outside** the web root for security reasons.
 
 ### 💡 Notes
 
-- This feature is **optional** — Fail2Ban-Report works without it.
-- API requests are made **server-side only**, your API key is never exposed to the browser.
-- AbuseIPDB’s free tier allows **1,000 requests per day**.
-
+- The feature is **fully optional** — Fail2Ban-Report works fine without it.
+- AbuseIPDB requests are made **server-side**, your API key is not exposed in the browser.
+- Their free tier currently allows **1,000 requests per day**
