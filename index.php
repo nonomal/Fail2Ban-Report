@@ -17,7 +17,7 @@
 <body>
   
  <div class="inline-headlines"> 
-  <h1>Fail2Ban Report</h1>
+  <h1>Fail2Ban-Report</h1>
   <h2>Let's catch the bad guys!</h2>
  </div>
   
