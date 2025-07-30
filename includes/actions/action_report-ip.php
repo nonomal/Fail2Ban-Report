@@ -3,15 +3,17 @@
 $ip = $_POST['ip'] ?? null;
 $config = parse_ini_file('/opt/Fail2Ban-Report/fail2ban-report.config');
 
+// Basic checks
 if (!$config['report'] || !$config['report_types'] || !$ip) {
     echo json_encode([
         'success' => false,
-        'message' => 'Reporting not enabled or invalid IP.',
+        'message' => 'Reporting not enabled or invalid IP address.',
         'type' => 'info',
     ]);
     exit;
 }
 
+// Parse report service list
 $services = explode(',', $config['report_types']);
 $results = [];
 
@@ -29,35 +31,21 @@ foreach ($services as $service) {
         if (json_last_error() !== JSON_ERROR_NONE) {
             $results[$service] = [
                 'success' => false,
-                'message' => "Invalid JSON response from $service: " . json_last_error_msg(),
+                'message' => "Invalid JSON response: " . json_last_error_msg(),
                 'raw_response' => $response
             ];
         } else {
             $results[$service] = $decoded;
         }
-
     } else {
-        $results[$service] = [
-            'success' => false,
-            'message' => "$service report script not available",
-            'type' => 'error'
-        ];
+        $results[$service] = ['success' => false, 'message' => "$service script not available."];
     }
 }
 
-// Kombiniere alle Messages zu einer einzigen Meldung
-$messages = [];
-foreach ($results as $service => $result) {
-    if (!empty($result['message'])) {
-        $messages[] = $result['message'];
-    }
-}
-
-$combinedMessage = implode(" | ", $messages);
-
+// Return collected responses from all report sources
 echo json_encode([
     'success' => true,
-    'message' => $combinedMessage ?: 'Reports collected.',
+    'message' => 'Report data retrieved.',
     'data' => $results,
     'type' => 'info',
 ]);
