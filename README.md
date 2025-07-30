@@ -85,20 +85,23 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ### 🔐 Security
 - ✅ Hardened `.htaccess` with best practices
-- ⏳ add security layer between json and js to harden `includes/` and `archive/` better
+- 🧩 add security layer between json and js to harden `includes/` and `archive/` better
 - ⏳ Further improvements (ongoing goal)
 
 ### 🔥 Active Defense
 - ✅ Manual IP blocking via UI in UFW 
 - ✅ IP reputation lookup via AbuseIPDB
-- ⏳ Support for nftables, firewalld
-- ⏳ full integration with fail2ban jails for block/unblock actions
+- 🧩 Support for nftables, firewalld
+- 🧩 full integration with fail2ban jails for block/unblock actions
 - ⏳ Bulk blocking of multiple IPs
 - ⏳ Optional automatic blocking based on patterns or thresholds
 - ⏳ Integration with external services (e.g. AbuseIPDB reporting)
 
 ### 🌿 User Interface
 - ⏳ Improve CSS and styling
+
+### 👀 Outlook
+- 🔭 next version will focus on security and stability
 
 ---
 
