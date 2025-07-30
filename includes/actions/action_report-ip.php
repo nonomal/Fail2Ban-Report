@@ -24,15 +24,12 @@ foreach ($services as $service) {
         include $script;
         $response = ob_get_clean();
 
-        // Debug-Ausgabe ins Log
-       // file_put_contents('/tmp/report_debug.log', "Service: $service\nResponse:\n$response\n\n", FILE_APPEND);
-
         $decoded = json_decode($response, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             $results[$service] = [
                 'success' => false,
-                'message' => "Invalid JSON response: " . json_last_error_msg(),
+                'message' => "Invalid JSON response from $service: " . json_last_error_msg(),
                 'raw_response' => $response
             ];
         } else {
@@ -40,13 +37,27 @@ foreach ($services as $service) {
         }
 
     } else {
-        $results[$service] = ['success' => false, 'message' => "$service not available"];
+        $results[$service] = [
+            'success' => false,
+            'message' => "$service report script not available",
+            'type' => 'error'
+        ];
     }
 }
 
+// Kombiniere alle Messages zu einer einzigen Meldung
+$messages = [];
+foreach ($results as $service => $result) {
+    if (!empty($result['message'])) {
+        $messages[] = $result['message'];
+    }
+}
+
+$combinedMessage = implode(" | ", $messages);
+
 echo json_encode([
     'success' => true,
-    'message' => 'Reports collected.',
+    'message' => $combinedMessage ?: 'Reports collected.',
     'data' => $results,
     'type' => 'info',
 ]);
