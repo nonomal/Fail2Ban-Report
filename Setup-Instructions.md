@@ -148,7 +148,7 @@ Fail2Ban-Report supports an optional IP reputation check and reporting via [Abus
     ```ini
     [reports]
     report=true
-    report_types=abuseipdb   # you can set more than one report
+    report_types=abuseipdb
 
     [AbuseIPDB API Key]
     abuseipdb_key=YOUR_API_KEY_HERE
