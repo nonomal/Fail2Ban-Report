@@ -44,7 +44,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 - 🔐 **Compatible with hardened environments** (no external assets, strict headers)
 - 🛠️ **Installer script** to automate setup and permissions
 - 🧩 **Modular design** for easy extension
-- 🪵 Optional logging of block/unblock actions (set true/fals and Logpath in `firewall-update.sh`)
+- 🪵 Optional logging of block/unblock actions (set true/false and logpath in `firewall-update.sh`)
 - 🕵️ **Optional Feature :** IP reputation check via AbuseIPDB (manual lookup from web interface)
 
 > 🧰 Works even on small setups (Raspberry Pi, etc.)
