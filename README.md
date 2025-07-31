@@ -51,6 +51,12 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
+## 👥 Discussions
+
+> If you want to join the conversation or have questions or ideas, visit the 💬 [Discussions page](https://github.com/SubleXBle/Fail2Ban-Report/discussions).
+
+---
+
 ## 🆕 What's New in V 0.2.1
 
 - Modular folder structure (split backend/frontend)
