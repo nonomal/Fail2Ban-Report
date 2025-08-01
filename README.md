@@ -57,15 +57,11 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
-## 🆕 What's New in V 0.2.1
+## 🆕 What's New in V 0.2.2
 
-- Modular folder structure (split backend/frontend)
-- Action buttons: Block/Unblock IPs directly
-- Blocklist viewer: shows all manually blocked IPs
-- `firewall-update.sh`: new script to apply block/unblock actions via `ufw`
-- Action checkboxes to select multiple actions/IP at once
-- New `.htaccess` for secure deployments
-- **Optional:** AbuseIPDB integration: Check IP reputation directly from the interface (displays report count)
+- changed standard sorting to descending
+- sorting of date/time, action and jail added
+- 
 
 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
 
