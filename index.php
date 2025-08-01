@@ -1,5 +1,5 @@
 <?php include ('includes/list-files.php'); ?>
-<?php // Version 0.2.1 ?>
+<?php // Version 0.2.2 ?>
 <?php include 'includes/header.php'; ?>
 
 <!--  <button class="siterel" onclick="location.reload()" title="! Reload Site !">↻</button> -->
