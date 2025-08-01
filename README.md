@@ -61,7 +61,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 - changed standard sorting to descending
 - sorting of date/time, action and jail added
-- 
+- reset & reload Button to easy reset filters and sorting within the ui
 
 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
 
