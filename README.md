@@ -57,7 +57,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
-## 🆕 What's New in V 0.2.3 (🔥HotFix)
+## 🆕 What's New in V 0.2.3 (🔥 HotFix)
 - Hotfix for `includes/list-files.php`
   - Fix file date filtering to include today's JSON logs and ensure latest files are listed correctly.
 
