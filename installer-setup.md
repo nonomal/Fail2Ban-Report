@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document explains the interactive steps and choices presented to you during the Fail2Ban-Report automatic installation process. It also describes what the installer does behind the scenes to set up the tool properly.
+This document explains the interactive steps and choices presented to you during the Fail2Ban-Report automatic installation process. It also describes what the installer does behind the scenes to set up the tool properly, including creation and configuration of the mandatory config file.
 
 ---
 
@@ -55,15 +55,35 @@ This document explains the interactive steps and choices presented to you during
 
 ---
 
-### 5. AbuseIPDB Reputation Reporting (Optional)
+### 5. Fail2Ban-Report Config File Setup (Mandatory)
+
+- The installer **always creates or overwrites** the config file located inside the shell scripts directory (e.g. `/opt/Fail2Ban-Report/fail2ban-report.config`).
+
+- You will be prompted to configure the following mandatory setting:  
+
+  `How many days of daily reports should be shown in the main interface? (default: 7)`
+
+- The value you enter is saved under the section:
+
+```
+[Fail2Ban-Daily-List-Settings]
+max_display_days=VALUE
+```
+
+
+- This setting controls how many days are shown in the “Select Date” dropdown in the web interface.
+
+---
+
+### 6. AbuseIPDB Reputation Reporting (Optional)
 
 - You will see an informational message about the AbuseIPDB feature that allows IP reputation lookups.
 
 - You will be asked:  
-  `Would you like to enable AbuseIPDB support? (Y/N):`
+`Would you like to enable AbuseIPDB support? (Y/N):`
 
 - If **yes**, you will be prompted to enter your AbuseIPDB API key:  
-  `Please enter your AbuseIPDB API key (or leave blank to add later):`
+`Please enter your AbuseIPDB API key (or leave blank to add later):`
 
 - If you enter a key, it will be saved in the config automatically.  
 - If left blank, the config will enable reporting but without an API key; you must add it manually later.
@@ -72,21 +92,21 @@ This document explains the interactive steps and choices presented to you during
 
 ---
 
-### 6. Cronjob Installation for fail2ban_log2json.sh
+### 7. Cronjob Installation for fail2ban_log2json.sh
 
 - The installer will ask:  
-  `Install daily cronjob for fail2ban_log2json.sh at 3 AM? (Y/N):`
+`Install daily cronjob for fail2ban_log2json.sh at 3 AM? (Y/N):`
 
 - If **yes**, a daily cronjob running at 3 AM will be created.  
 - If **no**, no cronjob is installed for this script.
 
 ---
 
-### 7. Cronjob Installation for firewall-update.sh
+### 8. Cronjob Installation for firewall-update.sh
 
 - You will be asked to select how often to run the firewall update script:
 
-  Please select how often the firewall-update.sh cronjob should run:
+Please select how often the firewall-update.sh cronjob should run:
 
 ```
 Every 5 minutes
@@ -96,6 +116,7 @@ Every 15 minutes
 Do not install cronjob
 Enter your choice [1-3]:
 ```
+
 
 - Based on your choice, the cronjob will be installed or skipped.
 
@@ -113,7 +134,7 @@ Checks for `jq` and installs it if requested.
 Copies `fail2ban_log2json.sh` and `firewall-update.sh` into the chosen scripts directory, sets executable permissions, and configures internal paths.
 
 - **Config File Generation:**  
-Creates a `.config` file in the scripts directory to enable or disable AbuseIPDB reporting, including your API key if provided.
+Creates a mandatory `.config` file in the scripts directory with your settings including max display days and AbuseIPDB options.
 
 - **Permissions:**  
 Sets ownership of the web directory files to `www-data:www-data`.
@@ -136,11 +157,13 @@ Adds cronjobs for automatic execution of the log parser and firewall updater, ba
 
 - The AbuseIPDB feature requires a valid API key for functionality.
 
+- The config file path is dynamically referenced by PHP scripts, so if you move the config, update the PHP files accordingly.
+
 ---
 
 ## After Installation
 
-- ⚠️ Make sure that the directory is inacessible for others ⚠️
+- ⚠️ Make sure that the directory is inaccessible for unauthorized users ⚠️
 
 - Verify that your web server serves the Fail2Ban-Report directory correctly.
 
