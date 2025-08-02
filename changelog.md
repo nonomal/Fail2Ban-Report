@@ -8,4 +8,5 @@
   + Click on the column headers "Date", "Action", or "Jail" to sort the data.
 - uncommented the "reset & reload" button to have a easy posibillity to reset set filters or sorting
 - Added date-filter and reset button in Blocklist Overlay (assets/js/blocklist-overlay.js | index.php | assets/css/style.css)
+- Added max_display_days to set the number of days displayed in the "Select Date" list on the main site. (fail2ban-report.config | includes/list-files.php)
 - 
