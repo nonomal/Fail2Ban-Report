@@ -57,17 +57,25 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
-## 🆕 What's New in V 0.2.1
+## 🆕 What's New in V 0.2.2
 
-- Modular folder structure (split backend/frontend)
-- Action buttons: Block/Unblock IPs directly
-- Blocklist viewer: shows all manually blocked IPs
-- `firewall-update.sh`: new script to apply block/unblock actions via `ufw`
-- Action checkboxes to select multiple actions/IP at once
-- New `.htaccess` for secure deployments
-- **Optional:** AbuseIPDB integration: Check IP reputation directly from the interface (displays report count)
+- Default sorting changed to descending (newest first)
+- Sorting by date/time, action, and jail added in the main list
+- Reset & reload button to easily clear filters and sorting
+- Date filter and reset button added to the blocklist overlay
+- The number of days shown in "Select Date" can now be limited via the config file (default 7 days)
+
 
 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
+
+---
+
+## 📄 Changelog
+
+Details about all new features, improvements, and changed files can be found in the [Changelog](changelog.md).
+
+This is especially useful if you want to manually patch or update individual files.
+
 
 ---
 
@@ -112,8 +120,8 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ## 🖼️ Screenshots
 
-![Main interface with log overview](assets/images/Fail2Ban-Report-B2.png)  
-![Blocklist interface with unblock actions](assets/images/Fail2Ban-Report-BL.png)
+![Main interface with log overview](assets/images/Main-List.png)  
+![Blocklist interface with unblock actions](assets/images/Blocklist-Overlay.png)
 ![Result after banning an IP](assets/images/banip.png)
 ![Result after "report" an IP](assets/images/reportip.png)
 

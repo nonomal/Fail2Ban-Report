@@ -1,8 +1,8 @@
 <?php include ('includes/list-files.php'); ?>
-<?php // Version 0.2.1 ?>
+<?php // Version 0.2.2 ?>
 <?php include 'includes/header.php'; ?>
 
-<!--  <button class="siterel" onclick="location.reload()" title="! Reload Site !">↻</button> -->
+<button class="siterel" onclick="location.href=location.pathname" title="! reset and reload !">↻</button>
 
   <label for="dateSelect">Select Date:</label>
   <select id="dateSelect"></select>
@@ -29,13 +29,14 @@
 
   <table id="resultTable">
     <thead>
-      <tr>
-        <th>Time</th>
-        <th>Action</th>
-        <th>IP</th>
-        <th>Jail</th>
-      </tr>
-    </thead>
+       <tr>
+         <th data-sort="timestamp" data-label="Date">Date</th>
+         <th data-sort="action" data-label="Action">Action</th>
+         <th>IP</th>
+         <th data-sort="jail" data-label="Jail">Jail</th>
+         <th></th>
+       </tr>
+     </thead>
     <tbody></tbody>
   </table>
 
@@ -45,8 +46,12 @@
     <h2 id="blocklistTitle">Edit Blocklist</h2>
     <p id="blocklistDesc" class="sr-only">Here you can manage your blocklist.</p>
 
-    <label for="blocklistSearch">Search IP or Jail:</label>
-    <input type="text" id="blocklistSearch" placeholder="Type to filter..." />
+    <div id="blocklistFilters" style="margin-bottom: 1em;">
+      <input type="date" id="blocklistDateFilter" />
+      <button id="blocklistResetBtn" class="button-reset"  type="button">Reset</button>
+      <input type="text" id="blocklistSearch" placeholder="Search IP or jail" />
+    </div>
+
 
     <button id="closeOverlayBtn" class="close-btn" aria-label="Close Blocklist Overlay">× Close</button>
 
