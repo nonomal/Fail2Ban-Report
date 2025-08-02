@@ -57,8 +57,11 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
-## 🆕 What's New in V 0.2.2
+## 🆕 What's New in V 0.2.3 (🔥HotFix)
+- Hotfix for `includes/list-files.php`
+  - Fix file date filtering to include today's JSON logs and ensure latest files are listed correctly.
 
+### New in V 0.2.2
 - Default sorting changed to descending (newest first)
 - Sorting by date/time, action, and jail added in the main list
 - Reset & reload button to easily clear filters and sorting
@@ -85,6 +88,8 @@ This is especially useful if you want to manually patch or update individual fil
 
 - ✅ **Date filter** now correctly limits displayed events
 - ✅ **Jail filter** now correctly shows only the jails present in the displayed event list.
+- ✅ **File date filtering** fix to include today's JSON logs and ensure latest files are listed correctly.
+
 
 ---
 
