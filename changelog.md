@@ -11,7 +11,7 @@ Moving the archive/ directory out of the web root to increase security is planne
 ### ✨ New Features
 
 - **Daily Log Processing**
-  - The Bash script `fail2ban_log2json.sh` will now take only events from the current date creating a daily JSON file: (still overwriting)
+  - The Bash script `fail2ban_log2json.sh` will now collect only events from the current date creating a daily JSON file: (still overwriting)
     → `archive/fail2ban-events-YYYYMMDD.json`  => (same naming – fully compatible)
   - Benefit: Smaller, cleaner files and no cross-day mixing
   - Enables future statistical analysis
