@@ -13,3 +13,21 @@
     - New HTML block `#fail2ban-stats` inside header section
   - Stats are displayed neatly beside the page title (flex layout)
 
+### 🛠 Modified or Added Files
+
+- `fail2ban_log2json.sh`  
+  → Now filters only for today's entries and structures JSON accordingly
+
+- `index.php`  
+  → Injects `statsFile` JS variable and adds stats HTML section
+
+- `includes/fail2ban-logstats.php`  
+  → **NEW**: Reads daily JSON so the `assets/js/fail2ban-logstats.js` can read it
+
+- `assets/js/fail2ban-logstats.js`  
+  → **NEW**: Reads daily Stats from `includes/fail2ban-logstats.php` and injects stats into the page
+
+- `assets/css/style.css`  
+  → Added `.inline-headlines` flex layout and style adjustments for stats block
+
+---
