@@ -18,7 +18,7 @@
 - `fail2ban_log2json.sh`  
   → Now filters only for today's entries and structures JSON accordingly
 
-- `index.php`  
+- `includes/header.php`  
   → Injects `statsFile` JS variable and adds stats HTML section
 
 - `includes/fail2ban-logstats.php`  
