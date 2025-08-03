@@ -1,4 +1,5 @@
 # Fail2Ban-Report
+> Beta 3 | Version 0.3.1
 
 A simple and clean web-based dashboard to turn your daily Fail2Ban logs into searchable and filterable JSON reports — with optional IP blocklist management for UFW.
 
@@ -57,17 +58,8 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
 
 ---
 
-## 🆕 What's New in V 0.2.3 (🔥 HotFix)
-- Hotfix for `includes/list-files.php`
-  - Fix file date filtering to include today's JSON logs and ensure latest files are listed correctly.
-
-### New in V 0.2.2
-- Default sorting changed to descending (newest first)
-- Sorting by date/time, action, and jail added in the main list
-- Reset & reload button to easily clear filters and sorting
-- Date filter and reset button added to the blocklist overlay
-- The number of days shown in "Select Date" can now be limited via the config file (default 7 days)
-
+## 🆕 What's New in V 0.3.1
+- 
 
 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
 
