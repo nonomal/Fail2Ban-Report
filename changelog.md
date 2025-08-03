@@ -76,6 +76,9 @@ Moving the archive/ directory out of the web root to increase security is planne
 - `assets/js/blocklist-overlay.js`
 → Modified to fetch blocklist data via the PHP proxy (get-blocklist.php) instead of accessing the JSON file directly
 
+- `.htaccess`
+→ Added "deny access" to archive/ by default
+
 ---
 
 
