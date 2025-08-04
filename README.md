@@ -65,7 +65,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
   - Frontend scripts no longer request raw `.json` files directly
 - **New secure PHP endpoints**
   - `includes/get-json.php` and `includes/get-blocklist.php` act as controlled proxies to serve JSON data
-  - Only PHP scripts with proper logic now expose required JSON content
+  - Only PHP scripts will now expose required JSON content
 - **Hardened frontend behavior**
   - JavaScript files (`jsonreader.js`, `blocklist-overlay.js`) fetch data only via the new PHP proxies
 - **New Ministats in Header**
