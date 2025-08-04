@@ -76,7 +76,7 @@ Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports view
   - Adds quick insight into current Fail2Ban activity
 - **Mobile-Friendly**
   - Site is now more mobile friendly
-  - added favicon to make browsers happy
+  - added favicon (🕵️) to make browsers happy
 
 
 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
