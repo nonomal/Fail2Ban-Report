@@ -53,7 +53,7 @@ Moving the archive/ directory out of the web root to increase security is planne
 - **Security Improvement**
   - By decoupling the JS from direct `.json` access, the blocklist data is better protected from unauthorized or direct URL access
 
-
+---
 
 ### 🛠 Modified or Added Files
 
