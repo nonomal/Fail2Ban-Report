@@ -219,7 +219,7 @@ Pull requests, feature ideas and bug reports are very welcome!
 ---
 
 ## 🧪 Experimental
-- 🧪 [as promised there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
+- 🧪 [there is an highly experimental feature for using fail2ban instead of UFW.](using-Fail2Ban-firewall-update.md) (⚠️ not recommended)
 
 ---
 
