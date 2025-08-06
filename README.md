@@ -193,7 +193,7 @@ This is especially useful if you want to manually patch or update individual fil
 
 ## 👀 Outlook
 - 📦 The next major version will focus on security by mooving and restructuring the `archive/` folder layout.
-- 🐳 A Docker image is expected around version v0.5.x, following the restructuring.
+- 🐳 A Docker image is expected probably around version v0.5.x, following the restructuring.
 
 ---
 
