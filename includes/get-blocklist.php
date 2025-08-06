@@ -3,29 +3,52 @@
 
 header('Content-Type: application/json');
 
-// Absolute path to blocklist.json outside the webroot or in the archive folder
-$blocklistPath = dirname(__DIR__) . '/archive/blocklist.json';
+// Directory containing blocklist files
+//$archiveDir = dirname(__DIR__) . '/../archive/';
+$archiveDir = realpath(__DIR__ . '/../archive');
+if (!$archiveDir) {
+    http_response_code(500);
+    die('Archive directory not found.');
+}
+$archiveDir .= '/';
 
-// Check if the file exists
-if (!file_exists($blocklistPath)) {
+
+// Get all files ending with ".blocklist.json"
+$blocklistFiles = glob($archiveDir . '*.blocklist.json');
+
+if (!$blocklistFiles) {
     http_response_code(404);
     echo json_encode([
         'success' => false,
-        'message' => 'Blocklist file not found.'
+        'message' => 'No blocklist files found.'
     ]);
     exit;
 }
 
-// Read file contents
-$data = file_get_contents($blocklistPath);
-if ($data === false) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Failed to read blocklist file.'
-    ]);
-    exit;
+$allEntries = [];
+
+foreach ($blocklistFiles as $file) {
+    $content = file_get_contents($file);
+    if ($content === false) {
+        // Skip file if reading fails, optionally log the error
+        continue;
+    }
+    $data = json_decode($content, true);
+    if (!is_array($data)) {
+        // Skip invalid JSON files
+        continue;
+    }
+    // Append all entries from this file
+    $allEntries = array_merge($allEntries, $data);
 }
 
-// Output raw JSON data
-echo $data;
+// Optional: sort entries by timestamp descending or IP ascending, etc.
+// usort($allEntries, function($a, $b) {
+//     return strcmp($b['timestamp'], $a['timestamp']); // newest first
+// });
+
+// Output the aggregated blocklist entries as JSON
+echo json_encode([
+    'success' => true,
+    'entries' => $allEntries
+]);

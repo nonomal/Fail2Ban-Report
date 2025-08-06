@@ -1,5 +1,87 @@
 # changelog
 
+## Changes made for V 0.3.2 (improvements)
+> This update brings several improvements — blocklists are now separated by jail, marking another step towards better Fail2Ban integration.  
+> Additionally, many new helpful statistics have been added to the header, along with a new jail filter in the blocklist overview.  
+> As expected from a reporting tool, stats are essential, so i added some basic stats.
+
+
+- **Blocklist per Jail Implementation**
+  - The blocklist JSON files are now created and managed individually per Fail2Ban jail instead of using a single global `blocklist.json`.
+    → New files like `sshd.blocklist.json`, `dovecot.blocklist.json`, `unknown.blocklist.json` are created automatically on demand.
+  - This separation prevents blocklist files from growing too large and enables finer control and filtering by jail.
+
+- **Blocklist Filtering UI Enhancement**
+  - The blocklist overlay UI now supports filtering entries by one or multiple jails via a multi-select dropdown.
+  - The search input matches IP and jail names simultaneously, combined with date filtering.
+  - If an IP appears in multiple blocklists, all occurrences are shown to improve visibility.
+
+- **Backend and Frontend Adjustments**
+  - `includes/block-ip.php`: Enhanced to write to and manage jail-specific blocklist files.
+  - `includes/get-blocklist.php`: Aggregates entries from all `.blocklist.json` files and returns a combined JSON to the frontend.
+  - `includes/actions/action_ban-ip.php`: Passes the jail name along with the IP for correct blocklist assignment.
+  - `assets/js/blocklist-overlay.js` (renamed from blocklist.js): Updated to handle multi-jail filtering and render aggregated blocklist data with filtering controls.
+  - HTML updated with a multi-select `<select>` element for jail filtering in the overlay.
+
+- **Benefits**
+  - Improved scalability and organization of blocklist data.
+  - Better user experience through intuitive filtering and visibility.
+  - Clear separation of blocklists per Fail2Ban jail without complicating the user workflow.
+
+- **Jail-Aware Unban System**
+  - The unban process has been fully adapted to support per-jail blocklists (e.g. `sshd.blocklist.json`, `dovecot.blocklist.json`) instead of the previous global `blocklist.json`.
+  - The function `unblockIp()` in `includes/unblock-ip.php` now accepts a second parameter `$jail` and determines the correct blocklist file based on the jail name.
+    → The jail name is normalized to lowercase and used to locate the appropriate `*.blocklist.json` file.
+  - Improved validation and error handling:
+    - Returns a specific message if the jail-specific blocklist file is missing.
+    - Detects if an IP was already inactive.
+    - Ensures only the correct jail's blocklist is modified.
+  - Updated `includes/actions/action_unban-ip.php` to:
+    - Accept both `ip` and `jail` via POST.
+    - Pass the jail parameter to `unblockIp()`.
+    - Return meaningful JSON responses for success or failure.
+  - Ensures compatibility with multi-jail environments and prepares for full UI integration of jail-specific unban operations.
+
+- **firewall-update.sh Multi-Jail Support and Cleanup**
+  - The firewall update script now processes all `*.blocklist.json` files inside the archive directory (e.g. `/opt/Fail2Ban-Report/archive/`), supporting per-jail blocklists.
+  - IPs marked as `"active": false` are automatically removed from UFW firewall rules and then deleted from their respective JSON files to keep blocklists clean and manageable.
+  - New IPs with `"active": true` are added to UFW if not already blocked.
+  - The script ensures proper file ownership (`www-data`) and permissions (`644`) after each update.
+  - Optional logging feature with timestamps can be enabled or disabled (default off).
+  - Robust error handling for missing dependencies (`jq` or `ufw`) with clean exits and log messages.
+  - Fully backward compatible with existing `.blocklist.json` files, requiring only configuration of the archive directory path.
+
+- **Blocklist Stats Overview**
+  - A new stats section was added to display a real-time overview of active and pending entries across all jail-specific blocklists (e.g. `sshd.blocklist.json`, `apache-auth.blocklist.json`).
+  - Introduced backend script `includes/blocklist-stats.php`:
+    - Scans all `*.blocklist.json` files in the `archive/` directory.
+    - Extracts the jail name from the filename and counts `active = true` and `active = false` entries.
+    - Returns a JSON structure like:
+      ```json
+      {
+        "sshd": { "active": 12, "pending": 3 },
+        "apache-auth": { "active": 5, "pending": 2 }
+      }
+      ```
+  - Frontend integration:
+    - Added a new stats block in the header next to existing Fail2Ban stats, showing per-jail active and pending counts.
+    - Implemented JavaScript (`assets/js/blocklist-stats.js`) to fetch and render stats dynamically.
+    - Blocklist Stats refresh automatically every 10 seconds.
+
+
+- Extended Fail2Ban Statistics:
+  - Backend (`includes/fail2ban-logstats.php`):
+    - Enhanced JSON output to include aggregated event counts for yesterday, last 7 days, and last 30 days.
+    - Aggregation performed by merging daily JSON event files based on file order (newest first), without relying on date functions.
+    - Added structured JSON response with keys: `aggregated.yesterday`, `aggregated.last_7_days`, and `aggregated.last_30_days`.
+  - Frontend (`assets/js/fail2ban-logstats.js`):
+    - Updated JavaScript to fetch and display aggregated stats alongside today's stats.
+    - Added dynamic population of new DOM elements showing event counts, bans, unbans, and unique IPs for the aggregated timeframes.
+    - Gracefully handles errors and missing data for aggregated stats.
+
+
+---
+
 ### [0.3.1] – 2025-08-05
 - Fixed: Relative path error in `action_unban-ip.php` when accessing `blocklist.json`.  
   → Hotfixed @ 13:10 CEST directly in main.
@@ -9,6 +91,8 @@
 > Shell scripts (.sh) currently still read and write the .json files directly since these files are still inside the web directory — but this will change soon.
 For version 0.3.1, I focus on a clear frontend/backend separation by proxying all JSON access through PHP.
 Moving the archive/ directory out of the web root to increase security is planned for the next major step in version 0.4.1.
+
+---
 
 ## Changes made for V 0.3.1
 
