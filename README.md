@@ -75,8 +75,7 @@ Fail2Ban-Report parses your fail2ban.log and generates JSON-based reports viewab
 - 🧾 Each jail now displays its own **blocklist section** with:
   - 🔒 Active bans
   - ⏳ Pending entries
-- 🔄 Auto-refresh every **60 seconds**.
-- 🧮 Layout adapts to **varying jail name lengths**.
+- 🔄 Auto-refresh every **60 seconds**. for Jail-Stats
 
 ---
 
