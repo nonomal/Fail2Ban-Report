@@ -153,6 +153,7 @@ This is especially useful if you want to manually patch or update individual fil
 - ✅ **File date filtering** fix to include today's JSON logs and ensure latest files are listed correctly.
 - ✅ **Blocklist Path on unblocking** fixed a possible bug that could lead to not finding the blocklist.json when unblocking from the Blocklist view.  
   → Hotfixed on 05.08.2025 at 13:10 (UTC+2) directly in latest
+=======
 
 ---
 
