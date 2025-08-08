@@ -13,7 +13,7 @@ It does **not yet** directly modify Fail2Ban jails or existing fail2ban configur
 
 > **Future Direction:**  
 The goal is to support **direct management of Fail2Ban jails** in upcoming versions — including user-controlled bans and unbans per jail.  
-To ensure full control and auditability, all manual ban actions are already tracked in a structured `blocklist.json`, which will later serve as the trusted source for persistent and reviewable ban state.
+To ensure full control and auditability, all manual ban actions are already tracked in a structured `*.blocklist.json`, which will later serve as the trusted source for persistent and reviewable ban state.
  
 Please read the [Installation Instructions](Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
 > still a little experimental feature : Use the Installer ![Installer Setup Documentation](installer-setup.md) It would be great if you tell me if the installer worked for your needs.
@@ -21,18 +21,34 @@ Please read the [Installation Instructions](Setup-Instructions.md) carefully and
 ---
 
 ## 📚 What It Does
-Fail2Ban-Report parses your fail2ban.log and generates JSON-based reports viewable via a web dashboard. It provides optional tools to:
+Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports viewable via a responsive web dashboard.  
+It provides optional tools to:  
 
-- Visualize ban and unban events
-- Interact with IPs (e.g., manually block or unblock)
-- Maintain a persistent blocklist.json
-- Sync that list with your system firewall using ufw (support for other firewalls or direct communication with Fail2Ban jails is not yet implemented)
+- 📊 Visualize **ban** and **unban** events, including per-jail statistics  
+- ⚡ Interact with IPs (e.g., manually block, unblock, or report to external services)  
+- 📂 Maintain **jail-specific** persistent blocklists (JSON) with `active` and `pending` status  
+- 🔄 Sync those lists with your system firewall using **ufw**  
+- 🚨 Show **warning indicators** when ban rates exceed configurable thresholds  
 
-## 🧱 Architecture overview:
+> **Note:** Direct integration with other firewalls or native Fail2Ban jail commands is not yet implemented.
 
-- Backend Shell Scripts: Parse logs, generate JSON files, and update UFW rules based on blocklist.json
-- Frontend Web Interface: Visualizes data and offers action controls
-- JSON Blocklist: Stores manually blocked IPs marked with active=true
+---
+
+## 🧱 Architecture Overview
+- **Backend Shell Scripts**:  
+  - Parse logs and generate daily JSON event files  
+  - Maintain and update `blocklist.json`  
+  - Apply or remove firewall rules based on blocklist entries (`ufw`)  
+
+- **Frontend Web Interface**:  
+  - Displays event timelines, statistics, and per-jail blocklists  
+  - Allows **multi-selection** for bulk ban/report actions  
+  - Shows **pending status** for unprocessed manual actions  
+  - Displays real-time warning indicators  
+
+- **JSON Blocklists**:  
+  - Stored per jail  
+  - Contain IP entries with metadata (`active`, `pending`, timestamps, jail name)  
 
 ---
 
