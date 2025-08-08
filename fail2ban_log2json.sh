@@ -2,7 +2,7 @@
 
 # === Configuration ===
 LOGFILE="/var/log/fail2ban.log"              # Path to Fail2Ban log file (adjust if needed)
-OUTPUT_JSON_DIR="/var/www/vhosts/suble.org/xbkupx/Fail2Ban-Report/archive"  # Target folder for JSON files (adjust if needed)
+OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"  # Target folder for JSON files (adjust if needed)
 
 # === Preparation ===
 TODAY=$(date +"%Y-%m-%d")                     # current date in format "YYYY-MM-DD"
