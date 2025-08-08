@@ -58,24 +58,24 @@ Fail2Ban-Report parses your fail2ban.log and generates JSON-based reports viewab
 
 ---
 
-## 🆕 What's New in V 0.3.2
+## 🆕 What's New in V 0.3.3 (QoL Update)
+### ⚠️ Warning System and Pending Status Indicators
+- 🚨 New [Warnings] section in config.ini to configure warning & critical thresholds (events per minute per jail).
+- 👀 Real-time warning & critical status indicators (colored dots) in the header for quick overview.
+- ⏳ Manual block/unblock actions now mark IPs as pending until processed by firewall-update.
+- 📊 Pending entries are now visible in blocklist stats for better tracking.
 
-### 🧱 New Blocklist Logic
-- 🔁 Blocking an IP address now stores it in a **jail-specific blocklist** (`blocklist["jailname"][]`) instead of one global list.
-- 🔍 Improves clarity and allows easier tracking of blocked IPs **per jail** as it is a step for better fail2ban integration.
+### ✔️ Multi-Selection UI and Bulk Actions for Ban & Report
+- ✅ Switched from per-row action buttons to checkbox multi-selection for IPs.
+- 📋 New dedicated “Ban” and “Report” buttons for bulk processing.
+- 🔄 Frontend updated to handle and display results for multiple IP actions simultaneously.
+- 🔔 New notification system for success/info/error messages on each action.
 
-### 📊 New Statistics
-- 📅 The Fail2Ban stats panel now includes:
-  - ✅ **Today’s** bans & unbans (as before)
-  - 🕓 **Yesterday**
-  - 📈 **Last 7 Days**
-  - 📊 **Last 30 Days**
-
-### 🧩 Per-Jail Blocklist Display
-- 🧾 Each jail now displays its own **blocklist section** with:
-  - 🔒 Active bans
-  - ⏳ Pending entries
-- 🔄 Auto-refresh every **60 seconds**. for Jail-Stats
+### 🛠 Backend Improvements & New IP Reporting
+- 🔄 Backend APIs now accept arrays of IPs for ban and report actions, with detailed aggregated feedback.
+- 🆕 Added IPInfo API integration alongside AbuseIPDB for richer geolocation and network info.
+- ⏲️ Built-in delay between report requests to avoid API rate limits.
+- ⚙️ Improved error handling and user feedback for multi-IP operations.
 
 ---
 
