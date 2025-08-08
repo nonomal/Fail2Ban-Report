@@ -41,7 +41,7 @@ It provides optional tools to:
 ## 🧱 Architecture Overview
 - **Backend Shell Scripts**:  
   - Parse logs and generate daily JSON event files  
-  - Maintain and update `blocklist.json`  
+  - Maintain and update `*.blocklist.json`  
   - Apply or remove firewall rules based on blocklist entries (`ufw`)  
 
 - **Frontend Web Interface**:  
