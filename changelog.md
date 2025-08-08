@@ -14,9 +14,9 @@
   - `assets/js/blocklist-stats.js`: Updated to display pending entries for both block and unblock actions.
 
 
-# Changelog: Multi-Selection UI and Backend Handling for Ban and Report Actions
+### Changelog: Multi-Selection UI and Backend Handling for Ban and Report Actions
 
-## User Interface & Frontend Logic
+### User Interface & Frontend Logic
 - **`assets/js/jsonreader.js`**  
   - Changed from action buttons per row to checkboxes for multi-selection of IPs.  
   - Updated rendering logic to support checkbox inputs and bulk selection filtering.
@@ -40,7 +40,7 @@
 - **`includes/header.php`**  
   - Included `notifications.js` for notification display support.
 
-## Backend Logic and API
+### Backend Logic and API
 - **`includes/actions/action_ban-ip.php`**  
   - Modified to accept arrays of IPs in POST data.  
   - Calls `blockIp()` for each IP separately, aggregates results.  
