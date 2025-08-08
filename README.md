@@ -8,11 +8,11 @@ A simple and clean web-based dashboard to turn your daily Fail2Ban logs into sea
 🔐 Security Notice
 
 **Current Status:**  
-Fail2Ban-Report currently manages bans and unbans through **UFW**, serving as a safe **intermediate solution**.  
+> Fail2Ban-Report currently manages bans and unbans through **UFW**, serving as a safe **intermediate solution**.  
 It does **not** directly modify Fail2Ban jails or change existing fail2ban configurations.
 
 **Future Direction:**  
-A potential long-term enhancement could include **direct interaction with Fail2Ban jails** — for example, user-controlled bans and unbans per jail.  
+> A potential long-term enhancement could include **direct interaction with Fail2Ban jails** — for example, user-controlled bans and unbans per jail.  
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
  
 Please read the [Installation Instructions](Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
