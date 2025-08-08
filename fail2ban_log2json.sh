@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # === Configuration ===
-LOGFILE="/var/log/fail2ban.log"  # This is the Fail2Ban log file - change if your Fail2Ban log is elsewhere
-OUTPUT_JSON_DIR="/var/www/Fail2Ban/archive"  # Folder on your webserver - adjust as needed
+LOGFILE="/var/log/fail2ban.log"              # Path to Fail2Ban log file (adjust if needed)
+OUTPUT_JSON_DIR="/var/www/vhosts/suble.org/xbkupx/Fail2Ban-Report/archive"  # Target folder for JSON files (adjust if needed)
 
 # === Preparation ===
-TODAY=$(date +"%Y-%m-%d")                     # Current date in the format "YYYY-MM-DD"
+TODAY=$(date +"%Y-%m-%d")                     # current date in format "YYYY-MM-DD"
 OUTPUT_JSON_FILE="$OUTPUT_JSON_DIR/fail2ban-events-$(date +"%Y%m%d").json"
 
 mkdir -p "$OUTPUT_JSON_DIR"
@@ -17,7 +17,7 @@ grep -E "Ban |Unban " "$LOGFILE" | awk -v today="$TODAY" '
 {
     timestamp = $1 " " $2;
 
-    # Only process entries from today
+    # Process only entries from today
     if (index(timestamp, today) != 1) {
         next;
     }
@@ -47,12 +47,12 @@ grep -E "Ban |Unban " "$LOGFILE" | awk -v today="$TODAY" '
 }
 ' >> "$OUTPUT_JSON_FILE"
 
-# Remove the trailing comma, if present
+# Remove last comma if present
 if [ -s "$OUTPUT_JSON_FILE" ]; then
     sed -i '$ s/},/}/' "$OUTPUT_JSON_FILE"
 fi
 
 echo "]" >> "$OUTPUT_JSON_FILE"
 
-# === Final message ===
+# === Completion message ===
 echo "✅ JSON created: $OUTPUT_JSON_FILE"
