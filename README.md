@@ -157,7 +157,8 @@ This is especially useful if you want to manually patch or update individual fil
 
 ### 🔥 Active Defense
 - ✅ Manual IP blocking via UI in UFW 
-- ✅ IP reputation lookup via AbuseIPDB
+- ✅ IP reputation lookup via AbuseIPDB (optional)
+- ✅ IP GeoLoc and Provider Data with IP-Info (optional)
 - ✅ Bulk blocking of multiple IPs
 - ✅ Shows warnings/critical states threshold for Bans/Minute/Jail (setable in config)
 - 🧩 Support for nftables, firewalld
