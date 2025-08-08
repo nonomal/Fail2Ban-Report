@@ -13,6 +13,7 @@
     const statsFile = 'fail2ban-events-<?php echo date("Ymd"); ?>.json';
   </script>
   <script src="assets/js/jsonreader.js" defer></script>
+  <script src="assets/js/notifications.js"></script>
   <script src="assets/js/action-collector.js" defer></script>
   <script src="assets/js/action.js" defer></script>
   <script src="assets/js/blocklist-overlay.js" defer></script>
@@ -65,4 +66,5 @@
     <!-- JS render Jails here -->
   </div>
   </div>
+
 </div>
