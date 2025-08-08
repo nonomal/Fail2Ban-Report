@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-// Config-Datei einlesen
+// read config
 $configPath = '/opt/Fail2Ban-Report/fail2ban-report.config';
 if (!file_exists($configPath)) {
     echo json_encode(['status' => 'disabled', 'reason' => 'No config found']);
@@ -10,17 +10,17 @@ if (!file_exists($configPath)) {
 
 $config = parse_ini_file($configPath, true);
 
-// Warnings nur aktiv, wenn in der Config enabled auf true steht (bool valider Check)
+// Warnings only active if enabled in the config is set to true (valid boolean check)
 if (empty($config['Warnings']['enabled']) || !filter_var($config['Warnings']['enabled'], FILTER_VALIDATE_BOOLEAN)) {
     echo json_encode(['status' => 'disabled', 'reason' => 'Warnings not enabled']);
     exit;
 }
 
-// Schwellenwerte auslesen, Fallback 20:50 falls nicht gesetzt
+// Read threshold values, fallback to 20:50 if not set
 $thresholdRaw = $config['Warnings']['threshold'] ?? '20:50';
 [$warnThreshold, $criticalThreshold] = array_map('intval', explode(':', $thresholdRaw));
 
-// Archive-Verzeichnis und neueste Log-Datei finden
+// Locate archive directory and latest log file
 $archiveDir = dirname(__DIR__) . '/archive/';
 $files = array_filter(scandir($archiveDir), fn($f) => preg_match('/^fail2ban-events-\d{8}\.json$/', $f));
 rsort($files); // neueste zuerst
@@ -31,14 +31,14 @@ if (!$todayFile || !file_exists($archiveDir . $todayFile)) {
     exit;
 }
 
-// JSON-Einträge laden
+// load JSON entrys
 $entries = json_decode(file_get_contents($archiveDir . $todayFile), true);
 if (!is_array($entries)) {
     echo json_encode(['status' => 'error', 'reason' => 'Invalid JSON log']);
     exit;
 }
 
-// Events gruppieren nach Jail und Minute (Minute als 'Y-m-d H:i')
+// Group events by jail and minute (minute as 'Y-m-d H:i')
 $jailMinuteEvents = [];
 
 foreach ($entries as $entry) {
@@ -52,7 +52,7 @@ foreach ($entries as $entry) {
     $jailMinuteEvents[$jail][$minute][] = $ip;
 }
 
-// Analyse: Zähle Events und einzigartige IPs pro Jail/Minute, klassifiziere als Warn oder Crit
+// Analysis: Count events and unique IPs per jail/minute, classify as warning or critical
 $warnings = [];
 $criticals = [];
 
@@ -69,7 +69,7 @@ foreach ($jailMinuteEvents as $jail => $minutes) {
             $criticals[$jail]['events'] += $eventCount;
             $criticals[$jail]['unique_ips'] += $uniqueIPCount;
         } elseif ($eventCount >= $warnThreshold) {
-            // Warning (nur, wenn nicht schon als critical gewertet)
+            // Warning (only if not already classified as critical)
             if (!isset($warnings[$jail])) {
                 $warnings[$jail] = ['events' => 0, 'unique_ips' => 0];
             }
@@ -79,7 +79,7 @@ foreach ($jailMinuteEvents as $jail => $minutes) {
     }
 }
 
-// Antwort zusammensetzen
+// craft json answer
 $response = [
     'status' => 'ok',
     'warning' => [
