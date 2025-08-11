@@ -85,6 +85,8 @@ Json Files should not loose Data anymore when several write processes trying to 
 - `block-ip.php`: Added FLOCK to lock json when writing
 - `unblock-ip.php`: Added FLOCK to lock json when writing
 
+just copy those 3 Files to apply the hotfix.
+
 
 ## 🆕 What's New in V 0.3.3 (QoL Update)
 ### ⚠️ Warning System and Pending Status Indicators
