@@ -1,5 +1,15 @@
 # changelog
 
+## Changes made for V 0.4.0
+
+Json Files should not loose Data anymore when several write processes trying to change the file
+
+- `firewall-update.sh`: Added FLOCK to lock json when writing
+- `block-ip.php`: Added FLOCK to lock json when writing
+- `unblock-ip.php`: Added FLOCK to lock json when writing
+
+
+
 ## Changes made for V 0.3.3 (QoL Update)
 
 - **Warning System and Pending Status Indicators**
