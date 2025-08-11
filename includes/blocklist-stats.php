@@ -1,6 +1,7 @@
 <?php
 // Set correct path to your blocklist directory
 $blocklistDir = dirname(__DIR__) . '/archive/';
+
 $stats = [];
 
 foreach (glob($blocklistDir . '*.blocklist.json') as $filepath) {
@@ -22,11 +23,22 @@ foreach (glob($blocklistDir . '*.blocklist.json') as $filepath) {
     $pending = 0;
 
     foreach ($entries as $entry) {
-        if (!isset($entry['active'])) continue;
-        if ($entry['active'] === true) {
-            $active++;
-        } else {
+        // Count pending entries (pending === true)
+        if (isset($entry['pending']) && $entry['pending'] === true) {
             $pending++;
+        }
+
+        // Count active entries with new rule:
+        // 1) active === true and pending missing or false
+        // 2) active === false and pending === true
+        if (
+            (isset($entry['active']) && $entry['active'] === true &&
+             (!isset($entry['pending']) || $entry['pending'] === false))
+            ||
+            (isset($entry['active']) && $entry['active'] === false &&
+             isset($entry['pending']) && $entry['pending'] === true)
+        ) {
+            $active++;
         }
     }
 
