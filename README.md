@@ -78,7 +78,7 @@ It provides optional tools to:
 
 ---
 
-## 🆕 Hot Fix V 0.3.4
+## 🆕 Fix V 0.3.4
 Json Files should not loose Data anymore when several write processes trying to write the json file at the same time.
 
 - `firewall-update.sh`: Added FLOCK to lock json when writing
