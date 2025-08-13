@@ -40,6 +40,38 @@ small changes where made in the following files:
 - `index.php` **Sort** per IP
 - `style.css` several small changes
 
+# 🟡🔴 Warnings Feature - Changelog
+
+### New Features
+- **IP Event Marker System**:  
+  - Highlights IPs appearing multiple times with the same event (`Ban`/`Unban`) in the current view.
+  - Highlights IPs present in multiple jails in the current view.
+  - Visual markers:
+    - 🟡 Yellow → Multiple same events
+    - 🔴 Red → Appears in multiple jails
+    - ⚪ Grey → No marker
+- **Sortable & Filterable 'Mark' Column**:  
+  - Added a new column `Mark` in the main result table.
+  - Column is fully sortable like other columns.
+  - Marker filter dropdown added to filter by marker type:
+    - All
+    - Yellow
+    - Red
+    - Yellow + Red
+    - None
+- **Dynamic Filtering**:
+  - Markers update in real-time when filters (`Action`, `Jail`, `IP`, `Date`) are changed.
+  - Table automatically updates to reflect filtered marker status.
+
+#### UI Enhancements
+- Marker column added between `Action` and `IP` for better visibility.
+- Marker filter dropdown integrated into existing filters, maintaining logical order.
+- Supports responsive layout using flexbox, keeping filters and buttons aligned.
+
+#### Implementation Notes
+- Marker calculation is based on the currently displayed dataset, not the full JSON.
+- No changes to backend JSON structure are required; marker is computed client-side.
+- Fully compatible with existing sort and filter system.
 
 
 
