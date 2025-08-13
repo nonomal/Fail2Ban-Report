@@ -22,16 +22,18 @@
   <button class="button-reset" id="banSelectedBtn">Ban</button>
   <button class="button-reset" id="reportSelectedBtn">Info</button>
 
-  <button id="openBlocklistBtn">Edit Blocklist</button>
+  <button id="openBlocklistBtn">Blocklist</button>
 
   <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+  <div class="jaillistdiv"><div class="headhead jaillist"> Todays Blocks per Jail: </div> <div id="fail2ban-bans-per-jail" class="jaillist">loading list ...</div></div>
 
   <table id="resultTable">
      <thead>
        <tr>
          <th data-sort="timestamp" data-label="Date">Date</th>
          <th data-sort="action" data-label="Action">Action</th>
-         <th>IP</th>
+         <th data-sort="ip" data-label="IP">IP</th>
          <th data-sort="jail" data-label="Jail">Jail</th>
          <th></th>
        </tr>
