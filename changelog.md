@@ -2,7 +2,7 @@
 
 ## Changes made for V 0.4.0
 
-### Changelog – Optimized `firewall-update.sh` for faster processing, improving performance with large JSON files.
+### Optimized `firewall-update.sh` for faster processing, improving performance with large JSON files.
 
 #### Changed
 - **Batch blocking of IPs**
