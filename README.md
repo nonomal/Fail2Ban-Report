@@ -95,7 +95,7 @@ It provides optional tools to:
   - `index.php` (IP sorting)
   - `style.css`
 
-### 🟡🔴 Warnings Feature
+### 🟡🔴 Marker Feature
 - **IP Event Markers**: Highlights repeated events (yellow) and IPs in multiple jails (red).
 - **Sortable & Filterable Mark Column**: New column `Mark` with dropdown filter.
 - **Dynamic Filtering**: Markers update live with Action, Jail, IP, or Date filters.
