@@ -40,9 +40,9 @@ small changes where made in the following files:
 - `index.php` **Sort** per IP
 - `style.css` several small changes
 
-# 🟡🔴 Warnings Feature - Changelog
+### 🟡🔴 Warnings Feature - Changelog
 
-### New Features
+#### New Features
 - **IP Event Marker System**:  
   - Highlights IPs appearing multiple times with the same event (`Ban`/`Unban`) in the current view.
   - Highlights IPs present in multiple jails in the current view.
