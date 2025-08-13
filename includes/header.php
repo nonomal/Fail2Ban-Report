@@ -20,7 +20,7 @@
   <script src="assets/js/fail2ban-logstats.js" defer></script>
   <script src="assets/js/blocklist-stats.js"></script>
   <script src="assets/js/warnings.js"></script>
-
+  <script src="assets/js/table-export.js"></script>
 
 </head>
 <body>
@@ -70,4 +70,10 @@
     <!-- JS render Jails here -->
   </div>
   </div>
+
+<!--
+  <div id="headerversion">
+    <div><span title="Beta 3.1">Version : 0.3.2</span></div>
+  </div>
+-->
 </div>
