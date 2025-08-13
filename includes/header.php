@@ -71,9 +71,4 @@
   </div>
   </div>
 
-<!--
-  <div id="headerversion">
-    <div><span title="Beta 3.1">Version : 0.3.2</span></div>
-  </div>
--->
 </div>
