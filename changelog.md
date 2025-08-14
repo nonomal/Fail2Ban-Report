@@ -100,6 +100,8 @@ small changes where made in the following files:
 - assets/js/jsonreader.js
 - assets/js/table-export.js
 
+
+
 ---
 
 ## Changes made for V 0.3.4 (Fix)
