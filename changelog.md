@@ -85,6 +85,21 @@ small changes where made in the following files:
   - Shows a success or error alert based on the clipboard operation result.
 
 
+### List of changed files
+
+- firewall-update.sh
+- index.php
+- includes/unblock-ip.php
+- includes/blocklist-stats.php
+- includes/fail2ban-logstats.php
+- includes/header.php
+- includes/unblock-ip.php
+- includes/warnings.php
+- assets/css/style.css
+- assets/js/fail2ban-logstats.js
+- assets/js/jsonreader.js
+- assets/js/table-export.js
+
 ---
 
 ## Changes made for V 0.3.4 (Fix)
