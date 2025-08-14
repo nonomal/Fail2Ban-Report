@@ -125,8 +125,8 @@ It provides optional tools to:
 If you're upgrading from an existing installation : from 0.3.3 and later
 
 1. 📦 Replace all files with the new version (overwrite).
-2. 🛠️ Control needed Paths
-
+2. 📦 make sure new shellscripts are executable
+3. 🛠️ Control needed Paths
 
 If you're upgrading from an existing installation : pre 0.3.2 and also from 0.3.2
 
