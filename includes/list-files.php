@@ -3,6 +3,8 @@
 // Path to the config file
 $configPath = '/opt/Fail2Ban-Report/fail2ban-report.config';
 
+require_once __DIR__ . "/paths.php";
+
 // Read config file and parse the [Fail2Ban-Daily-List-Settings] section
 $config = [];
 if (file_exists($configPath)) {
@@ -15,7 +17,8 @@ if (isset($config['Fail2Ban-Daily-List-Settings']['max_display_days'])) {
     $maxDays = (int)$config['Fail2Ban-Daily-List-Settings']['max_display_days'];
 }
 
-$jsonDir = dirname(__DIR__) . '/archive/';
+$jsonDir = $PATHS["fail2ban"];
+//$jsonDir = dirname(__DIR__) . '/archive/swsrv/fail2ban/';
 
 // Collect all matching JSON files with their dates extracted from filenames
 $matchedFiles = [];
