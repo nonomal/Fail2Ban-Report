@@ -3,18 +3,10 @@
 
 > A simple and clean web-based dashboard to turn your daily Fail2Ban logs into searchable and filterable JSON reports — with optional IP blocklist management for UFW.
 
-## This version brings Multiserver usage
-> Web UI and Backend are completley seperated
-> - You can run the Web-UI on nearly every system - as long as it brings a webserver and php with it from Raspberry Pi to Windows IIS - internal / external - as you like it - it fits your needs.
-> - Backend uses rsync now to syncronize json data from and to hosts (while trying to stay lightweight and without dependencies, rsync is available on nearly every linux system and also available for windows (with a little fiddeling)
-> - Helper-Script for conveniant restructureing of archive/ and your json files is provided
-> - 
-
-
-
 **Integration**
 >Designed for easy integration on a wide range of Linux systems — from small Raspberry Pis to modest business setups — though it’s not (yet) targeted at large-scale enterprise environments.
 Flexibility comes from the two backend shell scripts, which you can adapt to your specific environment or log sources to provide the JSON data the web interface needs (daily JSON event files).
+
 
 🛡️ **Note**: This tool is a visualization and management layer — it does **not** replace proper intrusion detection or access control. Deploy it behind IP restrictions or HTTP authentication.
 
@@ -89,40 +81,9 @@ It provides optional tools to:
 ---
 
 
-## 🆕 What's New in V 0.4.0
+## 🆕 What's New in V 0.5.0
 
-### 🧱 Firewall & JSON
-- Optimized `firewall-update.sh` for faster batch processing of IPs.
-- Batch blocking per jail with a single `ufw reload`.
-- Safe unblocking with rule renumbering and reload after each deletion.
-- JSON updates and cleanup done once per jail, not per IP.
-- Core mechanisms, logging, and permissions unchanged.
-> This significantly reduces both the runtime and the lock duration of the blocklists, especially during ban events.
-
-### 🖥️ UI & Statistics
-- Minor visual improvements in:
-  - `header.php`, `fail2ban-logstats.php`, `fail2ban-logstats.js`
-  - `index.php` (IP sorting)
-  - `style.css`
-
-### 🟡🔴 Marker Feature
-- **IP Event Markers**: Highlights repeated events per IP (yellow) and IPs in multiple jails (red).
-- **Sortable & Filterable Mark Column**: New column `Mark` with dropdown filter.
-- **Dynamic Filtering**: Markers update live with Action, Jail, IP, or Date filters.
-- Marker column placed between Action and IP, responsive layout preserved.
-
-### ✨ New Feature: Copy Filtered Data to Clipboard
-
-- **Added** a new "Copy to Clipboard" button to export the currently **filtered table data**.
-- **Implemented** a dedicated JavaScript file `assets/js/table-export.js` for the copy functionality.
-- **Integration** with existing DataTables filtering logic to ensure only visible/filtered rows are copied.
-- **Output Format**: Tab-separated values (TSV) with all HTML tags removed for clean text export.
-- **User Feedback**: 
-  - Shows a warning if there’s no data to copy.
-  - Shows a success or error alert based on the clipboard operation result.
-
-> This Feature will only work with enabled https for security reasons
-
+✅ There is one new Dropdown List
 
 ---
 
