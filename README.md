@@ -1,9 +1,15 @@
 # Fail2Ban-Report
-> Beta 4.0 | Version 0.4.0
+> Beta 5.0 | Version 0.5.0
 
 > A simple and clean web-based dashboard to turn your daily Fail2Ban logs into searchable and filterable JSON reports — with optional IP blocklist management for UFW.
 
-> This version brings more stability and performance, as well as improved visibility into Fail2Ban events.
+## This version brings Multiserver usage
+> Web UI and Backend are completley seperated
+> You can run the Web-UI on nearly every system - as long as it brings a webserver and php with it from Raspberry Pi to Windows IIS - internal / external - as you like it - it fits your needs.
+> Backend uses rsync now to syncronize json data from and to hosts (while trying to stay lightweight and without dependencies, tsync is on nearly every linux system and also available for windows (with a little fiddeling)
+> 
+
+
 
 **Integration**
 >Designed for easy integration on a wide range of Linux systems — from small Raspberry Pis to modest business setups — though it’s not (yet) targeted at large-scale enterprise environments.
