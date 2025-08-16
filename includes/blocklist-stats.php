@@ -1,6 +1,9 @@
 <?php
 // Set correct path to your blocklist directory
-$blocklistDir = dirname(__DIR__) . '/archive/';
+
+require_once __DIR__ . "/paths.php";
+
+$blocklistDir = $PATHS["blocklists"];
 
 $stats = [];
 
