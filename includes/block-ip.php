@@ -9,6 +9,9 @@
  * @param string $source           Who triggered the block (e.g. 'manual', 'report', etc.)
  * @return array                   Result array or array of results with 'success', 'message' and 'type'.
  */
+
+require_once __DIR__ . "/paths.php";
+
 function blockIp($ips, $jail = 'unknown', $source = 'manual') {
     $results = [];
 
@@ -36,8 +39,8 @@ function blockIp($ips, $jail = 'unknown', $source = 'manual') {
             $safeJail = 'unknown';
         }
 
-        $jsonFile = dirname(__DIR__, 1) . "/archive/{$safeJail}.blocklist.json";
-        $lockFile = "/tmp/{$safeJail}.blocklist.lock"; // same lock file name as shell script
+        $jsonFile = $GLOBALS["PATHS"]["blocklists"] . $safeJail . ".blocklist.json";
+        $lockFile = "/tmp/{$safeJail}.blocklist.lock";
 
         // Open lock file
         $lockHandle = fopen($lockFile, 'c');
@@ -45,19 +48,18 @@ function blockIp($ips, $jail = 'unknown', $source = 'manual') {
             $results[] = [
                 'ip' => $ip,
                 'success' => false,
-                'message' => "Unable to open lock file for {$safeJail}.",
+                'message' => "[LOCK] Unable to open lock file for {$safeJail}.",
                 'type' => 'error'
             ];
             continue;
         }
 
-        // Acquire exclusive lock
         if (!flock($lockHandle, LOCK_EX)) {
             fclose($lockHandle);
             $results[] = [
                 'ip' => $ip,
                 'success' => false,
-                'message' => "Could not acquire lock for {$safeJail}.",
+                'message' => "[LOCK] Could not acquire lock for {$safeJail}.",
                 'type' => 'error'
             ];
             continue;
@@ -87,7 +89,7 @@ function blockIp($ips, $jail = 'unknown', $source = 'manual') {
                         $results[] = [
                             'ip' => $ip,
                             'success' => false,
-                            'message' => "Failed to write to {$safeJail}.blocklist.json.",
+                            'message' => "[WRITE] Failed to write to {$safeJail}.blocklist.json.",
                             'type' => 'error'
                         ];
                         continue 2;
@@ -138,7 +140,7 @@ function blockIp($ips, $jail = 'unknown', $source = 'manual') {
                 $results[] = [
                     'ip' => $ip,
                     'success' => false,
-                    'message' => "Failed to write to {$safeJail}.blocklist.json.",
+                    'message' => "[WRITE] Failed to write to {$safeJail}.blocklist.json.",
                     'type' => 'error'
                 ];
                 continue;
