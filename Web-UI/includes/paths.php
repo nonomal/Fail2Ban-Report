@@ -21,8 +21,13 @@ $SERVERS = [
     "tests"  => "Testing"
 ];
 
-// Default Server => Will have to be set in config to work for others
-$DEFAULT_SERVER = "swsrv";
+// Config einlesen
+$configFile = '/opt/Fail2Ban-Report/Settings/fail2ban-report.config';
+$config = parse_ini_file($configFile, true);
+
+// Standardserver aus Config laden, fallback auf "swsrv"
+$DEFAULT_SERVER = $config['Default Server']['defaultserver'] ?? 'swsrv';
+
 
 // If choosen item -> dont forget
 if (isset($_POST['server']) && array_key_exists($_POST['server'], $SERVERS)) {
