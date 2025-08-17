@@ -50,7 +50,6 @@ if (!isset($_SESSION['user_role'])) {
 <div>
 <?php
 if (isset($_SESSION['username'])) {
-    //echo "Angemeldeter Benutzer: " . $_SESSION['username'];
     echo "<h2>╩★╩".$_SESSION['username']."★on★".$activeServer."╩★╩</h2>";
 } else {
     //echo "Viewer";
