@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <?php require_once __DIR__ . '/auth.php'; ?>
+
   <meta charset="UTF-8" />
   <title>Fail2Ban Report</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="icon" href="assets/images/favicon1.png" type="image/png">
+  <link rel="icon" href="assets/css/favicon-32x32.png" type="image/png">
   <script>
     const availableFiles = <?php echo $filesJson; ?>;
   </script>
@@ -23,13 +26,61 @@
   <script src="assets/js/table-export.js"></script>
   <script src="assets/js/ufw-report.js"></script>
 
+<!-- Auth -->
+<?php
+if (!isset($_SESSION['user_role'])) {
+    die("Session not active. Please login.");
+}
+?>
+<!-- Auth -->
+
+
 </head>
 <body>
 
+<div class="inline-headlines">
+
+  <div>
+    <h1>Fail2Ban-Report</h1>
+    <h2>Let's catch the bad guys!</h2>
+  <div>
+    <span title="Beta 5.0"><small>Version : 0.5.0</small></span></div>
+  </div>
+
+<div>
+<?php
+if (isset($_SESSION['username'])) {
+    //echo "Angemeldeter Benutzer: " . $_SESSION['username'];
+    echo "<h2>╩★╩".$_SESSION['username']."★on★".$activeServer."╩★╩</h2>";
+} else {
+    //echo "Viewer";
+    echo "<h2>╩★╩Viewer★on★".$activeServer."╩★╩</h2>";
+}
+?>
+</div>
 
 
+<!-- Log in/out -->
+<div>
+<form method="post" action="">
+  <small>
+  <label for="login_user">User:</label>
+  <input type="text" name="login_user" id="login_user" required>
+  <label for="login_pass">Password:</label>
+  <input type="password" name="login_pass" id="login_pass" required>
+  </small>
+  <button class="button-reset" type="submit">Login</button>
+</form>
+</div>
+<div>
+<form method="post" action="">
+  <button class="button-reset" type="submit" name="logout" value="1">Logout</button>
+</form>
+</div>
+<!-- Log in/out
 
-<!-- ################################## -->
+
+<!-- Serverselect -->
 
 <form method="post" style="margin-bottom: 1em;">
     <label for="server">Server: </label>
@@ -43,17 +94,12 @@
     </select>
 </form>
 
-<!-- ################################## -->
+<!-- Serverselect -->
+</div>
 
-
-
+<!- Second row here -->
 
 <div class="inline-headlines">
-  <div>
-    <h1>Fail2Ban-Report</h1>
-    <h2>Let's catch the bad guys!</h2>
-    <div><span title="Beta 5.0"><small>Version : 0.5.0</small></span></div>
-  </div>
 
 
   <div id="fail2ban-alerts-container">
@@ -73,6 +119,8 @@
     <div id="fail2ban-top3-jails" class="toplist"></div>
   </div>
 
+
+
   <div id="fail2ban-stats">
     <div class="headhead">Fail2Ban Today:</div>
     <div>🚫 Bans: <span id="fail2ban-bans">--</span></div>
@@ -86,6 +134,7 @@
     <div class="headstat">📅 7 Days : <span id="fail2ban-last7">--</span></div>
     <div class="headstat">📆 30 Days: <span id="fail2ban-last30">--</span></div>
   </div>
+
 
   <div id="blocklist-stats">
   <div class="headhead">Fail2Ban-Report Blocklists:</div>
