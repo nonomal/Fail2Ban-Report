@@ -13,6 +13,7 @@ archive/
 └── ufw/ <= future feature
 ```
 
+Standardserver has to be set in config
 
 ### Updated PHP files
 - `block-ip.php` → path updated to `archive/%server%/blocklists/`
