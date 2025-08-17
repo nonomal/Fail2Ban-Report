@@ -139,7 +139,7 @@ This is especially useful if you want to manually patch or update individual fil
 
 ## 🛣️ Roadmap
 > I gave up the usual Roadmap - to have more freedom with development - Things like Multiserver was never on the Roadmap but allways in my mind.
-> Using Fail2Ban-Report since it exists i have got some different views in terms of what do I want and how I think about what this project can become with a little time and polish.
+> Using Fail2Ban-Report since it exists i have got some different views in terms of what Fail2Ban-Report is and how I think about what this project can become with a little time and polish.
 > Suggestions and Ideas still welcome at any time (see Discussions)
 
 ## 👀 Outlook
