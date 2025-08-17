@@ -1,28 +1,39 @@
 <?php
-session_start();
+//session_start();
 
-// Basepath
+// Use existing Session or start a new one
+if (session_status() === PHP_SESSION_NONE) {
+//    die("Session not started. Include auth.php first.");
+//    session_start();
+    require_once __DIR__ . '/auth.php';
+}
+
+// Config Pfad
+$CONFIG_ROOT = "/opt/Fail2Ban-Report/Settings/";
+
+// Basispfad
 $ARCHIVE_ROOT = __DIR__ . "/../archive/";
 
-// List of available Servers (has to be edited by hand for now)
+// Liste verfügbarer Server
 $SERVERS = [
     "swsrv"  => "Webserver",
+    "sasrv"  => "Appserver",
     "tests"  => "Testing"
 ];
 
 // Standardserver
 $DEFAULT_SERVER = "swsrv";
 
-// if selected item in serverdropdown → dont forget it
+// Falls Auswahl im Dropdown getroffen wurde → merken
 if (isset($_POST['server']) && array_key_exists($_POST['server'], $SERVERS)) {
     $_SESSION['active_server'] = $_POST['server'];
 }
 
-// set active Server (Session → Default)
+// Aktiven Server bestimmen (Session → Default)
 $activeServer = $_SESSION['active_server'] ?? $DEFAULT_SERVER;
 
 /**
- * Path for active selected Server
+ * Pfade für den aktuell aktiven Server zurückgeben
  */
 function getPaths($server) {
     global $ARCHIVE_ROOT;
@@ -34,5 +45,6 @@ function getPaths($server) {
     ];
 }
 
-// set Global PATHS-Variable
+// Globale PATHS-Variable setzen
 $PATHS = getPaths($activeServer);
+$PATHS['config'] = $CONFIG_ROOT;
