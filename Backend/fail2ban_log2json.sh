@@ -1,30 +1,38 @@
 #!/bin/bash
 
 # === Configuration ===
-LOGFILE="/var/log/fail2ban.log"              # Path to Fail2Ban log file (adjust if needed)
-OUTPUT_JSON_DIR="/opt/Fail2Ban-Report/archive/YOUR-HOSTNAME/fail2ban"  # Target folder for JSON files (adjust if needed)
+LOGFILE="/var/log/fail2ban.log"
+OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"
 
-# === Preparation ===
-TODAY=$(date +"%Y-%m-%d")                     # current date in format "YYYY-MM-DD"
+TODAY=$(date +"%Y-%m-%d")
 OUTPUT_JSON_FILE="$OUTPUT_JSON_DIR/fail2ban-events-$(date +"%Y%m%d").json"
-
 mkdir -p "$OUTPUT_JSON_DIR"
 
-# === Processing ===
 echo "[" > "$OUTPUT_JSON_FILE"
 
-grep -E "(^|[^A-Za-z])(Ban|Unban) " "$LOGFILE" | awk -v today="$TODAY" '
+# Grep alle relevanten Events
+grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
 {
     timestamp = $1 " " $2;
+    if (index(timestamp, today) != 1) next;
 
-    # Process only entries from today
-    if (index(timestamp, today) != 1) {
-        next;
+    action = "";
+    ip = "";
+    if ($0 ~ /Increase Ban/) {
+        action = "Increase Ban";
+        match($0, /Increase Ban ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, m);
+        if (m[1]) ip = m[1];
+    } else if ($0 ~ /Ban/) {
+        action = "Ban";
+        match($0, /Ban ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, m);
+        if (m[1]) ip = m[1];
+    } else if ($0 ~ /Unban/) {
+        action = "Unban";
+        match($0, /Unban ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, m);
+        if (m[1]) ip = m[1];
     }
 
-    action = $(NF-1);
-    ip = $NF;
-
+    # Extract jail from first non-numeric bracketed section
     text = $0;
     c = 0;
     delete arr;
@@ -43,16 +51,16 @@ grep -E "(^|[^A-Za-z])(Ban|Unban) " "$LOGFILE" | awk -v today="$TODAY" '
         }
     }
 
-    printf "  {\n    \"timestamp\": \"%s\",\n    \"action\": \"%s\",\n    \"ip\": \"%s\",\n    \"jail\": \"%s\"\n  },\n", timestamp, action, ip, jail;
+    if (ip != "") {
+        printf "  {\n    \"timestamp\": \"%s\",\n    \"action\": \"%s\",\n    \"ip\": \"%s\",\n    \"jail\": \"%s\"\n  },\n", timestamp, action, ip, jail;
+    }
 }
 ' >> "$OUTPUT_JSON_FILE"
 
-# Remove last comma if present
+# Remove last comma
 if [ -s "$OUTPUT_JSON_FILE" ]; then
     sed -i '$ s/},/}/' "$OUTPUT_JSON_FILE"
 fi
 
 echo "]" >> "$OUTPUT_JSON_FILE"
-
-# === Completion message ===
 echo "✅ JSON created: $OUTPUT_JSON_FILE"
