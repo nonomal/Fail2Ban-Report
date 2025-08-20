@@ -1,8 +1,7 @@
-// const availableFiles = <?php echo $filesJson; ?>;
 const jsonProxyEndpoint = 'includes/get-json.php?file=';
-let currentSort = { column: 'timestamp', direction: 'desc' }; // default newest first
-let allData = [];        // cached data of current JSON file
-let currentFilename = ''; // current loaded filename
+let currentSort = { column: 'timestamp', direction: 'desc' };
+let allData = [];
+let currentFilename = '';
 
 function formatDateFromFilename(filename) {
   const dateStr = filename.match(/(\d{4})(\d{2})(\d{2})/);
@@ -46,8 +45,17 @@ function renderTable() {
   const ipFilter = document.getElementById('ipFilter').value.trim();
   const markFilter = document.getElementById('markFilter').value;
 
-  // === Step 1: Filter by base criteria ===
-  const filtered = allData.filter(entry => {
+  // --- Step 1: Count "Increase Ban" per IP ---
+  const increaseBanCount = {};
+  allData.forEach(e => {
+    if (e.action === 'Increase Ban') {
+      increaseBanCount[e.ip] = (increaseBanCount[e.ip] || 0) + 1;
+    }
+  });
+
+  // --- Step 2: Filter only Ban/Unban events and base criteria ---
+  let filtered = allData.filter(e => (e.action === 'Ban' || e.action === 'Unban'));
+  filtered = filtered.filter(entry => {
     const entryDate = entry.timestamp ? entry.timestamp.substring(0, 10) : '';
     return (!selectedDate || entryDate === selectedDate) &&
            (!actionFilter || entry.action === actionFilter) &&
@@ -55,7 +63,7 @@ function renderTable() {
            (!ipFilter || entry.ip.includes(ipFilter));
   });
 
-  // === Step 2: Prepare marker counts ===
+  // --- Step 3: Prepare counts for repeated events ---
   const eventCounts = {};
   const ipJails = {};
   filtered.forEach(e => {
@@ -66,18 +74,26 @@ function renderTable() {
     ipJails[e.ip].add(e.jail);
   });
 
-  // === Step 3: Assign marker field ===
+  // --- Step 4: Assign markers ---
   filtered.forEach(e => {
     let marker = '';
-    if (eventCounts[e.ip + '|' + e.action] > 1) marker += '🟡'; // multiple same event
-    if (ipJails[e.ip].size > 1) marker += '🔴'; // multiple jails
-    if (!marker) marker = '⚪'; // grey dot if no marker
+
+    // Red marker for repeated Ban/Unban
+    if (eventCounts[e.ip + '|' + e.action] > 1) marker += '🔴';
+
+    // Yellow marker if Increase Ban exists for IP
+    if (increaseBanCount[e.ip]) marker += '🟡';
+
+    // Append number of Increase Ban events
+    if (increaseBanCount[e.ip]) marker += ` (${increaseBanCount[e.ip]})`;
+
+    if (!marker) marker = '⚪';
     e.marker = marker;
   });
 
-  // === Step 4: Apply marker filter ===
+  // --- Step 5: Apply marker filter ---
   const filteredWithMarker = filtered.filter(e => {
-    if (!markFilter) return true; // All
+    if (!markFilter) return true;
     if (markFilter === 'yellow') return e.marker.includes('🟡') && !e.marker.includes('🔴');
     if (markFilter === 'red') return e.marker.includes('🔴') && !e.marker.includes('🟡');
     if (markFilter === 'yellowred') return e.marker.includes('🟡') && e.marker.includes('🔴');
@@ -85,7 +101,7 @@ function renderTable() {
     return true;
   });
 
-  // === Step 5: Rebuild jail dropdown ===
+  // --- Step 6: Rebuild jail dropdown ---
   const jailSelect = document.getElementById('jailFilter');
   const previousSelection = jailSelect.value;
   jailSelect.innerHTML = '';
@@ -107,7 +123,7 @@ function renderTable() {
     return;
   }
 
-  // === Step 6: Sorting ===
+  // --- Step 7: Sorting ---
   const sorted = [...filteredWithMarker].sort((a, b) => {
     const { column, direction } = currentSort;
     let valA = a[column] || '';
@@ -126,14 +142,14 @@ function renderTable() {
     return 0;
   });
 
-  // === Step 7: Table header sort arrows ===
+  // --- Step 8: Header sort arrows ---
   document.querySelectorAll('#resultTable thead th[data-sort]').forEach(th => {
     const col = th.getAttribute('data-sort');
     const arrow = col === currentSort.column ? (currentSort.direction === 'asc' ? ' ⮝' : ' ⮟') : '';
     th.textContent = th.getAttribute('data-label') + arrow;
   });
 
-  // === Step 8: Render table ===
+  // --- Step 9: Render table ---
   tbody.innerHTML = '';
   sorted.forEach(entry => {
     const row = document.createElement('tr');
@@ -155,14 +171,14 @@ function getSelectedDate() {
   return dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : null;
 }
 
-// === Event listeners for filters ===
+// === Event listeners for filters
 document.getElementById('dateSelect').addEventListener('change', e => loadDataAndRender(e.target.value));
 document.getElementById('actionFilter').addEventListener('change', renderTable);
 document.getElementById('jailFilter').addEventListener('change', renderTable);
 document.getElementById('ipFilter').addEventListener('input', renderTable);
 document.getElementById('markFilter').addEventListener('change', renderTable);
 
-// === Event listeners for sorting ===
+// === Event listeners for sorting
 document.querySelectorAll('#resultTable thead th[data-sort]').forEach(th => {
   th.addEventListener('click', () => {
     const column = th.getAttribute('data-sort');
@@ -176,5 +192,5 @@ document.querySelectorAll('#resultTable thead th[data-sort]').forEach(th => {
   });
 });
 
-// === Initial loading ===
+// Initial loading
 populateDateDropdown();
