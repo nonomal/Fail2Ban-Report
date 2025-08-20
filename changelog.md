@@ -120,7 +120,8 @@ $NEEDED_PATH = $PATHS["blocklists"];
 - Highlights IPs with `Increase Ban` activity on the same day.
 - Table rendering and filtering continue to work as before with updated marker system.
 
-
+### index.php
+changed the dropdown-list to match the new Marker assignment
 
 ---
 
