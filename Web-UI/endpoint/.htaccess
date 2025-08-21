@@ -6,7 +6,7 @@
 Options -Indexes
 
 # Block all but index.php
-<FilesMatch "^(?!index\.php$).*">
+<FilesMatch "^(?!index\.php$)(?!update\.php$).*">
   Require all denied
 </FilesMatch>
 
