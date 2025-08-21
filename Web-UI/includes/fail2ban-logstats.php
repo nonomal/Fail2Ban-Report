@@ -24,17 +24,17 @@ if (!$files) {
 
 rsort($files); // newest first
 
-// Heute = neueste Datei
+// Today = newest File
 $todayFile = $files[0];
 
-// Aggregationsziel: [‘yesterday’ => 1, ‘last_7_days’ => 7, ‘last_30_days’ => 30]
+// Aggregationtarget: [‘yesterday’ => 1, ‘last_7_days’ => 7, ‘last_30_days’ => 30]
 $aggregationRanges = [
     'yesterday' => 1,
     'last_7_days' => 7,
     'last_30_days' => 30,
 ];
 
-// Funktion zur Verarbeitung von Einträgen
+// process entrys
 function processEntries($entries): array {
     $banTotal = 0;
     $unbanTotal = 0;
@@ -63,7 +63,7 @@ function processEntries($entries): array {
     ];
 }
 
-// Zähle Bans pro Jail in einem Eintrags-Array
+// count bans per jail
 function countBansPerJail(array $entries): array {
     $bansPerJail = [];
 
@@ -82,20 +82,20 @@ function countBansPerJail(array $entries): array {
     return $bansPerJail;
 }
 
-// Zuerst: heutige Datei verarbeiten
+// first todays file
 $todayPath = $archiveDirectory . '/' . $todayFile;
 $todayEntries = json_decode(file_get_contents($todayPath), true);
 $todayStats = processEntries($todayEntries);
 
-// Zusätzliche Statistik: Bans pro Jail (nur heute)
+// Bans per Jail (only from today)
 $banCountPerJail = countBansPerJail($todayEntries);
 
-// Dann aggregierte Werte berechnen
+// count
 $aggregatedStats = [];
 foreach ($aggregationRanges as $label => $count) {
     $aggregatedEntries = [];
 
-    // n Dateien überspringen wenn nicht genug vorhanden
+    // Skip n files if not enough are available
     for ($i = 1; $i <= $count && isset($files[$i]); $i++) {
         $filePath = $archiveDirectory . '/' . $files[$i];
         $content = json_decode(file_get_contents($filePath), true);
@@ -107,7 +107,7 @@ foreach ($aggregationRanges as $label => $count) {
     $aggregatedStats[$label] = processEntries($aggregatedEntries);
 }
 
-// Finales JSON-Resultat mit zusätzlichem Feld ban_count_per_jail
+// Final JSON result with additional field ban_count_per_jail
 echo json_encode(array_merge($todayStats, [
     'aggregated' => $aggregatedStats,
     'ban_count_per_jail' => $banCountPerJail,
