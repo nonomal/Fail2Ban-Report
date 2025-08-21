@@ -124,9 +124,7 @@ $NEEDED_PATH = $PATHS["blocklists"];
 changed the dropdown-list to match the new Marker assignment
 
 
-# Fail2Ban-Report 0.5.0 – Backend / Endpoint Updates
-
-### Endpoint
+### Fail2Ban-Report 0.5.0 – Backend / Endpoint Updates
 
 ### 1. Endpoint (`/endpoint/index.php`)
 - New HTTPS endpoint for clients to send JSON data (`fail2ban-events-*.json` and `*.blocklist.json`).  
