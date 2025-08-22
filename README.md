@@ -23,7 +23,8 @@ It does not modify Fail2Ban jails or existing Fail2Ban configurations directly, 
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
 
 Please read the [Installation Instructions](Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
-> still a little experimental feature : Use the Installer ![Installer Setup Documentation](installer-setup.md) It would be great if you tell me if the installer worked for your needs.
+> Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
+> Critical backend operations (like UFW updates) are executed via root cron scripts; ensure the server running Fail2Ban-Report is fully secured.
 
 ---
 
