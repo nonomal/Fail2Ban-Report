@@ -153,15 +153,21 @@ This is especially useful if you want to manually patch or update individual fil
 
 ---
 
-## 🛣️ Roadmap
+## 👀 Outlook
+- 📦 will have a deeper look into statistics with the next releases
+
+---
+
+## 🛣️ Roadmap or "Things I will have to do - but I do them later"
+
 > I gave up the usual Roadmap - to have more freedom with development - Things like Multiserver was never on the Roadmap but allways in my mind.
+
+- ⏳ Rework Blocklist Overlay
+- ⏳ Rework Stylesheet
 
 > As I am using Fail2Ban-Report I think it has a lot of potential to become something nice for not just myself.
 
 > Suggestions and Ideas still welcome at any time (see Discussions) - When you are using Fail2Ban-Report and you think "I would need to see .. " tell me, I am happy to see your Ideas!
-
-## 👀 Outlook
-- 📦 will have a deeper look into statistics with the next releases
 
 ---
 
