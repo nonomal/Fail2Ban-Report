@@ -163,7 +163,7 @@ This is especially useful if you want to manually patch or update individual fil
 > When you are using Fail2Ban-Report and you think "I would need to see .. " tell me, I am happy to see your Ideas!
 
 ## 👀 Outlook
-- 📦 Further Improvements & Security Enhancements
+- 📦 will have a deeper look into statistics with the next releases
 
 ---
 
