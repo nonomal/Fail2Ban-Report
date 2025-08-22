@@ -1,10 +1,12 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # === Configuration ===
 LOGFILE="/var/log/fail2ban.log"                              # Pfad zum Fail2Ban Logfile
 OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"           # Lokaler Ordner (optional Archiv)
 CLIENT_USER="meinclient"                                     # Client Benutzername
-CLIENT_PASS="geheimespasswort"                               # Client Passwort (bcrypt-hash auf Server-Seite!)
+CLIENT_PASS="geheimespasswort"                               # Client Passwort
 CLIENT_UUID="123e4567-e89b-12d3-a456-426614174000"           # UUID des Clients
 ENDPOINT_URL="https://meinserver/Fail2Ban-Report/endpoint/"  # Server Endpoint-URL
 CLIENT_LOG="/var/log/fail2ban-report-client.log"             # Logfile für den Client
@@ -39,7 +41,6 @@ grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
         if (m[1]) ip = m[1];
     }
 
-    # Extract jail from first non-numeric bracketed section
     text = $0;
     c = 0;
     delete arr;
@@ -68,15 +69,15 @@ grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
 if [ -s "$OUTPUT_JSON_FILE" ]; then
     sed -i '$ s/},/}/' "$OUTPUT_JSON_FILE"
 fi
-
 echo "]" >> "$OUTPUT_JSON_FILE"
 
 # === Datei an Server senden ===
 HTTP_RESPONSE=$(curl -s -o /tmp/curl_response.txt -w "%{http_code}" \
-    -u "$CLIENT_USER:$CLIENT_PASS" \
-    -F "uuid=$CLIENT_UUID" \
-    -F "file=@$OUTPUT_JSON_FILE" \
-    "$ENDPOINT_URL")
+  -F "username=$CLIENT_USER" \
+  -F "password=$CLIENT_PASS" \
+  -F "uuid=$CLIENT_UUID" \
+  -F "file=@$OUTPUT_JSON_FILE" \
+  "$ENDPOINT_URL")
 
 SERVER_RESPONSE=$(cat /tmp/curl_response.txt)
 
