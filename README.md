@@ -148,6 +148,8 @@ This is especially useful if you want to manually patch or update individual fil
   → Hotfixed on 05.08.2025 at 13:10 (UTC+2) directly in latest (0.2.3)
 - ✅ **Installer** should now ask if you want to delete and reclone repo when allready existing (0.3.1)
 - ✅ **Added FLOCK** to lock json files to not loose data when several write processes write at the same time (0.3.2)
+- ✅ **Handling of "Increase Ban" Events** : will now processed correct by backend and is also visible in frontend via markers (0.4.0)
+  - Thanks to ***jbd7*** for finding and debugging the bug.
 
 ---
 
