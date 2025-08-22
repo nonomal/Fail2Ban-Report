@@ -1,23 +1,24 @@
 #!/bin/bash
+# fail2ban_log2json.sh
+# Erstellt die tägliche Fail2Ban-Events JSON und überträgt sie direkt an den Server
 
 set -euo pipefail
 
 # === Configuration ===
-LOGFILE="/var/log/fail2ban.log"                              # Pfad zum Fail2Ban Logfile
-OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"           # Lokaler Ordner (optional Archiv)
-CLIENT_USER="meinclient"                                     # Client Benutzername
-CLIENT_PASS="geheimespasswort"                               # Client Passwort
-CLIENT_UUID="123e4567-e89b-12d3-a456-426614174000"           # UUID des Clients
-ENDPOINT_URL="https://meinserver/Fail2Ban-Report/endpoint/"  # Server Endpoint-URL
-CLIENT_LOG="/var/log/fail2ban-report-client.log"             # Logfile für den Client
+LOGFILE="/var/log/fail2ban.log"
+OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"
+CLIENT_USER="meinclient"
+CLIENT_PASS="geheimespasswort"
+CLIENT_UUID="123e4567-e89b-12d3-a456-426614174000"
+ENDPOINT_URL="https://meinserver/Fail2Ban-Report/endpoint/index.php"
+CLIENT_LOG="/var/log/fail2ban-report-client.log"
 
-# === Preparation ===
+# === JSON Erstellung (unverändert) ===
 TODAY=$(date +"%Y-%m-%d")
 TODAY_SHORT=$(date +"%Y%m%d")
 OUTPUT_JSON_FILE="$OUTPUT_JSON_DIR/fail2ban-events-$TODAY_SHORT.json"
 mkdir -p "$OUTPUT_JSON_DIR"
 
-# === JSON Datei erzeugen ===
 echo "[" > "$OUTPUT_JSON_FILE"
 
 grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
@@ -65,30 +66,50 @@ grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
 }
 ' >> "$OUTPUT_JSON_FILE"
 
-# Remove last comma
 if [ -s "$OUTPUT_JSON_FILE" ]; then
     sed -i '$ s/},/}/' "$OUTPUT_JSON_FILE"
 fi
 echo "]" >> "$OUTPUT_JSON_FILE"
+echo "✅ JSON created: $OUTPUT_JSON_FILE"
 
-# === Datei an Server senden ===
-HTTP_RESPONSE=$(curl -s -o /tmp/curl_response.txt -w "%{http_code}" \
-  -F "username=$CLIENT_USER" \
-  -F "password=$CLIENT_PASS" \
-  -F "uuid=$CLIENT_UUID" \
-  -F "file=@$OUTPUT_JSON_FILE" \
-  "$ENDPOINT_URL")
+# === Upload der JSON an den Server ===
+upload_file() {
+    local file=$1
+    echo "🔄 Uploading $file ..."
 
-SERVER_RESPONSE=$(cat /tmp/curl_response.txt)
+    response=$(curl -s -w "\n%{http_code}" -X POST "$ENDPOINT_URL" \
+        -F "username=$CLIENT_USER" \
+        -F "password=$CLIENT_PASS" \
+        -F "uuid=$CLIENT_UUID" \
+        -F "file=@$file" || true)
 
-# === Logging ===
-if [ "$HTTP_RESPONSE" -eq 200 ]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ✅ Upload success: $OUTPUT_JSON_FILE" >> "$CLIENT_LOG"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ↩️  Server response: $SERVER_RESPONSE" >> "$CLIENT_LOG"
-else
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ❌ Upload failed (HTTP $HTTP_RESPONSE)" >> "$CLIENT_LOG"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ↩️  Server response: $SERVER_RESPONSE" >> "$CLIENT_LOG"
-fi
+    http_code=$(tail -n1 <<< "$response")
+    body=$(sed '$d' <<< "$response")
 
-# Cleanup
-rm -f /tmp/curl_response.txt
+    if [ "$http_code" -eq 0 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') ❌ Connection failed to $ENDPOINT_URL" | tee -a "$CLIENT_LOG"
+        return 1
+    fi
+
+    echo "$(date '+%Y-%m-%d %H:%M:%S') HTTP Status: $http_code" | tee -a "$CLIENT_LOG"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') Response Body: $body" | tee -a "$CLIENT_LOG"
+
+    if [ "$http_code" -ne 200 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') ❌ Upload failed (HTTP $http_code)" | tee -a "$CLIENT_LOG"
+        return 1
+    fi
+
+    success=$(echo "$body" | jq -r '.success // empty')
+    if [ "$success" != "true" ]; then
+        message=$(echo "$body" | jq -r '.message // empty')
+        echo "$(date '+%Y-%m-%d %H:%M:%S') ❌ Endpoint rejected the file: $message" | tee -a "$CLIENT_LOG"
+        return 1
+    fi
+
+    echo "$(date '+%Y-%m-%d %H:%M:%S') ✅ Upload succeeded for $file" | tee -a "$CLIENT_LOG"
+}
+
+# Upload der gerade erstellten JSON
+upload_file "$OUTPUT_JSON_FILE"
+
+echo "✅ Upload completed."
