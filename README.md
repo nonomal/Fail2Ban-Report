@@ -110,7 +110,9 @@ It provides optional tools to:
 
 🌐 Frontend
 
-- Multi-server dashboard → switch between servers seamlessly
+- Multi-server Dropdown-List
+- Admin Login
+- Logout (session destroy)
 
 🔐 Security
 
