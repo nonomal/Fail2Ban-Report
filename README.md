@@ -117,7 +117,7 @@ It provides optional tools to:
 - ⏳ documentation
 - ⏳ how 2 stuff
 
-
+### Legend
 - 🔐 Security
 - ⚙️ Backend
 - 🌐 Frontend
