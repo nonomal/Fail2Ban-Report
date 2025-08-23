@@ -1,8 +1,14 @@
 <?php
-// ipinfo.php
+// includes/actions/reports/ipinfo.php
 
-$config = parse_ini_file('/opt/Fail2Ban-Report/fail2ban-report.config');
-$apiKey = trim($config['ipinfo_key'] ?? '');
+require_once __DIR__ . '/../paths.php';
+
+// Config laden
+$config = parse_ini_file($PATHS['config'] . "fail2ban-report.config", true);
+$apiKey = trim($config['IP-Info API Key']['ipinfo_key'] ?? '');
+
+// IP aus POST
+$ipToCheck = $_POST['ip'] ?? null;
 
 if (!$apiKey) {
     echo json_encode([
@@ -13,8 +19,6 @@ if (!$apiKey) {
     return;
 }
 
-$ipToCheck = $ip ?? null;
-
 if (!$ipToCheck) {
     echo json_encode([
         'success' => false,
@@ -24,54 +28,43 @@ if (!$ipToCheck) {
     return;
 }
 
+// API Call
 $curl = curl_init();
 curl_setopt_array($curl, [
     CURLOPT_URL => "https://ipinfo.io/{$ipToCheck}/json?token={$apiKey}",
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => [
-        "Accept: application/json"
-    ],
+    CURLOPT_HTTPHEADER => ["Accept: application/json"],
 ]);
 
 $response = curl_exec($curl);
 $curlError = curl_error($curl);
 curl_close($curl);
 
-if ($response) {
-    $json = json_decode($response, true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'IPInfo: Invalid JSON response.',
-            'type' => 'error'
-        ]);
-        return;
-    }
-
-    // Example fields from IPInfo
-    $ip = $json['ip'] ?? 'unknown';
-    $hostname = $json['hostname'] ?? 'N/A';
-    $city = $json['city'] ?? 'N/A';
-    $region = $json['region'] ?? 'N/A';
-    $country = $json['country'] ?? 'N/A';
-    $org = $json['org'] ?? 'N/A';
-    $loc = $json['loc'] ?? 'N/A';
-    $postal = $json['postal'] ?? 'N/A';
-
-    $msg = "IPInfo: $ip - Hostname: $hostname, Location: $city, $region, $country, Org: $org";
-
-    echo json_encode([
-        'success' => true,
-        'message' => $msg,
-        'data' => $json,
-        'type' => 'info'
-    ]);
-} else {
-    $errorMsg = $curlError ?: 'IPInfo request failed.';
+if (!$response) {
     echo json_encode([
         'success' => false,
-        'message' => $errorMsg,
+        'message' => $curlError ?: 'IPInfo request failed.',
         'type' => 'error'
     ]);
+    return;
 }
+
+$json = json_decode($response, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'IPInfo: Invalid JSON response.',
+        'type' => 'error',
+        'raw_response' => $response
+    ]);
+    return;
+}
+
+$msg = "IPInfo: {$json['ip'] ?? 'unknown'} - Hostname: {$json['hostname'] ?? 'N/A'}, Location: {$json['city'] ?? 'N/A'}, {$json['region'] ?? 'N/A'}, {$json['country'] ?? 'N/A'}, Org: {$json['org'] ?? 'N/A'}";
+
+echo json_encode([
+    'success' => true,
+    'message' => $msg,
+    'type' => 'info',
+    'data' => $json
+]);
