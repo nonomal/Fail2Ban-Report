@@ -2,35 +2,37 @@
 
 set -euo pipefail
 
-# === Configuration ===
+# --- Configuration ---
 BLOCKLIST_DIR="/opt/Fail2Ban-Report/archive/blocklists"
 LOGFILE="/opt/Fail2Ban-Report/Firewall.log"
-LOGGING=true
+LOGGING=true  # Set to true to enable logging
 
-# Client Credentials for backsync
 CLIENT_USER="MyClientName"
 CLIENT_PASS="MyPassword"
 CLIENT_UUID="MyUUID"
 BACKSYNC_URL="https://my.server.tld/Fail2Ban-Report/endpoint/backsync.php"
 CLIENT_LOG="/var/log/fail2ban-report-client.log"
 
-# --- PATH ---
+# --- Set PATH ---
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
 
-# --- Logging ---
+# --- Logging function ---
 log() {
   if [ "$LOGGING" = true ]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $*" | tee -a "$LOGFILE"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $*" >> "$LOGFILE"
   fi
 }
 
-# --- Prerequisites ---
-for cmd in jq ufw; do
-  if ! command -v "$cmd" &>/dev/null; then
-    log "ERROR: $cmd is not installed."
-    exit 1
-  fi
-done
+# --- Check prerequisites ---
+if ! command -v jq &>/dev/null; then
+  log "ERROR: jq is not installed."
+  exit 1
+fi
+
+if ! command -v ufw &>/dev/null; then
+  log "ERROR: ufw is not installed."
+  exit 1
+fi
 
 # --- Get currently blocked IPs from UFW ---
 TMP_BLOCKED="/tmp/current_ufw_blocklist.txt"
@@ -40,14 +42,14 @@ ufw status numbered | grep "DENY IN" | awk '{print $3}' > "$TMP_BLOCKED" || true
 PROCESSED_FILES=()
 
 for FILE in "$BLOCKLIST_DIR"/*.blocklist.json; do
-  [ -e "$FILE" ] || continue
+  [ -e "$FILE" ] || continue  # skip if no files match
 
   JAIL_NAME=$(basename "$FILE" .blocklist.json)
   LOCKFILE="/tmp/${JAIL_NAME}.blocklist.lock"
 
   log "Processing blocklist: $FILE"
 
-  # Acquire lock
+  # === Acquire lock ===
   exec {lock_fd}>"$LOCKFILE"
   if ! flock -x "$lock_fd"; then
     log "ERROR: Could not acquire lock for $JAIL_NAME"
@@ -60,7 +62,7 @@ for FILE in "$BLOCKLIST_DIR"/*.blocklist.json; do
 
   blocked_success=()
 
-  # --- BLOCK new IPs ---
+  # --- BLOCK: Collect all new IPs and block them ---
   for ip in "${active_ips[@]}"; do
     if ! grep -qw "$ip" "$TMP_BLOCKED"; then
       log "Blocking IP: $ip"
@@ -72,13 +74,13 @@ for FILE in "$BLOCKLIST_DIR"/*.blocklist.json; do
     fi
   done
 
-  # Reload UFW once after blocking
+  # Reload UFW once after all block actions
   if ((${#blocked_success[@]} > 0)); then
     log "Reloading UFW after block actions"
     ufw reload
   fi
 
-  # --- UNBLOCK inactive IPs ---
+  # --- UNBLOCK: Process each inactive IP individually ---
   for ip in "${inactive_ips[@]}"; do
     mapfile -t rules < <(ufw status numbered | grep "$ip" | grep "DENY IN" | tac)
     for rule in "${rules[@]}"; do
@@ -90,7 +92,7 @@ for FILE in "$BLOCKLIST_DIR"/*.blocklist.json; do
     done
   done
 
-  # --- JSON Update: pending=false for newly blocked, remove inactive ---
+  # --- JSON Update: pending=false for blocked_success, remove inactive entries ---
   tmp_file=$(mktemp)
   BLOCK_JSON=$(printf '%s\n' "${blocked_success[@]:-}" | jq -R . | jq -s .)
   jq --argjson ips "$BLOCK_JSON" '
@@ -104,39 +106,43 @@ for FILE in "$BLOCKLIST_DIR"/*.blocklist.json; do
   chown www-data:www-data "$FILE"
   chmod 644 "$FILE"
 
-  # Release lock
+  # === Release lock ===
   flock -u "$lock_fd"
   exec {lock_fd}>&-
 
   PROCESSED_FILES+=("$FILE")
 done
 
-log "All blocklists processed. Preparing to backsync ${#PROCESSED_FILES[@]} file(s)..."
+log "All blocklists processed successfully."
 
 # --- Upload processed blocklists to backsync.php ---
-if [ ${#PROCESSED_FILES[@]} -gt 0 ]; then
-  CURL_CMD=(curl -s -w "\n%{http_code}" -X POST "$BACKSYNC_URL" \
+for FILE in "${PROCESSED_FILES[@]}"; do
+  log "Uploading $FILE to backsync.php ..."
+  
+  response=$(curl -s -w "\n%{http_code}" -X POST "$BACKSYNC_URL" \
       -F "username=$CLIENT_USER" \
       -F "password=$CLIENT_PASS" \
-      -F "uuid=$CLIENT_UUID")
+      -F "uuid=$CLIENT_UUID" \
+      -F "file=@$FILE" || true)
 
-  for FILE in "${PROCESSED_FILES[@]}"; do
-      CURL_CMD+=(-F "file[]=@$FILE")
-  done
+  http_code=$(tail -n1 <<< "$response")
+  body=$(sed '$d' <<< "$response")
 
-  RESPONSE="$("${CURL_CMD[@]}")"
-  HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
-  BODY=$(sed '$d' <<< "$RESPONSE")
-
-  echo "$(date '+%Y-%m-%d %H:%M:%S') HTTP Status: $HTTP_CODE" | tee -a "$CLIENT_LOG"
-  echo "$(date '+%Y-%m-%d %H:%M:%S') Response Body: $BODY" | tee -a "$CLIENT_LOG"
-
-  if [ "$HTTP_CODE" -eq 200 ] && [ "$(echo "$BODY" | jq -r '.success // empty')" = "true" ]; then
-      log "✅ Blocklists successfully uploaded to backsync.php"
-  else
-      log "❌ Failed to upload blocklists"
+  if [ "$http_code" -eq 0 ]; then
+    log "ERROR: Connection failed to $BACKSYNC_URL"
+    continue
   fi
-fi
 
-log "Firewall blocklists processed and synchronized successfully."
+  log "HTTP Status: $http_code, Response: $body"
+
+  success=$(echo "$body" | jq -r '.success // empty')
+  if [ "$success" == "true" ]; then
+    log "✅ $FILE successfully synced to server"
+  else
+    log "❌ Failed to sync $FILE: $(echo "$body" | jq -r '.message // empty')"
+  fi
+done
+
+log "All processed blocklists uploaded."
+
 exit 0
