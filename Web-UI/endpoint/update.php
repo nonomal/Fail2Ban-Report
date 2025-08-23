@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 require_once __DIR__ . '/../Settings/paths.php'; // optional für globale Pfade
 define('CLIENT_LIST', __DIR__ . '/../Settings/client-list.json');
-define('UPDATE_FILE', __DIR__ . '/update.json');
+define('UPDATE_FILE', __DIR__ . '/../archive/update.json');
 define('BLOCKLIST_BASE', __DIR__ . '/../archive/');
 
 // Hilfsfunktion für JSON-Antworten
