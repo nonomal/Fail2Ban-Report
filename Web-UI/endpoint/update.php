@@ -1,40 +1,37 @@
 <?php
-// endpoint/update.php
+// update.php – Prüft Blocklist-Updates für Client-Server und stellt Blocklists zum Download bereit
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../Settings/paths.php'; // optional für globale Pfade
-define('CLIENT_LIST', __DIR__ . '/../Settings/client-list.json');
-define('UPDATE_FILE', __DIR__ . '/../archive/update.json');
-define('BLOCKLIST_BASE', __DIR__ . '/../archive/');
+// === Config ===
+$CLIENTS_FILE  = "/opt/Fail2Ban-Report/Settings/client-list.json";
+$ARCHIVE_ROOT  = __DIR__ . "/../archive/";
+$DOWNLOAD_ROOT = __DIR__; // /endpoint/<username>/blocklists/
 
-// Hilfsfunktion für JSON-Antworten
-function respond($data, $code = 200) {
-    http_response_code($code);
+// === Helper: Antwortfunktion ===
+function respond($statusCode, $data) {
+    http_response_code($statusCode);
     echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-// --- Load client list ---
-if (!file_exists(CLIENT_LIST)) {
-    respond(['success' => false, 'error' => 'Client list not found'], 500);
+// === 1) Authentifizierung ===
+if (!file_exists($CLIENTS_FILE)) {
+    respond(500, ["success" => false, "message" => "Client list not found."]);
 }
-$clients = json_decode(file_get_contents(CLIENT_LIST), true);
+
+$clients = json_decode(file_get_contents($CLIENTS_FILE), true);
 if (!is_array($clients)) {
-    respond(['success' => false, 'error' => 'Client list corrupted'], 500);
+    respond(500, ["success" => false, "message" => "Client list corrupted."]);
 }
 
-// --- Parse input ---
-$input = json_decode(file_get_contents('php://input'), true);
-if (!$input || !isset($input['username'], $input['password'], $input['uuid'])) {
-    respond(['success' => false, 'error' => 'Invalid request'], 400);
-}
-$username = $input['username'];
-$password = $input['password'];
-$uuid     = $input['uuid'];
-$client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+// POST-Daten
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
+$uuid     = $_POST['uuid'] ?? '';
+$remoteIp = $_SERVER['REMOTE_ADDR'] ?? '';
 
-// --- Authenticate client (analog index.php) ---
+// Client suchen
 $client = null;
 foreach ($clients as $c) {
     if ($c['username'] === $username && $c['uuid'] === $uuid) {
@@ -42,64 +39,73 @@ foreach ($clients as $c) {
         break;
     }
 }
+
 if (!$client) {
-    respond(['success' => false, 'error' => 'Authentication failed (user/uuid)'], 403);
-}
-if (!password_verify($password, $client['password'])) {
-    respond(['success' => false, 'error' => 'Authentication failed (password)'], 403);
-}
-if (isset($client['ip']) && $client['ip'] !== '' && $client['ip'] !== $client_ip) {
-    respond(['success' => false, 'error' => 'Authentication failed (ip mismatch)'], 403);
+    respond(403, ["success" => false, "message" => "Authentication failed (user/uuid)."]);
 }
 
-// --- Load update.json ---
-if (!file_exists(UPDATE_FILE)) {
-    $update_data = [];
-} else {
-    $update_data = json_decode(file_get_contents(UPDATE_FILE), true);
+if (!password_verify($password, $client['password'])) {
+    respond(403, ["success" => false, "message" => "Authentication failed (password)."]);
+}
+
+if (isset($client['ip']) && $client['ip'] !== $remoteIp) {
+    respond(403, ["success" => false, "message" => "Authentication failed (ip mismatch)."]);
+}
+
+// === 2) Prüfen, ob Updates für diesen Client vorliegen ===
+$updateFile = $ARCHIVE_ROOT . 'update.json';
+$update_data = [];
+if (file_exists($updateFile)) {
+    $update_data = json_decode(file_get_contents($updateFile), true);
     if (!is_array($update_data)) $update_data = [];
 }
 
-// --- Check if client has updates ---
-$client_updates = $update_data[$username] ?? [];
+$clientUpdates = $update_data[$username] ?? [];
+$updatesToSend = array_filter($clientUpdates, fn($v) => $v === true);
 
-if (empty($client_updates)) {
-    respond(['success' => true, 'updates' => []]);
+if (empty($updatesToSend)) {
+    respond(200, ["success" => true, "updates" => []]);
 }
 
-// --- Build response ---
-$response = ['success' => true, 'updates' => []];
+// === 3) Temporären Download-Pfad vorbereiten ===
+$tempDir = $DOWNLOAD_ROOT . "/{$username}/blocklists/";
+if (!is_dir($tempDir)) mkdir($tempDir, 0770, true);
 
-foreach ($client_updates as $file => $flag) {
-    if ($flag !== true) continue;
+// === 4) Blocklists bereitstellen & Status auf false setzen ===
+$sentLists = [];
 
-    // Only allow blocklists
-    if (!preg_match('/\.blocklist\.json$/', $file)) continue;
+foreach ($updatesToSend as $listName => $_) {
+    $sourceFile = $ARCHIVE_ROOT . "$username/blocklists/$listName";
+    $destFile   = $tempDir . $listName;
 
-    // Sicherheits-Check für Username
-    $username_safe = preg_replace('/[^a-zA-Z0-9_\-]/', '', $username);
-    $filepath = BLOCKLIST_BASE . $username_safe . '/blocklists/' . $file;
-
-    if (!file_exists($filepath)) {
-        continue;
+    // Lock auf die Blocklist selbst
+    $blockLock = "/tmp/{$listName}.lock";
+    $blockHandle = fopen($blockLock, 'c');
+    if (!$blockHandle || !flock($blockHandle, LOCK_EX)) {
+        continue; // evtl. loggen
     }
 
-    // Lock the file during read
-    $lockHandle = fopen($filepath, 'r');
-    if ($lockHandle) {
-        if (flock($lockHandle, LOCK_SH)) {
-            $content = file_get_contents($filepath);
-            $response['updates'][$file] = json_decode($content, true);
-            flock($lockHandle, LOCK_UN);
+    if (file_exists($sourceFile)) {
+        copy($sourceFile, $destFile);
+        $sentLists[] = $listName;
+
+        // Status in update.json auf false → Lock nur beim Schreiben
+        $updateLock = "/tmp/update.json.lock";
+        $updateHandle = fopen($updateLock, 'c');
+        if ($updateHandle && flock($updateHandle, LOCK_EX)) {
+            $update_data[$username][$listName] = false;
+            file_put_contents($updateFile, json_encode($update_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            flock($updateHandle, LOCK_UN);
+            fclose($updateHandle);
         }
-        fclose($lockHandle);
     }
+
+    flock($blockHandle, LOCK_UN);
+    fclose($blockHandle);
 }
 
-// --- Optionally reset update flags ---
-foreach (array_keys($client_updates) as $file) {
-    $update_data[$username][$file] = false;
-}
-file_put_contents(UPDATE_FILE, json_encode($update_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-respond($response);
+// === 5) Antwort an Client ===
+respond(200, [
+    "success" => true,
+    "updates" => $sentLists
+]);
