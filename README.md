@@ -30,16 +30,21 @@ Please read the [Installation Instructions](Setup-Instructions.md) carefully and
 ---
 
 ## 📚 What It Does
-Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports viewable via a responsive web dashboard.  
-It provides optional tools to:  
 
-- 📊 Visualize **ban** and **unban** events, including per-jail statistics  
-- ⚡ Interact with IPs (e.g., manually block, unblock) — **only Admins can perform actions**  
-- 📂 Maintain **jail-specific and per-server** persistent blocklists (JSON) with `active`, `pending`, and `source` metadata  
-- 🔄 Sync those lists with your system firewall using **ufw**  
-- 🌐 Switch between multiple servers in the dashboard for multi-server setups  
-- 🚨 Show **Warning and Critical indicators** when ban rates exceed configurable thresholds  
-- 🚨 Show **Markers** when an IP Address had a **ban-increase** (🟡) or **more than one ban event** on one day (🔴)
+Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports viewable via a responsive web dashboard.  
+It provides optional tools to:
+
+- 📊 View **ban/unban events** and per-jail statistics
+- 🌐 Switch between multiple servers in a single dashboard
+- 🔐 Use authentication with **viewer** (read-only) and **admin** (block/unblock) roles
+- 📂 Maintain **persistent blocklists** (per jail and per server) with metadata (`active`, `pending`, `source`)
+  - no fire & forget
+- ⚡ Apply or remove firewall rules (currently via **ufw**)
+- 🚨 Get configureable warnings for unusual activity (DDoS, brute-force, scans)
+- 🚨 Mark IPs with 🔴 repeat bans or 🟡 ban increases
+- 🔍 Optional integrations:
+  - [AbuseIPDB](https://www.abuseipdb.com/) for reputation lookups
+  - [IP-Info.io](https://ipinfo.io/) for region/provider checks
 
 > **Note:** Viewer accounts are read-only. Direct integration with other firewalls or native Fail2Ban jail commands is not yet implemented.  
 
@@ -48,88 +53,86 @@ It provides optional tools to:
 
 ## 🧱 Architecture Overview
 
-- **Backend Shell Scripts**:  
-  - Parse logs and generate daily JSON event files  
-  - Maintain and update `*.blocklist.json` per server  
-  - Apply or remove firewall rules based on blocklist entries (`ufw`)  
-  - Support for multi-server environments (future: rsync backend)  
+**Backend (Shell scripts):**
+- Parse Fail2Ban logs → generate daily JSON event files
+- Maintain and update jail-specific blocklists (`*.blocklist.json`)
+- Sync blocklists with `ufw`
+- Provide HTTPS endpoint for multi-server synchronization
 
-- **Frontend Web Interface**:  
-  - Displays event timelines, statistics, and per-jail blocklists  
-  - Allows **multi-selection** for bulk ban/report actions  
-  - Shows **pending status** for unprocessed manual actions  
-  - Displays real-time warning indicators  
-  - **Server switching**: choose which server’s data to view  
-  - **Authentication**: Viewer (read-only) / Admin (Ban/Unban)  
+**Frontend (PHP Web Interface):**
+- Event timeline with filtering and search
+- Per-jail blocklist view
+- Multi-server dropdown
+- Bulk actions (ban/unban/report)
+- Pending status for actions not yet applied
+- Warning/critical indicators for activity spikes
+- Authentication: viewer (read-only) / admin (ban/unban)
 
-- **JSON Blocklists**:  
-  - Stored per jail and per server  
-  - Contain IP entries with metadata (`active`, `pending`, timestamps, jail name, source)  
-  - Only admins can modify entries (block/unblock) 
+**Blocklists (JSON):**
+- Stored per jail and per server
+- Include metadata: jail, status, timestamps, source
+- Modified only by authenticated admins
 
 ---
 
 ## 📦 Features
 
-🔍 **Searchable & filterable log reports** — by date, jail, IP  
-🔧 **Integrated JSON blocklist** — persistent Block-Overview per server  
-🧱 **Firewall sync** — UFW supported
-⚡ **Lightweight setup** — no DB, no frameworks  
-🔐 **Secure & hardened** — minimal external dependencies (jq, awk), strict headers, htaccess protected  
-🛠️ **Installer / Setup scripts** — automate folder creation, permissions, user management  
-🧩 **Modular & extendable design** — includes, paths, scripts clearly separated  
-🪵 **Optional Backend logging** — block/unblock actions logged via firewall-update.sh  
-🕵️ **Optional IP reputation check** — AbuseIPDB manual lookup from UI  
-🕵️ **Optional IP location/provider Check** — IP-Info manual lookup from UI
-👥 **User roles & authentication** — Viewer (read-only) / Admin (Ban/Unban)  
-🌐 **Multiserver support** — switch between servers in UI, central blocklist management
+- 🔍 Searchable & filterable event reports  
+- 📊 Aggregated statistics (today, yesterday, 7 days, 30 days)  
+- 📂 Jail- and server-specific blocklists  
+- 🔄 Firewall sync with UFW  
+- 🔐 Authentication with role separation  
+- ⚡ Lightweight: no database, no frameworks  
+- 🛠️ Setup scripts for installation, permissions, and user management  
+- 🧩 Modular structure 
+- 🪵 Optional backend logging for ban/unban actions  
 
 > 🧰 Works even on small setups (Raspberry Pi, etc.)
 
 ---
 
-## 👥 Discussions
 
-> If you want to join the conversation or have questions or ideas, visit the 💬 [Discussions page](https://github.com/SubleXBle/Fail2Ban-Report/discussions).
+## 🆕 What's New in v0.5.0
+
+- 🌐 **Multi-server support** with HTTPS sync backend  
+- 🔐 **User authentication** with roles (Admin / Viewer)  
+- ⚙️ **Reorganized backend**:  
+  - `archive/` separated per server (fail2ban / blocklists)  
+  - `/opt/Fail2Ban-Report/` cleaned and structured  
+  - Centralized path handling, less hardcoding  
+- 🌐 **Frontend updates**:  
+  - Server selection dropdown  
+  - Admin login + logout (session handling)  
+- 🔒 **Security updates**:  
+  - Bcrypt password storage  
+  - UUID and optional IP checks  
+  - Additional `.htaccess` IP whitelist
+ 
+---
+
+## ⚙️ Requirements
+
+- Fail2Ban with logging enabled  
+- UFW (for firewall integration)  
+- `bash`, `jq`, `awk`, `curl`  
+- PHP 7.4+ with JSON support  
+- HTTPS-capable web server (Apache or Nginx)  
 
 ---
 
-
-## 🆕 What's New in V 0.5.0
-
-> This Versions new Features are:
->  -  Multiserver Support with HTTPS-Sync Backend
->  -  Authentication with User Roles (admin-Role is set - viewer is like guest for now)
-
-⚙️ Backend
-
-- archive/ restructured → separated per server and "department" (fail2ban / blocklists)
-- /opt/Fail2Ban-Report/ reorganized → cleaner separation of configs and scripts
-- Centralized path management → reduced hardcoding, clearer structure
-- Sync-Backend
-
-🌐 Frontend
-
-- Multi-server Dropdown-List
-- Admin Login
-- Logout (session destroy)
-
-🔐 Security
-
-- Authentication → login with session, only admins can ban/unban
-- User management script (.sh) → manage Fail2Ban-Report User-List
-- User groups → Viewer (read-only) / Admin (ban/unban)
-- Username, password, UUID and optional IP checked by backend
-- password stored as bcrypt hash only
-- additional .htaccess for IP whitelist provided
-
----
 
 ### ⚠️ Upgrade Notice
 
 If you're upgrading from an existing installation 
 
 > here will be added some new stuff
+
+---
+
+
+## 👥 Discussions
+
+> If you want to join the conversation or have questions or ideas, visit the 💬 [Discussions page](https://github.com/SubleXBle/Fail2Ban-Report/discussions).
 
 ---
 
