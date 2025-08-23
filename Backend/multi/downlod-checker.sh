@@ -45,3 +45,4 @@ for FILE in $(echo "$response" | jq -r '.updates[]'); do
 done
 
 echo "🎉 All blocklists processed."
+
