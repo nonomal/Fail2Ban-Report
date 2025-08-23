@@ -1,31 +1,25 @@
 #!/bin/bash
 
-# Pfad als Variable festlegen
-BASE_PATH="$1"
+# Set the base path here
+BASE_PATH="/path/to/your/folders"
 
-# Prüfen, ob ein Pfad übergeben wurde
-if [ -z "$BASE_PATH" ]; then
-    echo "Bitte einen Pfad als Parameter angeben."
-    exit 1
-fi
-
-# Prüfen, ob der Pfad existiert
+# Check if the path exists
 if [ ! -d "$BASE_PATH" ]; then
-    echo "Der angegebene Pfad existiert nicht."
+    echo "The specified path does not exist: $BASE_PATH"
     exit 1
 fi
 
-# Für jeden Ordner im angegebenen Pfad
+# Loop through each subdirectory in the base path
 for DIR in "$BASE_PATH"/*/; do
-    # Prüfen, ob es einen Ordner "fail2ban" gibt
+    # Check if a "fail2ban" folder exists
     if [ -d "${DIR}fail2ban" ]; then
-        echo "Bearbeite Ordner: ${DIR}fail2ban"
+        echo "Processing folder: $DIR"
         
-        # Unterordner erstellen, falls nicht vorhanden
-        mkdir -p "${DIR}fail2ban/blocklists"
-        mkdir -p "${DIR}fail2ban/ufw"
-        mkdir -p "${DIR}fail2ban/stats"
+        # Create folders next to fail2ban, if they don't exist
+        mkdir -p "${DIR}blocklists"
+        mkdir -p "${DIR}ufw"
+        mkdir -p "${DIR}stats"
     fi
 done
 
-echo "Fertig!"
+echo "Done!"
