@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the base path here
-BASE_PATH="/path/to/your/folders"
+BASE_PATH="/path/to/your/archive"
 
 # Check if the path exists
 if [ ! -d "$BASE_PATH" ]; then
