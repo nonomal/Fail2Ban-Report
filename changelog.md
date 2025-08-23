@@ -153,11 +153,12 @@ changed the dropdown-list to match the new Marker assignment
 
 ```
 endpoint/
-└── index.php <= responsible for daily json files
-├── update.php <= this is where servers can ask for updates of blocklists
-├── download.php <= will give servers the updated blocklists for syncing
-├── backsync.php <= will take updated blocklists from client and replace servers blocklists
-└── .htaccess for security purpose (set ip allowlist)
+├── index.php       # Responsible for generating and serving daily JSON logs (Fail2Ban events)
+├── update.php      # Endpoint for clients to request which blocklists have updates
+├── download.php    # Endpoint for clients to download updated blocklists for syncing
+├── backsync.php    # Endpoint for clients to upload updated blocklists; replaces server-side blocklists
+└── .htaccess       # Security: IP allowlist to restrict access to trusted clients only
+
 ```
 
 ### 1. Endpoint (`/endpoint/index.php`)
