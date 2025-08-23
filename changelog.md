@@ -151,6 +151,15 @@ changed the dropdown-list to match the new Marker assignment
 
 ### Fail2Ban-Report 0.5.0 – Backend / Endpoint Updates
 
+```
+endpoint/
+└── index.php <= responsible for daily json files
+├── update.php <= this is where servers can ask for updates of blocklists
+├── download.php <= will give servers the updated blocklists for syncing
+├── backsync.php <= will take updated blocklists from client and replace servers blocklists
+└── .htaccess for security purpose (set ip allowlist)
+```
+
 ### 1. Endpoint (`/endpoint/index.php`)
 - New HTTPS endpoint for clients to send JSON data (`fail2ban-events-*.json` and `*.blocklist.json`).  
 - Authentication using:
