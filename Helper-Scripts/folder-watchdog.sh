@@ -20,6 +20,7 @@ for DIR in "$BASE_PATH"/*/; do
         echo "Processing folder: $DIR"
         
         # Create folders next to fail2ban, if they don't exist
+        # ufw and stats are not needed by now - but will be needed soon
         mkdir -p "${DIR}blocklists"
         mkdir -p "${DIR}ufw"
         mkdir -p "${DIR}stats"
