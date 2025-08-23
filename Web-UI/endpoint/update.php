@@ -8,6 +8,7 @@ define('CLIENT_LIST', __DIR__ . '/../Settings/client-list.json');
 define('UPDATE_FILE', __DIR__ . '/update.json');
 define('BLOCKLIST_BASE', __DIR__ . '/../archive/');
 
+// Hilfsfunktion für JSON-Antworten
 function respond($data, $code = 200) {
     http_response_code($code);
     echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -25,26 +26,30 @@ if (!is_array($clients)) {
 
 // --- Parse input ---
 $input = json_decode(file_get_contents('php://input'), true);
-if (!$input || !isset($input['username'], $input['password'])) {
+if (!$input || !isset($input['username'], $input['password'], $input['uuid'])) {
     respond(['success' => false, 'error' => 'Invalid request'], 400);
 }
 $username = $input['username'];
 $password = $input['password'];
+$uuid     = $input['uuid'];
 $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
-// --- Authenticate client ---
-$authorized = false;
+// --- Authenticate client (analog index.php) ---
+$client = null;
 foreach ($clients as $c) {
-    if ($c['username'] === $username && password_verify($password, $c['password'])) {
-        if (isset($c['ip']) && $c['ip'] !== '' && $c['ip'] !== $client_ip) {
-            respond(['success' => false, 'error' => 'IP not allowed'], 403);
-        }
-        $authorized = true;
+    if ($c['username'] === $username && $c['uuid'] === $uuid) {
+        $client = $c;
         break;
     }
 }
-if (!$authorized) {
-    respond(['success' => false, 'error' => 'Unauthorized'], 401);
+if (!$client) {
+    respond(['success' => false, 'error' => 'Authentication failed (user/uuid)'], 403);
+}
+if (!password_verify($password, $client['password'])) {
+    respond(['success' => false, 'error' => 'Authentication failed (password)'], 403);
+}
+if (isset($client['ip']) && $client['ip'] !== '' && $client['ip'] !== $client_ip) {
+    respond(['success' => false, 'error' => 'Authentication failed (ip mismatch)'], 403);
 }
 
 // --- Load update.json ---
