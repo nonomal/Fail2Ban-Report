@@ -1,5 +1,5 @@
 # Fail2Ban-Report
-> Beta 5.0 | Version 0.5.0
+> ![Fail2Ban-Report](https://img.shields.io/badge/Fail2Ban--Report%20🕵️-v0.5.0-yellow)
 
 > A lightweight web-based multi-server dashboard that transforms daily Fail2Ban logs into searchable and filterable JSON reports, while also providing centralized UFW IP blocklist management across all your servers.
 
