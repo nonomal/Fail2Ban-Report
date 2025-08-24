@@ -42,7 +42,7 @@ It provides optional tools to:
 - ⚡ Apply or remove firewall rules (currently via **ufw**)
 - 🚨 Get configureable warnings for unusual activity (DDoS, brute-force, scans)
 - 🚨 Mark IPs with 🔴 repeat bans or 🟡 ban increases
-- 🔍 Optional integrations:
+- 🔍 Optional integrations: (_Free API-KEYS_)
   - [AbuseIPDB](https://www.abuseipdb.com/) for reputation lookups
   - [IP-Info.io](https://ipinfo.io/) for region/provider checks
 
