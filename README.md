@@ -4,7 +4,7 @@
 > A lightweight web-based multi-server dashboard that transforms daily Fail2Ban logs into searchable and filterable JSON reports, while also providing centralized UFW IP blocklist management across all your servers.
 
 **Integration**
->Designed for easy integration on a wide range of Linux systems — from small Raspberry Pis to modest business setups — though it’s not (yet?) targeted at large-scale enterprise environments.
+>Designed for easy integration on a wide range of Linux systems — from small Raspberry Pis to modest business setups — though it’s not (yet) targeted at large-scale enterprise environments.
 High flexibility comes from the backend shell scripts, which you can adapt to your specific environment or log sources to provide the JSON data the web interface needs (daily JSON event files).
 
 
@@ -113,11 +113,13 @@ It provides optional tools to:
 ## ⚙️ Requirements
 
 - Fail2Ban with logging enabled  
-- UFW (for firewall integration)  
-- `bash`, `jq`, `awk`, `curl`  
+- UFW (for firewall integration)    
 - PHP 7.4+ with JSON support  
 - HTTPS-capable web server (Apache or Nginx)  
-
+- `bash` - (https://en.wikipedia.org/wiki/Bash_(Unix_shell))
+- `jq`   - (https://jqlang.org/)
+- `awk`  - (https://en.wikipedia.org/wiki/AWK)
+- `curl` - (https://curl.se/)
 ---
 
 
