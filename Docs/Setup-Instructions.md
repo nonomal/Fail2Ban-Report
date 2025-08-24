@@ -36,11 +36,20 @@ The structure should look like this:
     │   ├── unblock-ip.php
     │   ├── list-files.php
     │   └── footer.php
-    ├── archive/               ← must be writable by web server
+    ├── archive/    ← must be writable by web server
+    │   ├── Client-Servername
+    │      ├── fail2ban/
+    │      ├── blocklists
+    │      └── ufw
     ├── index.php
     ├── .htaccess
-    ├── README.md
-    ├── Setup-Instructions.md
+    ├── endpoint/
+    │   ├── index.php
+    │   ├── update.php
+    │   ├── download.php
+    │   ├── backsync.php
+    │   └── .htaccess
+    ├── s
     └── (Shell scripts stored outside the web root)
 
 ---
