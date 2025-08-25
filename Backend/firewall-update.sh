@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # --- Configuration ---
-BLOCKLIST_DIR="/opt/Fail2Ban-Report/archive/blocklists"   # Or Webarchive when local
+BLOCKLIST_DIR="/var/www/html/Fail2Ban-Report/archive/blocklists"   # Or Webarchive when local
 LOGFILE="/opt/Fail2Ban-Report/Firewall.log"
 LOGGING=true  # Set to true to enable logging
 
