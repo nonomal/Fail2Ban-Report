@@ -109,7 +109,7 @@ It provides optional tools to:
 
 ## ⚙️ Requirements
 
-### Server
+### 🗄️ Server
 - Fail2Ban with logging enabled  
 - UFW (for firewall integration)    
 - PHP 7.4+ with JSON support  
@@ -119,7 +119,7 @@ It provides optional tools to:
 - `awk`  - (https://en.wikipedia.org/wiki/AWK)
 - `curl` - (https://curl.se/)
 
-### Client
+### 📡 Sync-Client
 - Fail2Ban with logging enabled  
 - UFW (for firewall integration)    
 - `bash` - (https://en.wikipedia.org/wiki/Bash_(Unix_shell))
