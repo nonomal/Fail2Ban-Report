@@ -166,7 +166,7 @@ It provides optional tools to:
 
 ## 🪳 Bugfixes (History)
 
-> - Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/issues)
+Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/issues)
 
 > - ✅ **Date filter** now correctly limits displayed events (0.1.2)
 > - ✅ **Jail filter** now correctly shows only the jails present in the displayed event list. (0.2.1)
