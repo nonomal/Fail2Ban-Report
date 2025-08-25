@@ -1,5 +1,5 @@
 LOGFILE="/var/log/fail2ban.log"
-OUTPUT_JSON_DIR="/var/www/Fail2Ban-Report/archive"
+OUTPUT_JSON_DIR="/var/www/html/Fail2Ban-Report/archive"
 
 TODAY=$(date +"%Y-%m-%d")
 OUTPUT_JSON_FILE="$OUTPUT_JSON_DIR/fail2ban-events-$(date +"%Y%m%d").json"
