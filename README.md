@@ -36,7 +36,7 @@ Critical backend operations (like UFW updates) are executed via root cron script
 
 ## Installation
 
-### UI and local Fail2Ban Events
+### New Installation : UI and local Fail2Ban Events
 Please read the ![Setup Instructions](Docs/Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
