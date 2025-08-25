@@ -25,7 +25,7 @@ It does not modify Fail2Ban jails or existing Fail2Ban configurations directly, 
 > A potential long-term enhancement could include **direct interaction with Fail2Ban jails** — for example, user-controlled bans and unbans per jail.  
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
 
-**Read about the Syncronisation-Concept**
+**Syncronisation-Concept**
 > in this Document ![Docs/Sync-Concept.md](Docs/Sync-Concept.md)
 
 Please read the [Installation Instructions](Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
