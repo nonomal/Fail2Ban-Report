@@ -21,12 +21,12 @@ It does not modify Fail2Ban jails or existing Fail2Ban configurations directly, 
 
 > Version 0.5.0 introduces multi-server support and role-based access: Viewer accounts are read-only, while Admins can manage bans/unbans and blocklists across all connected servers via the dashboard.
 
-**Read about the Syncronisation-Concept**
-> in this Document ![Docs/Sync-Concept.md](Docs/Sync-Concept.md)
-
 **Future Direction:**  
 > A potential long-term enhancement could include **direct interaction with Fail2Ban jails** — for example, user-controlled bans and unbans per jail.  
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
+
+**Read about the Syncronisation-Concept**
+> in this Document ![Docs/Sync-Concept.md](Docs/Sync-Concept.md)
 
 Please read the [Installation Instructions](Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
