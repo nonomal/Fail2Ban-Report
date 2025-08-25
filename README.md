@@ -40,6 +40,10 @@ Critical backend operations (like UFW updates) are executed via root cron script
 Please read the ![Setup Instructions](Docs/Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
+### Existing Installations : UI and local Fail2Ban Events
+Read the ![]() carefully.
+> Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
+
 ### Adding Sync-Clients
 Read the ![Instructions to add a Sync-Client for Fail2Ban-Report](Docs/Adding-Clients.md) carefully.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
