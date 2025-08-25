@@ -1,5 +1,7 @@
 # Sync Concept of Fail2Ban-Report
 
+> Username of the Client and Displayed Servername in Web-UI are the same.
+
 ## Web UI
 When a block or unblock action is triggered via the Web UI (example: block):
 
