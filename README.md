@@ -168,13 +168,13 @@ It provides optional tools to:
 
 > - Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/issues)
 
-- ✅ **Date filter** now correctly limits displayed events (0.1.2)
-- ✅ **Jail filter** now correctly shows only the jails present in the displayed event list. (0.2.1)
-- ✅ **File date filtering** fix to include today's JSON logs and ensure latest files are listed correctly. (0.2.2)
-- ✅ **Blocklist Path on unblocking** fixed a possible bug that could lead to not finding the blocklist.json when unblocking from the Blocklist view. (0.2.2)
+> - ✅ **Date filter** now correctly limits displayed events (0.1.2)
+> - ✅ **Jail filter** now correctly shows only the jails present in the displayed event list. (0.2.1)
+> - ✅ **File date filtering** fix to include today's JSON logs and ensure latest files are listed correctly. (0.2.2)
+> - ✅ **Blocklist Path on unblocking** fixed a possible bug that could lead to not finding the blocklist.json when unblocking from the Blocklist view. (0.2.2)
   → Hotfixed on 05.08.2025 at 13:10 (UTC+2) directly in latest (0.2.3)
-- ✅ **Installer** should now ask if you want to delete and reclone repo when allready existing (0.3.1)
-- ✅ **Added FLOCK** to lock json files to not loose data when several write processes write at the same time (0.3.2)
+> - ✅ **Installer** should now ask if you want to delete and reclone repo when allready existing (0.3.1)
+> - ✅ **Added FLOCK** to lock json files to not loose data when several write processes write at the same time (0.3.2)
 - ✅ **Handling of "Increase Ban" Events** : will now processed correct by backend and is also visible in frontend via markers (0.4.0)
   - Thanks to ***jbd7*** for reporting and debugging 👍.
 - ⏳ **Copy to Clipboard** cannot copy the list when filtered by markers
