@@ -1,4 +1,4 @@
-# 🔧 Fail2Ban-Report V 0.5.0 – Manual Setup Instructions - Fresh Installation (v0.5.0)
+# 🔧 Fail2Ban-Report V 0.5.0 – Manual Setup Instructions
 
 
 This guide explains how to install **Fail2Ban-Report v0.5.0** from scratch.
