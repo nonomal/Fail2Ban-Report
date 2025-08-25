@@ -200,7 +200,7 @@ This is especially useful if you want to manually patch or update individual fil
 
 ---
 
-⚡ Performance & Stress Test
+## ⚡ Performance & Stress Test
 
 Fail2Ban-Report has been tested under high-load conditions to verify stability, responsiveness, and reliable synchronization across multiple servers.
 
