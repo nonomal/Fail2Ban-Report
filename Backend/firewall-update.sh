@@ -5,7 +5,7 @@ set -euo pipefail
 # --- Configuration ---
 BLOCKLIST_DIR="/var/www/html/Fail2Ban-Report/archive/blocklists"   # Or Webarchive when local
 LOGFILE="/opt/Fail2Ban-Report/Firewall.log"
-LOGGING=true  # Set to true to enable logging
+LOGGING=false  # Set to true to enable logging
 
 # --- Set PATH ---
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
