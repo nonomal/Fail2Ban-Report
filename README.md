@@ -26,9 +26,9 @@ It does not modify Fail2Ban jails or existing Fail2Ban configurations directly, 
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
 
 **Syncronisation-Concept and Chain of Trust**
-> you can read about the Syncronisation Concept in this Document ![Sync-Concept](Docs/Sync-Concept.md) to get a better understanding of how it works
+> you can read about the Syncronisation Concept in this Document [Sync-Concept](Docs/Sync-Concept.md) to get a better understanding of how it works
 
-> you can read about the "Chain of Trust" between Server and Clients in this Document: ![Chain of Trust](Docs/chain-of-trust.md)
+> you can read about the "Chain of Trust" between Server and Clients in this Document: [Chain of Trust](Docs/chain-of-trust.md)
 
 Critical backend operations (like UFW updates) are executed via root cron scripts; ensure the server running Fail2Ban-Report is fully secured.
 
@@ -46,15 +46,15 @@ Username and Password for Blocklist manipulation is `admin`:`admin`
 ## 🛠️ Installation
 
 ### 🔧 New Installation : UI and local Fail2Ban Events
-Please read the ![Setup Instructions](Docs/Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
+Please read the [Setup Instructions](Docs/Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
 ### 🔧 Existing Installations : UI and local Fail2Ban Events
-Read the ![Setup Instructions]() carefully.
+Read the [Setup Instructions]() carefully.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
 ### 📡 Adding Sync-Clients
-Read the ![Instructions to add a Sync-Client for Fail2Ban-Report](Docs/Adding-Clients.md) carefully.
+Read the [Instructions to add a Sync-Client for Fail2Ban-Report](Docs/Adding-Clients.md) carefully.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
 
