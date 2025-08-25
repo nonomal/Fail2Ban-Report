@@ -280,34 +280,20 @@ Pull requests, feature ideas and bug reports are very welcome!
 
 ## 🖼️ Screenshots
 
-![screenshots/Header-050-1.png](screenshots/Header-050-1.png)
+### Main List
+![Main-List](screenshots/Main-List-050-2.png)
 
-New Header with Login/Logout and Server-Chooser - grey text when not logged in
+### Blocklist View
+![Blocklist](screenshots/Block-List-050-2.png)
 
+### Security Message (new)
+![Admin-Message](screenshots/admin-msg-050-2.png)
 
-![screenshots/Header-050-2.png](screenshots/Header-050-2.png)
+### Ban Message
+![Ban-Message](screenshots/Ban-Msg-050-2.png)
 
-Yellow Text when logged in user
-
-
-![screenshots/List-050-1.png](screenshots/List-050-1.png)
-
-Fail2Ban - Event List
-
-
-![screenshots/Block-List-050-1.png](screenshots/Block-List-050-1.png)
-
-Blocklist
-
-
-![screenshots/Message-Toast-050-1.png](screenshots/Message-Toast-050-1.png)
-
-Message Toaster
-
-
-![screenshots/Message-Toast-050-2.png](screenshots/Message-Toast-050-2.png)
-
-New Feature : Block and Unblock Actions only for logged in admin role
+### Information Message
+![Info-Message](screenshots/Info-050-2.png)
 
 
 ---
