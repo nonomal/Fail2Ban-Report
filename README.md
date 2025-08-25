@@ -182,7 +182,7 @@ It provides optional tools to:
 ---
 
 ## 👀 Outlook
-- 📦 will have a deeper look into statistics and more Fail2Ban Integration with the next releases
+> besides stability, security and usability, next releases will focus more on statistics, integration of other firewalls and more fail2ban integration
 
 ---
 
