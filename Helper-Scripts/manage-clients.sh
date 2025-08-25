@@ -1,16 +1,16 @@
 #!/bin/bash
 # manage-clients.sh
-# CLI-Tool zur Verwaltung der Fail2Ban-Report Clients für den HTTPS-Endpoint (JSON + bcrypt)
+# CLI-Tool to manage Fail2Ban-Report Clients for the HTTPS-Endpoint (JSON + bcrypt)
 
-# === Konfiguration ===
+# === Configuration ===
 CLIENT_FILE="/opt/Fail2Ban-Report/Settings/client-list.json"
 
-# JSON-Datei existiert nicht → erstellen
+# JSON-File does not exist → create
 if [ ! -f "$CLIENT_FILE" ]; then
     echo "[]" > "$CLIENT_FILE"
 fi
 
-# === Hilfsfunktionen ===
+# === Helperfunction ===
 function read_password() {
     read -sp "Password: " password
     echo
@@ -26,12 +26,12 @@ function add_client() {
     read -p "Username: " username
     read_password
     read -p "UUID: " uuid
-    read -p "IP (optional, leer lassen für alle): " ip
+    read -p "IP (optional): " ip
 
-    # Passwort in bcrypt hashen (PHP)
+    # Password in bcrypt hash (PHP)
     hash=$(php -r "echo password_hash('$password', PASSWORD_BCRYPT);")
 
-    # JSON-Eintrag anhängen
+    # attach JSON entry
     tmp=$(mktemp)
     jq --arg u "$username" --arg p "$hash" --arg id "$uuid" --arg ip "$ip" \
        '. += [{"username":$u,"password":$p,"uuid":$id,"ip":$ip}]' "$CLIENT_FILE" > "$tmp" && mv "$tmp" "$CLIENT_FILE"
@@ -42,7 +42,7 @@ function add_client() {
 function edit_client() {
     read -p "Username to edit: " username
 
-    # Prüfen, ob Client existiert
+    # Check, if Client exists
     exists=$(jq --arg u "$username" 'map(select(.username==$u)) | length' "$CLIENT_FILE")
     if [ "$exists" -eq 0 ]; then
         echo "Client $username not found."
@@ -51,7 +51,7 @@ function edit_client() {
 
     read_password
     read -p "UUID: " uuid
-    read -p "IP (optional, leer lassen für alle): " ip
+    read -p "IP (optional): " ip
 
     tmp=$(mktemp)
     jq --arg u "$username" --arg p "$(php -r "echo password_hash('$password', PASSWORD_BCRYPT);")" \
@@ -74,7 +74,7 @@ function list_clients() {
     jq -r '.[] | "Username: \(.username), UUID: \(.uuid), IP: \(.ip)"' "$CLIENT_FILE"
 }
 
-# === Hauptmenü ===
+# === Main Menu ===
 echo "Select action:"
 echo "1) Add client"
 echo "2) Edit client"
@@ -90,6 +90,6 @@ case "$action" in
     *) echo "Invalid choice"; exit 1 ;;
 esac
 
-# === Berechtigungen setzen ===
+# === set ownership ===
 chown root:www-data "$CLIENT_FILE"
 chmod 0660 "$CLIENT_FILE"
