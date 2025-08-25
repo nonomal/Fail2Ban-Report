@@ -25,8 +25,9 @@ It does not modify Fail2Ban jails or existing Fail2Ban configurations directly, 
 > A potential long-term enhancement could include **direct interaction with Fail2Ban jails** — for example, user-controlled bans and unbans per jail.  
 The existing structured `*.blocklist.json` format is already designed to support this, ensuring that any future manual ban management can remain "persistent", reviewable, and fully auditable.
 
-**Syncronisation-Concept**
-> you can read about the Syncronisation Concept in this Document ![Sync-Concept.md](Docs/Sync-Concept.md) to get a better understanding of how it works
+**Syncronisation-Concept and Chain of Trust**
+> you can read about the Syncronisation Concept in this Document ![Sync-Concept](Docs/Sync-Concept.md) to get a better understanding of how it works
+> you can read about the "Chain of Trust" between Server and Clients in this Document: ![Chain of Trust](Docs/chain-of-trust.md)
 
 > Critical backend operations (like UFW updates) are executed via root cron scripts; ensure the server running Fail2Ban-Report is fully secured.
 
