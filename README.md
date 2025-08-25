@@ -212,8 +212,8 @@ Fail2Ban-Report has been tested under high-load conditions to verify stability, 
 
 **Key Results:**
 
-- The WebUI loads all 13,480 daily JSON entries in about 1.5 seconds.
 - Since each ban is triggered after 4 failed attempts, the actual number of incoming requests corresponds to roughly 53,600 login attempts over 10 minutes → about 5,360 requests per minute (≈ 89 requests per second).
+- The WebUI loads all 13,480 daily JSON entries in about 1.5 seconds.
 - Connected clients consistently pulled and pushed blocklists without any delay. Even when a blocklist update included 80+ new IP entries, the synchronization completed in a blink of an eye, with changes applied in both directions instantly.
 - Switching between multiple servers in the dashboard remains smooth, typically under 2 seconds, even during attacks.
 
