@@ -23,7 +23,7 @@ updates=$(echo "$response" | jq -r '.updates | length')
 
 if [ "$updates" -eq 0 ]; then
   echo "ℹ️ No updates available."
-  exit 0
+  exit 1
 fi
 
 echo "✅ Updates available: $updates blocklist(s)."
