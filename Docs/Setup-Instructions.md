@@ -1,6 +1,8 @@
-# 🔧 Fail2Ban-Report Beta 2 – Manual Setup Instructions
+# 🔧 Fail2Ban-Report V 0.5.0 – Manual Setup Instructions - Fresh Installation (v0.5.0)
 
-These instructions explain how to manually install and configure **Fail2Ban-Report v2** on a Linux system.
+
+This guide explains how to install **Fail2Ban-Report v0.5.0** from scratch.
+It covers the Web-UI setup, security hardening, backend configuration, and user management.
 
 ---
 
@@ -17,185 +19,218 @@ These instructions explain how to manually install and configure **Fail2Ban-Repo
 
 ---
 
-## 📁 Project Structure
+## Step 1 – Install Web-UI on the Server
 
-Place the project in your desired web directory, for example:
+1. Create the target directory on your web server, e.g.:
 
-    /var/www/html/Fail2Ban-Report/
+   ```bash
+   mkdir -p /var/www/html/Fail2Ban-Report
+   ```
 
-The structure should look like this:
+2. Copy the content of the `Web-UI` folder into it:
 
-    Fail2Ban-Report/
-    ├── assets/
-    │   ├── css/style.css
-    │   ├── images/*.png
-    │   └── js/*.js
-    ├── includes/
-    │   ├── actions/*.php
-    │   ├── block-ip.php
-    │   ├── unblock-ip.php
-    │   ├── list-files.php
-    │   └── footer.php
-    ├── archive/    ← must be writable by web server
-    │   ├── Client-Servername
-    │      ├── fail2ban/
-    │      ├── blocklists
-    │      └── ufw
-    ├── index.php
-    ├── .htaccess
-    ├── endpoint/
-    │   ├── index.php
-    │   ├── update.php
-    │   ├── download.php
-    │   ├── backsync.php
-    │   └── .htaccess
-    ├── s
-    └── (Shell scripts stored outside the web root)
+   ```bash
+   cp -r /home/USER/Fail2Ban-Report-latest/Web-UI/* /var/www/html/Fail2Ban-Report/
+   ```
+
+3. Adjust file ownership so your web server user can access them:
+
+   ```bash
+   chown -R -P www-data:www-data /var/www/html/Fail2Ban-Report
+   ```
 
 ---
 
-## 🔐 Permissions
+## Step 2 – Secure the Web-UI
 
-Make the `/archive/` directory writable for the web server:
+Edit the included **`.htaccess`** file and apply the following settings:
 
-    chown -R www-data:www-data /var/www/html/Fail2Ban-Report/
-    find /var/www/html/Fail2Ban-Report/ -type d -exec chmod 755 {} \;
-    find /var/www/html/Fail2Ban-Report/ -type f -exec chmod 644 {} \;
+### 1. Enforce HTTPS
 
----
+Go to the section **“Basic HTTPS Headers”** and make sure the Web-UI is only available via **HTTPS**.
+All unencrypted HTTP requests should be redirected to HTTPS.
 
-## ⚙️ Shell Scripts
+### 2. Authentication
 
-The following two shell scripts **must not** be placed inside the web root.
-Recommended path: `/opt/Fail2Ban-Report/`
-
-- `fail2ban_log2json.sh`
-- `firewall-update.sh`
-
-Adjust paths in these scripts if necessary:
-- `fail2ban_log2json.sh` reads the Fail2Ban log and writes JSON files to `/archive/` (archive/ is a folder placed in the Webspace of /Fail2Ban-Report/ 
-- `firewall-update.sh` reads `blocklist.json` and syncs it with UFW (blocks/unblocks) so it also needs the path to `/archive/`
-
-> Make sure both scripts are executable (`chmod +x`)
+Fail2Ban-Report does not include a native base login.
+Use the `.htaccess` file to secure access with either **Basic Authentication** or **IP-based restrictions**.
 
 ---
 
-## 🕒 Cronjob Configuration
+### Option A: Password Protection
 
-Set up two cronjobs:
+Enable Basic Auth in `.htaccess`:
 
-1. Convert logs to JSON every 5–15 minutes:
-    
-    */5 * * * * root /opt/Fail2Ban-Report/fail2ban_log2json.sh
+```apache
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /etc/apache2/htpasswd/.htpasswd
 
-2. Sync firewall blocklist with UFW every 5–15 minutes:
+<RequireAny>
+   Require valid-user
+</RequireAny>
+```
 
-    */5 * * * * root /opt/Fail2Ban-Report/firewall-update.sh
+* Create the `.htpasswd` file outside of the web root, e.g.:
 
-> Make sure both scripts are executable (`chmod +x`)
+  ```bash
+  htpasswd -c -B /etc/apache2/htpasswd/.htpasswd admin
+  ```
 
----
-
-## 🌐 Web Interface Configuration
-
-- No PHP configuration is required.
-- All scripts in `includes/` and `includes/actions/` work without manual changes.
-- The web interface displays log information and lets you:
-  - View ban history
-  - Block/unblock IPs manually
-  - Manage the `blocklist.json` interactively
+* Store only **bcrypt-hashed passwords**, never plain text.
+  You can use the built-in Apache `htpasswd` tool (recommended) or an external generator (e.g. [bcrypt generator](https://suble.net/htpasswd.php)).
 
 ---
 
-## 🔒 Security Notes
+### Option B: IP Restriction
 
-The `.htaccess` file includes:
+```apache
+<RequireAny>
+   Require ip <YOUR_IP_ADDRESS>
+</RequireAny>
+```
 
-- Protection against direct access to:
-  - `.json`, `.sh`, `.ini`, `.log`, `.bak`, `.OLD`
-- Rewrite rules for `archive/*.json` and `includes/*.php`
-- Strong HTTPS headers
-- (Optional) examples for basic authentication and IP restrictions (commented)
+If you want to allow your Sync Clients as well, list them explicitly:
 
-Make sure your Apache server honors `.htaccess`, and you enable `mod_rewrite`.
+```apache
+<RequireAny>
+   Require ip <YOUR_IP_ADDRESS>
+   Require ip <Sync-Client-1>
+   Require ip <Sync-Client-2>
+</RequireAny>
+```
 
----
-
-## ✅ Setup Complete
-
-You can now access the tool at:
-
-    http(s)://yourdomain.tld/Fail2Ban-Report/
-
-Monitor your logs, manage bans, and secure your system visually and efficiently.
+⚠️ **Important:** Never allow unauthenticated access to your Web-UI! Use either password protection, IP restriction, or both.
 
 ---
 
-## 🌐 Optional: AbuseIPDB Integration
+## Step 3 – Backend Setup
 
-Fail2Ban-Report supports an optional IP reputation check and reporting via [AbuseIPDB](https://www.abuseipdb.com/), a public threat intelligence platform.
+Create the following directory structure (case-sensitive!):
 
-### 🔎 What It Does
+```
+/opt/Fail2Ban-Report
+├── archive
+│   ├── fail2ban
+│   └── blocklists
+├── Helper-Scripts
+├── Settings
+└── Backend
+```
 
-- Displays how often an IP has been reported on AbuseIPDB
-- Allows you to manually report abusive IPs directly from the interface
-- Helps assess the trustworthiness of IP addresses before unblocking them
+---
 
-### 🧰 Requirements
+### Helper-Scripts
 
-- A free account at [AbuseIPDB.com](https://www.abuseipdb.com/)
-- A personal API key (available in your [AbuseIPDB dashboard](https://www.abuseipdb.com/account/api))
+Copy helper scripts:
 
-### 🛠 Configuration
+```bash
+cp -r /home/USER/Fail2Ban-Report-latest/Helper-Scripts/* /opt/Fail2Ban-Report/Helper-Scripts/
+```
 
-1. Create a config file **outside the web root**, e.g. at:
+Adjust paths in `folder-watchdog.sh`:
 
-    ```
-    /opt/Fail2Ban-Report/fail2ban-report.config
-    ```
+* Set `BASE_PATH` to the directory of your Web-UI `archive` folder.
 
-2. Add the following content (replace the API key placeholder):
+---
 
-    ```ini
-    [reports]
-    report=true
-    report_types=abuseipdb
+### Config File
 
-    [AbuseIPDB API Key]
-    abuseipdb_key=YOUR_API_KEY_HERE
-    ```
+Copy the config file:
 
-3. Ensure the config file is **readable** by the web server (e.g. `www-data`):
+```bash
+cp -r /home/USER/Fail2Ban-Report/Conf/fail2ban-report.config /opt/Fail2Ban-Report/Settings/
+```
 
-    ```bash
-    chown www-data:www-data /opt/Fail2Ban-Report/fail2ban-report.config
-    chmod 640 /opt/Fail2Ban-Report/fail2ban-report.config
-    ```
+Example configuration:
 
-4. Done — if the file exists and is valid, the web interface will show AbuseIPDB info and allow reporting.
+```ini
+[reports]
+report=false
+report_types=abuseipdb,ipinfo
 
-### ⚠️ Custom Path or Filename
+[Fail2Ban-Daily-List-Settings]
+max_display_days=7
 
-If you choose a different location or name for the config file:
+[Warnings]
+enabled=true
+threshold=5:20
 
-- Open this file:
+[Default Server]
+defaultserver=
+```
 
-    ```
-    includes/actions/reports/abuseipdb.php
-    ```
+* **Reports**: If enabled (`report=true`), you need API keys for [AbuseIPDB](https://www.abuseipdb.com/) and [IPInfo](https://ipinfo.io/).
+* **Warnings**: Threshold `5:20` means “Warning” at 5 bans/minute per jail, “Critical” at 20.
+* **Default Server**: Define the default server name (folder name) shown in the Web-UI.
 
-- Look for the line that defines the path:
+---
 
-    ```php
-    $configPath = '/opt/Fail2Ban-Report/fail2ban-report.config';
-    ```
+### Backend Scripts
 
-- Adjust it to match your actual file path.
+Copy backend scripts:
 
-> ⚠️ The config file must be placed **outside** the web root for security reasons.
+```bash
+cp -r /home/USER/Fail2Ban-Report/Backend/fail2ban_log2json.sh /opt/Fail2Ban-Report/Backend/
+cp -r /home/USER/Fail2Ban-Report/Backend/firewall-update.sh /opt/Fail2Ban-Report/Backend/
+```
 
-### 💡 Notes
+Adjust script paths:
 
-- The feature is **fully optional** — Fail2Ban-Report works fine without it.
-- AbuseIPDB requests are made **server-side**, your API key is not exposed in the browser.
-- Their free tier currently allows **1,000 requests per day**
+* `fail2ban_log2json.sh` → set `OUTPUT_JSON_DIR` to `/opt/Fail2Ban-Report/archive/<SERVERNAME>/fail2ban/`
+* `firewall-update.sh` → set blocklist path to `/var/www/html/Fail2Ban-Report/archive/<SERVERNAME>/blocklists`
+
+Make scripts executable:
+
+```bash
+chmod +x /opt/Fail2Ban-Report/Backend/*.sh
+```
+
+---
+
+### Cronjobs
+
+Edit your crontab:
+
+```bash
+crontab -e
+```
+
+Example (run every 5 minutes):
+
+```bash
+*/5 * * * * /opt/Fail2Ban-Report/Backend/fail2ban_log2json.sh >> /var/log/f2br_backend.log 2>&1
+*/5 * * * * /opt/Fail2Ban-Report/Backend/firewall-update.sh >> /var/log/f2br_backend.log 2>&1
+```
+
+* `*/5` = every 5 minutes
+* `*/15` = every 15 minutes
+* `*/30` = every 30 minutes
+
+Logging is recommended for easier debugging.
+
+---
+
+## Step 4 – Create Admin User
+
+To ensure only authorized users can manipulate blocklists, **authentication is required** since v0.5.0.
+
+Go to the helper scripts directory:
+
+```bash
+cd /opt/Fail2Ban-Report/Helper-Scripts/
+./manage-users.sh
+```
+
+* Enter username and password (stored as bcrypt hash only).
+* Assign a role:
+
+  * `Admin` → can manipulate blocklists
+  * `Viewer` → read-only access
+
+---
+
+## Done!
+
+Fail2Ban-Report is now running on your server.
+To add more clients, follow the **“Adding-Clients”** guide.
