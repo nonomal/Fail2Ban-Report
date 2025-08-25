@@ -73,7 +73,7 @@ There's a simple demo version available here – no backend, no real data:
 Username and Password for Website Access is : `admin`:`admin`
 Username and Password for Blocklist manipulation is `admin`:`admin`
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 🛠️ Installation
@@ -91,7 +91,7 @@ Read the [Instructions to add a Sync-Client for Fail2Ban-Report](Docs/Adding-Cli
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 📚 What It Does
@@ -113,7 +113,7 @@ It provides optional tools to:
 
 > **Note:** Viewer accounts are read-only. Direct integration with other firewalls or native Fail2Ban jail commands is not yet implemented.  
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 🧱 Architecture Overview
@@ -138,7 +138,7 @@ It provides optional tools to:
 - Include metadata: jail, status, timestamps, source
 - Modified only by authenticated admins
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## ⚙️ Requirements
@@ -161,7 +161,7 @@ It provides optional tools to:
 - `awk`  - (https://en.wikipedia.org/wiki/AWK)
 - `curl` - (https://curl.se/)
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 📦 Features
@@ -178,7 +178,7 @@ It provides optional tools to:
 
 > 🧰 Works even on small setups (Raspberry Pi, etc.)
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 
@@ -199,7 +199,7 @@ It provides optional tools to:
   - UUID and optional IP checks  
   - Additional `.htaccess` IP whitelist
 
- [↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 🪳 Bugfixes (History)
@@ -217,20 +217,20 @@ Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/is
   - Thanks to 👉 ***jbd7*** 👈 for reporting and debugging `issue #21` 👍.
 - ⏳ **Copy to Clipboard** cannot copy the list when filtered by markers (0.5.0)
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 👀 Outlook
 > besides stability, security and usability, next releases will focus more on statistics, integration of other firewalls and more fail2ban integration
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 👥 Discussions
 
 > If you want to join the conversation or have questions or ideas, visit the 💬 [Discussions page](https://github.com/SubleXBle/Fail2Ban-Report/discussions).
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 📄 Changelog
@@ -239,7 +239,7 @@ Details about all new features, improvements, and changed files can be found in 
 
 This is especially useful if you want to manually patch or update individual files.
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 📄 License
@@ -247,7 +247,7 @@ This is especially useful if you want to manually patch or update individual fil
 This project is licensed under the **GPLv3**.  
 Feel free to use, modify and share — but please respect the license terms.
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## ⚡ Performance & Stress Test
@@ -271,7 +271,7 @@ Fail2Ban-Report has been tested under high-load conditions to verify stability, 
 
 Fail2Ban-Report maintains fast performance and reliable data synchronization, proving its suitability for multi-server setups and high-frequency event environments.
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 
@@ -287,7 +287,7 @@ Fail2Ban-Report maintains fast performance and reliable data synchronization, pr
 
 > Suggestions and Ideas still welcome at any time (see Discussions) - When you are using Fail2Ban-Report and you think "I would need to see .. " tell me, I am happy to see your Ideas!
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## ✅ What It Is
@@ -306,7 +306,7 @@ Fail2Ban-Report maintains fast performance and reliable data synchronization, pr
 - ❌ A heavy analytics platform — it’s lightweight and log-driven by design
 - ❌ A Playground for inexperienced People trying to block half of the Internet
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 🤝 Contributing
@@ -320,7 +320,7 @@ Pull requests, feature ideas and bug reports are very welcome!
 > 💡 “Wouldn’t it be cool if it could also do XYZ?”  
 > Absolutely — I’m happy to hear your ideas.
 
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
 ## 🖼️ Screenshots
@@ -340,6 +340,5 @@ Pull requests, feature ideas and bug reports are very welcome!
 ### Ban Message
 ![Ban-Message](screenshots/Ban-Msg-050-2.png)
 
-
-[↑ Table of Contents ↑](#-Table-of-Contents)
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
