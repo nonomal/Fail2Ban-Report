@@ -32,18 +32,53 @@ apt update -qq && apt install jq gawk curl -y -qq
 > The Client will show up on the Server by it's Username
 > So if you have your testserver (testing.yourodmain.tld) as Client and you are using the "UserName" "TestServer" it will show up in the UI as TestServer (Case-Sensitive)
 
-In /opt/Fail2Ban-Report/Backend/ create the following scripts:
+In /opt/Fail2Ban-Report/Backend/ create or copy the following scripts:
 
-- fail2ban_log2json.sh ← insert client login credentials
-- download-checker.sh ← insert client login credentials
-- firewall-update.sh ← insert client login credentials
-- syncback.sh ← insert client login credentials
+- config.env
+- fail2ban_log2json.sh
+- download-checker.sh
+- firewall-update.sh
+- syncback.sh
+- Fail2Ban-Report-cronscript.sh
 
 Make all .sh files executable:
 
 ```
 chmod +x /opt/Fail2Ban-Report/Backend/*.sh
 ```
+
+edit config.env
+```
+# === Shared Fail2Ban Report Client Config ===
+
+# Authentication
+CLIENT_USER="MyClientName"
+CLIENT_PASS="MyPassword"
+CLIENT_UUID="MyUUID"
+
+# Server URLs
+ENDPOINT_URL="https://my.server.tld/Fail2Ban-Report/endpoint/index.php"
+UPDATE_URL="https://my.server.tld/Fail2Ban-Report/endpoint/update.php"
+DOWNLOAD_URL="https://my.server.tld/Fail2Ban-Report/endpoint/download.php"
+BACKSYNC_URL="https://my.server.tld/Fail2Ban-Report/endpoint/backsync.php"
+
+# Local Paths
+OUTPUT_JSON_DIR="/opt/Fail2Ban-Report/archive/fail2ban"
+BLOCKLIST_DIR="/opt/Fail2Ban-Report/archive/blocklists"
+CLIENT_LOG="/var/log/fail2ban-report-client.log"
+```
+
+You will have to edit:
+
+Authentication Part
+`CLIENT_USER` this is your Username on the Server and also the Name that is Displayed in Web-UI for this Server
+`CLIENT_PASS` the Passwort for your Client
+`CLIENT_UUID` the UUID that was created with `create-client-uuid.sh`
+
+Server URLs
+
+change `my.server.tld/` to fit your envoirement
+if curious why so many urls read [Syncronisation-Concept](Sync-Concept.md)
 
 ## Helper scripts
 
@@ -65,10 +100,27 @@ The client UUID will be displayed – copy it.
 
 
 ## Cron jobs
-```muss ich noch ändern
-/path/to/fail2ban_log2json.sh
-/path/to/download-checker.sh && /path/to/firewall-update.sh && /path/to/syncback.sh
+you set the Fail2Ban-Report-cronscript.sh as the "Master Cronscript"
 ```
+crontab -e
+```
+then
+```
+*/5 * * * * /opt/Fail2Ban-Report/Backend/Fail2Ban-Report-cronscript.sh >> /opt/Fail2Ban-Report/Backend/Fail2ban-Report-cronscript.sh
+```
+This will add a cronjob running the script every 5 minutes
+
+change `*/5` to `*/10` or `*/15` to run every 10 or 15 minutes
+
+The Script will call the other Backend Scripts:
+
+- upload of new fail2ban-log json file
+- check if new update of blocklists is available
+  - if yes download blocklist
+  - change firewall
+  - upload changed blocklist
+- script ends
+
 ---
 
 # On the UI-Server
