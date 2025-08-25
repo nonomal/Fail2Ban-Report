@@ -1,10 +1,10 @@
 #!/bin/bash
 # manage_users.sh
-# CLI-Tool zur Verwaltung der Fail2Ban-Report User (JSON + bcrypt)
+# CLI-Tool to manage Fail2Ban-Report Users (JSON + bcrypt)
 
 USER_FILE="/opt/Fail2Ban-Report/Settings/users.json"
 
-# JSON-Datei existiert nicht → erstellen
+# JSON-Datei does not exist → create
 if [ ! -f "$USER_FILE" ]; then
     echo "[]" > "$USER_FILE"
 fi
@@ -15,10 +15,10 @@ function add_user() {
     echo
     read -p "Role (admin/viewer): " role
 
-    # Passwort in bcrypt hashen (PHP verwenden)
+    # Password in bcrypt hash (using PHP)
     hash=$(php -r "echo password_hash('$password', PASSWORD_BCRYPT);")
 
-    # JSON-Eintrag anhängen
+    # attach JSON-entry
     tmp=$(mktemp)
     jq --arg u "$username" --arg p "$hash" --arg r "$role" '. += [{"username":$u,"password":$p,"role":$r}]' "$USER_FILE" > "$tmp" && mv "$tmp" "$USER_FILE"
     echo "User $username added."
