@@ -187,7 +187,8 @@ It provides optional tools to:
   - Centralized path handling, less hardcoding  
 - 🌐 **Frontend updates**:  
   - Server selection dropdown  
-  - Admin login + logout (session handling)  
+  - Admin login + logout (session handling)
+  - changed Marker Feature to show: - 🔴 repeat bans |🟡(1) ban increases with the number how often it happend
 - 🔒 **Security updates**:  
   - Bcrypt password storage  
   - UUID and optional IP checks  
