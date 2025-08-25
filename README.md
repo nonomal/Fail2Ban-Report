@@ -44,6 +44,10 @@ Please read the ![Setup Instructions](Docs/Setup-Instructions.md) carefully and 
 Read the ![Instructions to add a Sync-Client for Fail2Ban-Report](Docs/Adding-Clients.md) carefully.
 > Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
 
+
+
+---
+
 ## 📚 What It Does
 
 Fail2Ban-Report parses your `fail2ban.log` and generates JSON-based reports viewable via a responsive web dashboard.  
