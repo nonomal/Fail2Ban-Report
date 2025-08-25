@@ -12,6 +12,37 @@ High flexibility comes from the backend shell scripts, which you can adapt to yo
 
 ## 🛡️ **Note**: This tool is a visualization and management layer — it does **not** replace proper intrusion detection or access control. Deploy it behind IP restrictions or HTTP authentication only!
 
+---
+
+## 📑 Table of Contents
+
+- [⚠️ Status of the Project](#️-status-of-the-project)
+- [🖥️ Demo](#️-demo)
+- [🛠️ Installation](#️-installation)
+  - [🔧 New Installation : UI and local Fail2Ban Events](#-new-installation--ui-and-local-fail2ban-events)
+  - [🔧 Existing Installations : UI and local Fail2Ban Events](#-existing-installations--ui-and-local-fail2ban-events)
+  - [📡 Adding Sync-Clients](#-adding-sync-clients)
+- [📚 What It Does](#-what-it-does)
+- [🧱 Architecture Overview](#-architecture-overview)
+- [⚙️ Requirements](#️-requirements)
+  - [🗄️ Server](#️-server)
+  - [📡 Sync-Client](#-sync-client)
+- [📦 Features](#-features)
+- [🆕 What's New in v0.5.0](#-whats-new-in-v050)
+- [🪳 Bugfixes (History)](#-bugfixes-history)
+- [👀 Outlook](#-outlook)
+- [👥 Discussions](#-discussions)
+- [📄 Changelog](#-changelog)
+- [📄 License](#-license)
+- [⚡ Performance & Stress Test](#-performance--stress-test)
+- [🛣️ Roadmap or "Things I will have to do - but I do them later"](#️-roadmap-or-things-i-will-have-to-do---but-i-do-them-later)
+- [✅ What It Is](#-what-it-is)
+- [❌ What It Is Not](#-what-it-is-not)
+- [🤝 Contributing](#-contributing)
+- [🖼️ Screenshots](#-screenshots)
+
+
+---
 
 ## ⚠️ Status of the Project
 
