@@ -1,5 +1,7 @@
 # Manual Client Installation – Fail2Ban-Report v0.5.0
 
+
+# On the new Sync-Client
 ## Preparation
 
 - Check Fail2Ban → must be running  
