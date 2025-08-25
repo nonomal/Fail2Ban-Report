@@ -200,6 +200,13 @@ This is especially useful if you want to manually patch or update individual fil
 
 ---
 
+## 📄 License
+
+This project is licensed under the **GPLv3**.  
+Feel free to use, modify and share — but please respect the license terms.
+
+---
+
 ## ⚡ Performance & Stress Test
 
 Fail2Ban-Report has been tested under high-load conditions to verify stability, responsiveness, and reliable synchronization across multiple servers.
@@ -305,8 +312,3 @@ Pull requests, feature ideas and bug reports are very welcome!
 
 ---
 
-
-## 📄 License
-
-This project is licensed under the **GPLv3**.  
-Feel free to use, modify and share — but please respect the license terms.
