@@ -39,7 +39,7 @@ High flexibility comes from the backend shell scripts, which you can adapt to yo
 - [✅ What It Is](#-what-it-is)
 - [❌ What It Is Not](#-what-it-is-not)
 - [🤝 Contributing](#-contributing)
-- [🖼️ Screenshots](#-screens)
+- [🖼️ Screenshots](#-screenshots)
 
 
 ---
@@ -323,7 +323,7 @@ Pull requests, feature ideas and bug reports are very welcome!
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
-## 🖼️ Screens
+## 🖼️ Screenshots
 
 ### Main List
 ![Main-List](screenshots/Main-List-050-2.png)
