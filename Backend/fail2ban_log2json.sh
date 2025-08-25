@@ -7,7 +7,7 @@ mkdir -p "$OUTPUT_JSON_DIR"
 
 echo "[" > "$OUTPUT_JSON_FILE"
 
-# Grep alle relevanten Events
+# Grep all relevant Events
 grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
 {
     timestamp = $1 " " $2;
