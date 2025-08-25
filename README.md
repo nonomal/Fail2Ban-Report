@@ -2,14 +2,6 @@
 ![Fail2Ban-Report Beta](https://img.shields.io/badge/Fail2Ban--Report%20-_🕵️_V0.5.0_(Beta_5)-gold?style=flat&logoColor=black)
 
 
-## 🖥️ Demo
-👀 Want to try out the look & feel?
-There's a simple demo version available here – no backend, no real data:
-👉 https://demo.suble.net/ 🔗
-
----
-
-
 > A lightweight web-based multi-server dashboard that transforms daily Fail2Ban logs into searchable and filterable JSON reports, while also providing centralized UFW IP blocklist management across all your servers through a pull-based client-side synchronization via secure HTTPS endpoints.
 
 
@@ -42,7 +34,16 @@ Critical backend operations (like UFW updates) are executed via root cron script
 
 ---
 
-## Installation
+## 🖥️ Demo
+👀 Want to try out the look & feel?
+There's a simple demo version available here – no backend, no real data:
+👉 https://demo.suble.net/ 🔗
+Username and Password for Website Access is : `admin`:`admin`
+Username and Password for Blocklist manipulation is `admin`:`admin`
+
+---
+
+## 🛠️ Installation
 
 ### New Installation : UI and local Fail2Ban Events
 Please read the ![Setup Instructions](Docs/Setup-Instructions.md) carefully and secure your deployment with the provided `.htaccess`.
