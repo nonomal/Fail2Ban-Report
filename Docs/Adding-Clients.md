@@ -16,14 +16,41 @@
 apt update -qq && apt install jq gawk curl -y -qq
 ```
 
+Structure of Fail2Ban-Report Sync-Client (!***Case-Sensitive***!)
+
 ```
 /opt/Fail2Ban-Report/
     Backend/
     Helper-Scripts/
+    Settings
     archive/
         fail2ban/
         blocklists/
 ```
+## Helper scripts
+
+in `/opt/Fail2Ban-Report/Helper-Scripts/` create:
+
+- `create-client-uuid.sh`
+
+Make it executable:
+```
+chmod +x /opt/Fail2Ban-Report/Helper-Scripts/create-client-uuid.sh
+```
+
+Run it once to generate client-uuid.json inside
+/opt/Fail2Ban-Report/Settings/
+```
+./create-client-uuid.sh
+```
+The client UUID will be displayed
+
+You can later see the created UUID with
+```
+cat /opt/Fail2Ban-Report/Settings/client-uuid.json
+```
+
+---
 
 ## Backend scripts
 
@@ -80,24 +107,7 @@ Server URLs
 change `my.server.tld/` to fit your envoirement
 if curious why so many urls read [Syncronisation-Concept](Sync-Concept.md)
 
-## Helper scripts
-
-in `/opt/Fail2Ban-Report/Helper-Scripts/` create:
-
-- `create-client-uuid.sh`
-
-Make it executable:
-```
-chmod +x /opt/Fail2Ban-Report/Helper-Scripts/create-client-uuid.sh
-```
-
-Run it once to generate client-uuid.json inside
-/opt/Fail2Ban-Report/Settings/
-```
-./create-client-uuid.sh
-```
-The client UUID will be displayed – copy it.
-
+---
 
 ## Cron jobs
 you set the Fail2Ban-Report-cronscript.sh as the "Master Cronscript"
