@@ -105,7 +105,8 @@ Authentication Part
 Server URLs
 
 change `my.server.tld/` to fit your envoirement
-if curious why so many urls read [Syncronisation-Concept](Sync-Concept.md)
+
+If you are curious why so many sync urls read the [Syncronisation-Concept](Sync-Concept.md)
 
 ---
 
