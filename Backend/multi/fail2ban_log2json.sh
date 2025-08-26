@@ -15,6 +15,7 @@ mkdir -p "$OUTPUT_JSON_DIR"
 
 echo "[" > "$OUTPUT_JSON_FILE"
 
+# Grep all relevant Events
 grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
 {
     timestamp = $1 " " $2;
@@ -28,14 +29,15 @@ grep -E "(Ban|Unban)" "$LOGFILE" | awk -v today="$TODAY" '
         if (m[1]) ip = m[1];
     } else if ($0 ~ /Ban/) {
         action = "Ban";
-        match($0, /Ban ([0-9]+\.[0-9]+\.[0-9]+)/, m);
+        match($0, /Ban ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, m);
         if (m[1]) ip = m[1];
     } else if ($0 ~ /Unban/) {
         action = "Unban";
-        match($0, /Unban ([0-9]+\.[0-9]+)/, m);
+        match($0, /Unban ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, m);
         if (m[1]) ip = m[1];
     }
 
+    # Extract jail from first non-numeric bracketed section
     text = $0;
     c = 0;
     delete arr;
