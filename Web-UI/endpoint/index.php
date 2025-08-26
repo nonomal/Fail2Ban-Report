@@ -7,14 +7,14 @@ $ARCHIVE_BASE = __DIR__ . "/archive/"; // anpassen falls nötig
 
 header('Content-Type: application/json');
 
-// === Helper: Antwortfunktion ===
+// === Helper: Response-function ===
 function respond($statusCode, $data) {
     http_response_code($statusCode);
     echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-// === 1) Authentifizierung ===
+// === 1) Authentcation ===
 if (!file_exists($CLIENTS_FILE)) {
     respond(500, ["success" => false, "message" => "Client list not found."]);
 }
@@ -23,13 +23,13 @@ if (!is_array($clients)) {
     respond(500, ["success" => false, "message" => "Client list corrupted."]);
 }
 
-// Daten aus Request
+// Data from Request
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 $uuid     = $_POST['uuid'] ?? '';
 $remoteIp = $_SERVER['REMOTE_ADDR'] ?? '';
 
-// Client suchen
+// search Client
 $client = null;
 foreach ($clients as $c) {
     if ($c['username'] === $username && $c['uuid'] === $uuid) {
@@ -47,7 +47,7 @@ if (isset($client['ip']) && $client['ip'] !== $remoteIp) {
     respond(403, ["success" => false, "message" => "Authentication failed (ip mismatch)."]);
 }
 
-// === 2) Datei-Prüfung ===
+// === 2) Check files ===
 if (!isset($_FILES['file'])) {
     respond(400, ["success" => false, "message" => "No file uploaded."]);
 }
@@ -58,7 +58,7 @@ if (!is_uploaded_file($uploadedFile)) {
     respond(400, ["success" => false, "message" => "Invalid upload."]);
 }
 
-// Typ bestimmen
+// get type
 $isEvents   = preg_match('/^fail2ban-events-\d+\.json$/', $originalName);
 $isBlocklist = preg_match('/^[a-z0-9_-]+\.blocklist\.json$/i', $originalName);
 
@@ -66,7 +66,7 @@ if (!$isEvents && !$isBlocklist) {
     respond(400, ["success" => false, "message" => "Invalid filename: $originalName"]);
 }
 
-// === 3) Archivpfad vorbereiten ===
+// === 3) prepare archive path ===
 $userArchive = $ARCHIVE_BASE . $username . "/";
 $targetDir = $userArchive . ($isEvents ? "fail2ban/" : "blocklists/");
 if (!is_dir($targetDir) && !mkdir($targetDir, 0770, true)) {
@@ -74,7 +74,7 @@ if (!is_dir($targetDir) && !mkdir($targetDir, 0770, true)) {
 }
 $targetFile = $targetDir . $originalName;
 
-// === 4) Fail2Ban Events → einfach überschreiben ===
+// === 4) Fail2Ban Events → overwrite them ===
 if ($isEvents) {
     if (!move_uploaded_file($uploadedFile, $targetFile)) {
         respond(500, ["success" => false, "message" => "Failed to save events file."]);
@@ -84,7 +84,7 @@ if ($isEvents) {
     respond(200, ["success" => true, "message" => "Events file stored."]);
 }
 
-// === 5) Blocklist Verarbeitung ===
+// === 5) process eventlists  ===
 $newData = json_decode(file_get_contents($uploadedFile), true);
 if (!is_array($newData)) {
     respond(400, ["success" => false, "message" => "Invalid JSON in upload."]);
@@ -96,7 +96,7 @@ if (!$lockHandle || !flock($lockHandle, LOCK_EX)) {
     respond(500, ["success" => false, "message" => "Could not acquire lock."]);
 }
 
-// Alte Daten laden
+// load old Data
 $archiveData = [];
 if (file_exists($targetFile)) {
     $archiveData = json_decode(file_get_contents($targetFile), true);
@@ -105,13 +105,13 @@ if (file_exists($targetFile)) {
     }
 }
 
-//  Vergleiche & Update
+//  Compare & Update
 $changed = false;
 foreach ($archiveData as $key => &$entry) {
     if (!isset($entry['ip'])) continue;
     $ip = $entry['ip'];
 
-    // Case 1: active=true & pending=true -> pending=false wenn in neuer Liste mit pending=false
+    // Case 1: active=true & pending=true -> pending=false when in new List with pending=false
     if ($entry['active'] === true && $entry['pending'] === true) {
         foreach ($newData as $n) {
             if ($n['ip'] === $ip && $n['pending'] === false) {
@@ -123,7 +123,7 @@ foreach ($archiveData as $key => &$entry) {
         }
     }
 
-    // Case 2: active=false & pending=true -> löschen wenn nicht mehr in neuer Liste
+    // Case 2: active=false & pending=true -> delete if not in List anymore
     if ($entry['active'] === false && $entry['pending'] === true) {
         $found = false;
         foreach ($newData as $n) {
@@ -140,7 +140,7 @@ foreach ($archiveData as $key => &$entry) {
 }
 unset($entry);
 
-// Speichern
+// Save
 if ($changed) {
     if (file_put_contents($targetFile, json_encode(array_values($archiveData), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
         flock($lockHandle, LOCK_UN);
@@ -148,7 +148,7 @@ if ($changed) {
         respond(500, ["success" => false, "message" => "Failed to write blocklist."]);
     }
 } else {
-    // falls es die Datei noch gar nicht gab -> einfach speichern
+    // if file is new -> save it
     if (!file_exists($targetFile)) {
         if (!move_uploaded_file($uploadedFile, $targetFile)) {
             flock($lockHandle, LOCK_UN);
