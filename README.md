@@ -219,7 +219,7 @@ It provides optional tools to:
 | Frontend               | 📊 Single-server view, marker, warnings    | 📊 Server dropdown, markers with counting, warnings                |
 | Blocklists             | 📂 Per jail, local with status             | 📂 Per jail & server, with status (active, pending)                |
 | Firewall Integration   | ✅ UFW                                     | ✅ UFW                                                             |
-| Docker Support         | 🐳 First version available                 | 🐳 Docker version will be updated [See here](https://github.com/SubleXBle/Fail2Ban-Report-Docker)                     |
+| Docker Support         | 🐳 First version available                 | 🐳 [Docker version](https://github.com/SubleXBle/Fail2Ban-Report-Docker) |
 | Performance            | ⚡ Good for single setups                  | ⚡ Tested with >13,000 events, fast loading times                  |
 | Installation           | 🛠️ Manual Installation or installer        | 🛠️ Maual Installation                                              |
 | Statistics & Markers   | 🔴/🟡 Markers for IPs                      | 🔴 Repeated bans, 🟡 Ban increases with counting                  |
