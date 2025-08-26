@@ -151,9 +151,9 @@ It provides optional tools to:
 
 ### 🗄️ Server
 - Fail2Ban with logging enabled  
-- UFW (for firewall integration)    
-- PHP 7.4+ with JSON support  
-- HTTPS-capable web server (Apache or Nginx)  
+- UFW (for firewall integration)
+- HTTPS-capable web server (Apache)
+- PHP 7.4+ with JSON support    
 - `jq`   - (https://jqlang.org/)
 - `awk`  - (https://en.wikipedia.org/wiki/AWK)
 - `curl` - (https://curl.se/)
