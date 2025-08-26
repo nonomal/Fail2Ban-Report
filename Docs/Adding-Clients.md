@@ -68,6 +68,8 @@ In /opt/Fail2Ban-Report/Backend/ create or copy the following scripts:
 - syncback.sh
 - Fail2Ban-Report-cronscript.sh
 
+> **Note:** you can set logging in ***every script*** to your desired logging destination and logfile name.
+
 Make all .sh files executable:
 
 ```
