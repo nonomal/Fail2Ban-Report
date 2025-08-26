@@ -1,7 +1,7 @@
 # Chain of Trust – Authentication and Data Ownership
 
 > ### Please read carefully
-> This is the first Version of the **Fail2Ban-Report** Endpoint - upcoming releases will make changes to ensure a smoother workflow
+> This is the first Version of the **Fail2Ban-Report** Endpoint - upcoming releases will make changes to ensure a smoother workflow.
 
 
 The **backend shell scripts** run with `sudo` or root privileges to read Fail2Ban logs and modify firewall rules.
