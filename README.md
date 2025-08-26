@@ -219,7 +219,7 @@ Found a bug? → [Open an issue](https://github.com/SubleXBle/Fail2Ban-Report/is
 ---
 
 ## 👀 Outlook
-> besides stability, security and usability, next releases will focus more on statistics, integration of other firewalls and more fail2ban integration
+> next minor releases will focus on stability, security and usability, wider integration of authentication (Aka Loginpage) and smoother sync cycle, next major releases will focus more on statistics, integration of other firewalls and more fail2ban integration
 
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
