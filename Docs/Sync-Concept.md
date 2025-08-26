@@ -1,6 +1,8 @@
 # Sync Concept of Fail2Ban-Report
 
 > Username of the Client and Displayed Servername in Web-UI are the same.
+> Please also read the [Chain of Trust Document](chain-of-trust.md) to understand when Data-Ownership is transfered between Server and Client.
+> There is a poibility that set blocks in blocklists will be set back in WebUI because of Client Syncronisation. (Last Truth from Client) Future Versions will prevent this
 
 ## Web UI
 When a block or unblock action is triggered via the Web UI (example: block):
