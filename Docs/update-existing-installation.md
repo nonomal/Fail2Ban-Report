@@ -48,7 +48,25 @@ copy the new Config to opt/Fail2Ban-Report/Settings/
 Contents of the new `fail2ban-report.config`
 
 ```
+[reports]
+report=false
+report_types=abuseipdb,ipinfo
 
+[AbuseIPDB API Key]
+abuseipdb_key=YOUR-API-KEY
+
+[IP-Info API Key]
+ipinfo_key=YOUR-API-KEY
+
+[Fail2Ban-Daily-List-Settings]
+max_display_days=7
+
+[Warnings]
+enabled=true
+threshold=5:20
+
+[Default Server]
+defaultserver=
 ```
 
 
@@ -73,6 +91,9 @@ Your Backend is now ready for V 0.5.0
 
 ## Updating Web-UI
 
-Overwrite all your Content Files
+> save your `.htaccess` eventually to not have to rework everything to the new version
+
+Overwrite all your Files in your Web-UI Directory (eg.: `/var/www/html/Fail2Ban-Report/`)
 
 
+you are done - you have upgraded Fail2Ban-Report to it's new version
