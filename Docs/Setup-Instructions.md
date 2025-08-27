@@ -4,9 +4,11 @@
 This guide explains how to install **Fail2Ban-Report v0.5.0** from scratch.
 It covers the Web-UI setup, security hardening, backend configuration, and user management.
 
-> 🚨 This guide assumes that you have downloaded the project to /home/USER/ and that the project folder is named Fail2Ban-Report-latest.
-> Also that you want to install the Web-UI in /var/www/html/
-> Therefore, any copy commands or paths in this guide are based on this assumption.
+> 🚨 This guide assumes that you have downloaded the project to `/home/USER/` and that the project folder is named `Fail2Ban-Report-latest`.
+
+> Also that you want to install the Web-UI in `/var/www/html/` to get the URL `https://yourdomain.tld/Fail2Ban-Report/`
+
+> Therefore, any copy commands or paths in this guide are based on this assumption. Please edit Paths to fit your Setup.
 
 > Folder Names are Case Sensitive - please use them as descibed to avoid conflicts
 
