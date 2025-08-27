@@ -38,12 +38,10 @@ High flexibility comes from the backend shell scripts, which you can adapt to yo
 - [🖼️ Screenshots](#-Screenshots)
 - [👥 Discussions](#-discussions)
 - [📄 Changelog](#-changelog)
-- [📄 License](#-license)
 - [⚡ Performance & Stress Test](#-performance--stress-test)
 - [🛣️ Roadmap or "Things I will have to do - but I do them later"](#️-roadmap-or-things-i-will-have-to-do---but-i-do-them-later)
-- [✅ What It Is](#-what-it-is) and [❌ What It Is Not](#-what-it-is-not)
 - [🤝 Contributing](#-contributing)
-  
+- [📄 License](#-license)
 
 
 ---
@@ -274,14 +272,6 @@ This is especially useful if you want to manually patch or update individual fil
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
-## 📄 License
-
-This project is licensed under the **GPLv3**.  
-Feel free to use, modify and share — but please respect the license terms.
-
-##### [↑ Table of Contents ↑](#-Table-of-Contents)
----
-
 
 ## ⚡ Performance & Stress Test
 
@@ -323,25 +313,6 @@ Fail2Ban-Report maintains fast performance and reliable data synchronization, pr
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
-## ✅ What It Is
-- A **role-based web dashboard** for Fail2Ban events: read-only for Viewers, action-enabled for Admins  
-- A tool to **visualize** bans/unbans and **manually** manage blocked IPs  
-- A **log parser + JSON generator** that works alongside your existing Fail2Ban setup  
-- A way to **sync a persistent, per-jail blocklist** with your firewall (currently **UFW only**)  
-- Supports **multi-server setups**, allowing you to switch between servers in the dashboard  
-- Designed for **sysadmins** who want quick insights without SSH-ing into the server  
-
-## ❌ What It Is Not
-- ❌ A replacement for **Fail2Ban** itself (it depends on Fail2Ban)  
-- ❌ A real-time IDS/IPS (data updates depend on log parsing intervals)  
-- ❌ A universal firewall manager (no native support for iptables/nftables, etc. — yet)  
-- ❌ A tool for **automatic** jail management (manual actions only for now)  
-- ❌ A heavy analytics platform — it’s lightweight and log-driven by design
-- ❌ A Playground for inexperienced People trying to block half of the Internet
-
-##### [↑ Table of Contents ↑](#-Table-of-Contents)
----
-
 ## 🤝 Contributing
 
 Pull requests, feature ideas and bug reports are very welcome!
@@ -356,4 +327,11 @@ Pull requests, feature ideas and bug reports are very welcome!
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
+## 📄 License
+
+This project is licensed under the **GPLv3**.  
+Feel free to use, modify and share — but please respect the license terms.
+
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
+---
 
