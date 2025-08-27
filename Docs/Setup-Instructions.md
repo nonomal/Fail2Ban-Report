@@ -38,7 +38,7 @@ Wanna know more about ![Chain of Trust](chain-of-trust.md) or ![Syncronisation C
    mkdir -p /var/www/html/Fail2Ban-Report
    ```
 
-2. Copy the content of the `Web-UI` folder into it:
+2. Copy ***the content*** of the `Web-UI` folder into it:
 
    ```bash
    cp -r /home/USER/Fail2Ban-Report-latest/Web-UI/* /var/www/html/Fail2Ban-Report/
