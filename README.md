@@ -38,11 +38,12 @@ High flexibility comes from the backend shell scripts, which you can adapt to yo
 - [👥 Discussions](#-discussions)
 - [📄 Changelog](#-changelog)
 - [📄 License](#-license)
+- [🖼️ Screenshots](#-Screenshots)
 - [⚡ Performance & Stress Test](#-performance--stress-test)
 - [🛣️ Roadmap or "Things I will have to do - but I do them later"](#️-roadmap-or-things-i-will-have-to-do---but-i-do-them-later)
 - [✅ What It Is](#-what-it-is) and [❌ What It Is Not](#-what-it-is-not)
 - [🤝 Contributing](#-contributing)
-- [🖼️ Screenshots](#-Screenshots)
+  
 
 
 ---
@@ -259,6 +260,27 @@ Feel free to use, modify and share — but please respect the license terms.
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
+## 🖼️ Screenshots
+
+### Main List
+![Main-List](screenshots/Main-List-050-3.png)
+
+### Blocklist View
+![Blocklist](screenshots/Block-List-050-3.png)
+
+### Information Message
+![Info-Message](screenshots/Info-050-2.png)
+
+### Security Message (new)
+![Admin-Message](screenshots/admin-msg-050-2.png)
+
+### Ban Message
+![Ban-Message](screenshots/Ban-Msg-050-2.png)
+
+##### [↑ Table of Contents ↑](#-Table-of-Contents)
+---
+
+
 ## ⚡ Performance & Stress Test
 
 Fail2Ban-Report has been tested under high-load conditions to verify stability, responsiveness, and reliable synchronization across multiple servers.
@@ -332,22 +354,4 @@ Pull requests, feature ideas and bug reports are very welcome!
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
-## 🖼️ Screenshots
 
-### Main List
-![Main-List](screenshots/Main-List-050-3.png)
-
-### Blocklist View
-![Blocklist](screenshots/Block-List-050-3.png)
-
-### Information Message
-![Info-Message](screenshots/Info-050-2.png)
-
-### Security Message (new)
-![Admin-Message](screenshots/admin-msg-050-2.png)
-
-### Ban Message
-![Ban-Message](screenshots/Ban-Msg-050-2.png)
-
-##### [↑ Table of Contents ↑](#-Table-of-Contents)
----
