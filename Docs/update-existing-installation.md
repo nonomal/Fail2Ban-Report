@@ -10,15 +10,15 @@ right now in your archive/ folder you can find all sorts of .json files
 
 you will have to create a Folder inside of archive/ for your local Installation. This Folder is the "Name" of your Local Server. So if you create a Folder named "Webserver" your local Server will show up in UI as "Webserver"
 
-in your new folder archive/<SERVERNAME>/ you will have to create 2 additional Folders:
+in your new folder `archive/<SERVERNAME>/` you will have to create 2 additional Folders:
 
 - fail2ban
 - blocklists
 
 Change permissions of the new Created Folders and hand it over to your Webserver-User. (chown)
 
-Moove all Daily Event-Lists to archive/<SERVERNAME>/fail2ban/
-Moove all Blocklists to archive/<SERVERNAME>/blocklists/
+Moove all Daily Event-Lists to `archive/<SERVERNAME>/fail2ban/`
+Moove all Blocklists to `archive/<SERVERNAME>/blocklists/`
 
 Your archive/ is set and ready for V 0.5.0
 
