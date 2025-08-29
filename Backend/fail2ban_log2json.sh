@@ -1,3 +1,5 @@
+# This is the Logfile-Reader for the local installation - so you will have to edit the OUTPUT_JSON_DIR to fit your Webserver Installation
+#
 LOGFILE="/var/log/fail2ban.log"
 OUTPUT_JSON_DIR="/var/www/html/Fail2Ban-Report/archive/<SERVERNAME>/fail2ban"
 # <SERVERNAME> is the Name of your local Server Folder in archive/
