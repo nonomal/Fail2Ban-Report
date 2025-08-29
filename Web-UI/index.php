@@ -1,6 +1,22 @@
 <?php include ('includes/list-files.php'); ?>
 <?php include 'includes/header.php'; ?>
 
+<!-- Blockstats -->
+<div class="jaillistdiv">
+  <div class="subheadhead">Number of Fail2Ban Blocks per Jail today:</div>
+  <div id="fail2ban-bans-per-jail" class="jaillist">loading list ...</div>
+</div>
+<!-- Future Feature -->
+<!--
+<div class="jaillistdiv">
+  <div class="subheadhead">UFW Blocks from Fail2Ban-Report Lists:</div>
+ <div class="jaillist" id="ufw-blocks-info">loading list ..</div>
+</div>
+-->
+<!-- Future Feature -->
+<!-- Blockstats -->
+<div class="spacer1"></div>
+
 <!-- === Filters Container === -->
 <div id="filters" style="display:flex; flex-wrap:wrap; gap:0.5em; align-items:center; margin-bottom:1em;">
 
@@ -42,10 +58,16 @@
 
 <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
 
+<!--
 <div class="jaillistdiv">
-  <div class="headhead jaillist">Todays Blocks per Jail:</div>
+  <div class="subheadhead">Number of Fail2Ban Blocks per Jail Today:</div>
   <div id="fail2ban-bans-per-jail" class="jaillist">loading list ...</div>
 </div>
+<div class="jaillistdiv">
+  <div class="subheadhead">UFW Blocks from Fail2Ban-Report Blocklists: </div>
+  <div class="jaillist" id="ufw-blocks-info">loading list ..</div>
+</div>
+-->
 
 <table id="resultTable">
    <thead>
