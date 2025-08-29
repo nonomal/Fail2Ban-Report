@@ -36,7 +36,7 @@ High flexibility comes from the backend shell scripts, which you can adapt to yo
 - [🆕 What's New in v0.5.0](#-whats-new-in-v050)
 - [🪳 Bugfixes (History)](#-bugfixes-history)
 - [👀 Outlook](#-outlook)
-- [🖼️ Screenshots](#-Screenshots)
+- [🖼️ Screenshots](#-screenshots)
 - [👥 Discussions](#-discussions)
 - [📄 Changelog](#-changelog)
 - [⚡ Performance & Stress Test](#-performance--stress-test)
