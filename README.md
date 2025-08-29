@@ -304,7 +304,7 @@ Fail2Ban-Report maintains fast performance and reliable data synchronization, pr
 ---
 
 ## 🐳 Docker Version
-> Development of [Docker Version of Fail2Ban-Report](https://github.com/SubleXBle/Fail2Ban-Report-Docker) will start when native Version is released
+> Development of [Docker Version of Fail2Ban-Report](https://github.com/SubleXBle/Fail2Ban-Report-Docker) is expected with 0.5.1
 
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
