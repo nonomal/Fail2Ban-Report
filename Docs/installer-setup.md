@@ -4,6 +4,8 @@ This guide explains how to use the automated installer script for **Fail2Ban-Rep
 The installer sets up the **Web-UI**, the **Backend**, and (optionally) configures cronjobs.  
 It is designed for **Debian/Ubuntu-like systems**.
 
+> use the `Installation-Files/installer.sh` File for Installation 
+
 ---
 
 ## 📋 Prerequisites
