@@ -43,8 +43,8 @@ if (!isset($_SESSION['last_regeneration'])) {
 
 // Client binding (User-Agent + partial IP)
 $clientFingerprint = hash('sha256',
-    $_SERVER['HTTP_USER_AGENT'] . 
-    substr($_SERVER['REMOTE_ADDR'], 0, strrpos($_SERVER['REMOTE_ADDR'], '.')) // IP without last Oktett
+    $_SERVER['HTTP_USER_AGENT'] .
+    substr($_SERVER['REMOTE_ADDR'], 0, strrpos($_SERVER['REMOTE_ADDR'], '.')) // IP ohne letztes Oktett
 );
 
 if (!isset($_SESSION['client_fingerprint'])) {
@@ -88,7 +88,7 @@ if (isset($_POST['login_user']) && isset($_POST['login_pass'])) {
             $_SESSION['created_at']        = time();
             $_SESSION['last_regeneration'] = time();
             $_SESSION['client_fingerprint'] = hash('sha256',
-                $_SERVER['HTTP_USER_AGENT'] . 
+                $_SERVER['HTTP_USER_AGENT'] .
                 substr($_SERVER['REMOTE_ADDR'], 0, strrpos($_SERVER['REMOTE_ADDR'], '.'))
             );
             $loggedIn = true;
