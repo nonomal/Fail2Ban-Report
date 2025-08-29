@@ -86,7 +86,7 @@ Next steps:
      /opt/Fail2Ban-Report/Settings/fail2ban-report.config
   3. Protect the Web-UI from public access!
 
-Installation completed. Enjoy your Fail2Ban-Report! 🚀
+Installation completed.  Enjoy Fail2Ban-Report! 🕵️
 ```
 
 
