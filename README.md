@@ -122,11 +122,13 @@ Username and Password for Blocklist manipulation is `admin`:`admin`
 
 ## 🛠️ Installation
 
-> - manual installation doc ready
-> - manual update doc ready
-> - manual add-sync-client  ready
-> - 
+### Manual Installations:
 
+> - [New Installation](Docs/)
+> - Upgrading
+> - Add Sync-Client
+
+### Auto-Installer
 
 
 
