@@ -590,12 +590,67 @@ ul.toplist li {
 /* Jail List Small Row */
 .jaillistdiv {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  white-space: nowrap;
-  animation: marquee 10s linear infinite;
 }
+
 .jaillist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
   color: #aaa;
   font-size: 0.7em;
   display: inline-block;
 }
+
+.spacer1 {
+  height: 10px;
+}
+
+.sessionheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #111;
+  border-bottom: 0px solid #333;
+}
+
+.sessionheader h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.sessionheader h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 0;
+  color: #aaa;
+}
+.sessionheader h3 {
+  font-size: 1.0rem;
+  margin: 0;
+  color: #d4af37;
+}
+
+.sessionheader h4 {
+  font-size: 1.0rem;
+  font-weight: normal;
+  margin: 0;
+  color: #aaa;
+}
+
+.inline-titles {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.inline-titles h3,
+.inline-titles h4 {
+  margin: 0;
+}
+
