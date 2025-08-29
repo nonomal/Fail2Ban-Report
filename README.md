@@ -120,17 +120,6 @@ Username and Password for Blocklist manipulation is `admin`:`admin`
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
-## 🛠️ Installation
-
-> Have in mind, that you are installing Beta Software that could contain bugs or can change with next release.
-
-- [Install from Scratch](Docs/Setup-Instructions.md)
-- [Upgrade existing Installations]()
-- [Adding Sync Clients](Docs/Adding-Clients.md)
-
-
-##### [↑ Table of Contents ↑](#-Table-of-Contents)
----
 
 ## 🧱 Architecture Overview
 
