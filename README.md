@@ -120,6 +120,15 @@ Username and Password for Blocklist manipulation is `admin`:`admin`
 ##### [↑ Table of Contents ↑](#-Table-of-Contents)
 ---
 
+## 🛠️ Installation
+
+> - manual installation doc ready
+> - manual update doc ready
+> - manual add-sync-client  ready
+> - 
+
+
+
 
 ## 🧱 Architecture Overview
 
