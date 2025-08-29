@@ -124,9 +124,9 @@ Username and Password for Blocklist manipulation is `admin`:`admin`
 
 ### Manual Installations:
 
-> - [New Installation](Docs/)
-> - Upgrading
-> - Add Sync-Client
+> - [New Installation](Docs/Setup-Instructions.md)
+> - [Upgrading](Docs/update-existing-installation.md)
+> - [Add Sync-Client](Docs/Adding-Clients.md)
 
 ### Auto-Installer
 
