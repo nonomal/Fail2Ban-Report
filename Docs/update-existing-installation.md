@@ -77,23 +77,27 @@ copy following Helper-Scripts from Sources to /opt/Fail2Ban-Report/Helper-Script
 - manage-users.sh
 
 make them executeable
+chmod +x /opt/Fail2Ban-Report/Helper-Scripts/*.sh
 
 run the manage-users script to create your admin user
 
+```
 ./manage-users.sh
+```
 
-choose 1 to create a user
-Enter your Username
-Enter Password
-Enter "admin" to get admin role (needed to manipulate blocklists)
+> - choose 1 to create a user
+> - Enter your Username
+> - Enter Password
+> - Enter "admin" to get admin role (needed to manipulate blocklists)
 
-Your Backend is now ready for V 0.5.0
+### Your Backend is now ready for V 0.5.0
+
+---
 
 ## Updating Web-UI
 
-> save your `.htaccess` eventually to not have to rework everything to the new version
+> save your `.htaccess` eventually to not have to rework everything or edit new version
 
-Overwrite all your Files in your Web-UI Directory (eg.: `/var/www/html/Fail2Ban-Report/`)
-
+Overwrite all your Files in your Web-UI Directory (eg.: `/var/www/html/Fail2Ban-Report/`) with the Files in Web-UI Folder in this Project
 
 you are done - you have upgraded Fail2Ban-Report to it's new version
