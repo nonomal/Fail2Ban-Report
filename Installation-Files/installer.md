@@ -97,8 +97,7 @@ Installation completed.  Enjoy Fail2Ban-Report! 🕵️
 
 ## ✅ Fail2Ban-Report v0.5.0 – Post-Installation Checklist
 
-### 🔐 1. Secure the Web-UI
-**Goal:** Prevent unauthorized access  
+### 🔐 1. Secure the Web-UI and Prevent unauthorized access  
 
 #### 🔒 Enforce HTTPS
 ```apache
@@ -135,9 +134,7 @@ sudo htpasswd -c -B /etc/apache2/htpasswd/.htpasswd admin
 </RequireAny>
 ```
 
-### ⚙️ 2. Set Up User Management
-
-Goal: Role-based access to blocklists
+### ⚙️ 2. Set Up Fail2Ban-Report User
 
 ```
 cd /opt/Fail2Ban-Report/Helper-Scripts/
@@ -173,7 +170,6 @@ threshold=5:20
 
 ### 🔄 4. Adjust Script Paths for Server Names
 
-Goal: Proper log and blocklist mapping
 
 ```
 # In fail2ban_log2json.sh
@@ -184,27 +180,14 @@ BLOCKLIST_PATH="/var/www/html/Fail2Ban-Report/archive/<SERVERNAME>/blocklists/"
 
 ```
 
-### 🧪 5. Enable Logging for Cronjobs (Optional)
 
-Goal: Easier debugging
+### 🧪 6. Test the Web-UI
 
-```
-*/5 * * * * /opt/Fail2Ban-Report/Backend/fail2ban_log2json.sh >> /var/log/f2b-report-json.log 2>&1
-*/5 * * * * /opt/Fail2Ban-Report/Backend/firewall-update.sh >> /var/log/f2b-report-fw.log 2>&1
-```
-
-### 📡 6. Test the Web-UI
-
-Goal: Verify functionality
 
 Open in browser: http://<SERVER-IP>/Fail2Ban-Report/
 
-Check log display
-
-Verify access protection
-
-Confirm user roles
-
-
+- Check log display
+- Verify access protection
+- Confirm user roles
 
 
